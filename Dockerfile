@@ -26,6 +26,8 @@ RUN msiexec /log logfile.txt /i "C:\\hecras\\HEC-RAS 5.0.7.msi" /quiet && del C:
 
 # Register the executable
 COPY .\\GetSystemStatistic.py C:\\GetSystemStatistic.py
+COPY .\\runplans.py C:\\data\\runplans.py
 
-# copy an example directory 
-COPY .\\Bald_Eagle_Creek C:\\data
+COPY .\\runras.bat C:\\data\\runras.bat
+
+ENTRYPOINT ["C:\\data\\runras.bat"]

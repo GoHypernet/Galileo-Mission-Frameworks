@@ -242,8 +242,6 @@ regfile = r'''Windows Registry Editor Version 5.00
 [HKEY_USERS\S-1-5-93-2-1\SOFTWARE\VB and VBA Program Settings\C:\Program Files (x86)\HEC\HEC-RAS\5.0.7\ras.exe\User Defined General PF Plots]
 "Count"="0" ''' % (id)
 
-f = open('ras07reg.reg','w')
+f = open(r'C:\ras07reg.reg','w')
 f.write(regfile)
 f.close()
-
-print(id)
