@@ -39,20 +39,6 @@ for plan in Plans:
 
     output = hec.Compute_CurrentPlan(NMsg,TabMsg,block)
     print(output)
-	
-# create a new folder to hold the results
-try:
-    resFolder = os.path.join(os.getcwd(),r'results')
-    if not os.path.isdir(resFolder):
-        os.mkdir(resFolder)
-    # detect results and move them to new folder	
-    for file in os.listdir(os.getcwd()):
-        extension = file.split(".")[-1]
-        if extension == 'dss' or extension[0] == 'O' or extension == 'color_scales' or extension == 'txt':
-            shutil.move(file,os.path.join(resFolder,file))
-except OSError:
-	print("Creation of directory %s failed" % resFolder)
-        
 
 hec.QuitRas()       # close  HEC-RAS
 del hec             # delete HEC-RAS controller

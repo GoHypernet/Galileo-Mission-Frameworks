@@ -2,7 +2,8 @@ FROM microsoft/dotnet-framework
 
 # Install python 3.7.1 64bit for running scripts against COM object
 ADD .\\python-3.7.1-amd64.exe .
-RUN c:\python-3.7.1-amd64.exe /quiet /install && del c:\python-3.7.1-amd64.exe
+RUN c:\python-3.7.1-amd64.exe /quiet /install 
+RUN del c:\python-3.7.1-amd64.exe
 
 # Install pywin32 and numpy modules
 RUN py -m pip install --upgrade pip && py -m pip install pywin32 && py -m pip install numpy
