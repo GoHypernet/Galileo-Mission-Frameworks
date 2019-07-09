@@ -16,7 +16,7 @@ for file in os.listdir(os.getcwd()):
             print("found project file: ", RASProject)
 
 # form the contents of the project.bat file
-rasruncontents = f'"C:\\Program Files (x86)\\HEC\\HEC-RAS\\5.0.7\\Ras.exe" -c "C:\\data\\{RASProject}"'
+rasruncontents = f'"C:\\Program Files (x86)\\HEC\\HEC-RAS\\5.0.7\\Ras.exe" -test "C:\\data [Test]\\{RASProject}"'
 
 # open and write the project.bat file
 rasrunfile = os.path.join(os.getcwd(),"project.bat")
