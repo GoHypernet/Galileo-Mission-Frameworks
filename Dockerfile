@@ -1,4 +1,4 @@
-FROM microsoft/dotnet-framework
+FROM microsoft/dotnet-framework:latest
 
 # Install python 3.7.1 64bit for running scripts against COM object
 COPY .\\python-3.7.1-amd64.exe .
@@ -30,12 +30,11 @@ RUN .\\HECRASInstall.exe /s /x /b"C:\hecras" /v"/qn"
 RUN msiexec /log logfile.txt /i "C:\\hecras\\HEC-RAS 5.0.7.msi" /quiet && del C:\HECRASInstall.exe
 
 # Register the executablepow
-COPY .\\GetSystemStatistic.py C:\\GetSystemStatistic.py
-COPY .\\runplans.py C:\\data\\runplans.py
-COPY .\\runplan.py C:\\data\\runplan.py
+COPY [".\\GetSystemStatistic.py","C:\\GetSystemStatistic.py"]
+COPY [".\\runplans.py".,"C:\\data [Test]\\runplans.py"]
 
-COPY .\\runras.bat C:\\data\\runras.bat
+COPY [".\\runras.bat","C:\\data [Test]\\runras.bat"]
 
 #COPY .\\VB6.0-KB290887-X86.exe C:\\VB6.0-KB290887-X86.exe
 
-ENTRYPOINT ["C:\\data\\runras.bat"]
+ENTRYPOINT ["C:\\data [Test]\\runras.bat"]
