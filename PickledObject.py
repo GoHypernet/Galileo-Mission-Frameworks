@@ -1,5 +1,7 @@
 from typing import Callable
+from pathlib import Path
 import pickle
+
 
 class PickledObject:
     """Wraps objects for easy pickling. The object in question is accessed
