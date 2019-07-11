@@ -19,10 +19,8 @@ class PickledObject:
         """
         self.path = Path(path)
         if self.path.exists():
-            LOG.info("Found extant pickled object at %s", self.path.resolve())
             self.load()
         elif constructor:
-            LOG.info("Constructing object for pickling")
             self.obj = constructor()
             self.dump()
         else:
@@ -30,10 +28,8 @@ class PickledObject:
 
     def dump(self) -> None:
         """Pickles `obj` to `path`"""
-        LOG.info("Pickling object to %s", self.path.resolve())
         pickle.dump(self.obj, self.path.open('wb'))
 
     def load(self) -> None:
         """Replaces `obj` with a load from `path`"""
-        LOG.info("Loading pickled object from %s", self.path.resolve())
         self.obj = pickle.load(self.path.open('rb'))
