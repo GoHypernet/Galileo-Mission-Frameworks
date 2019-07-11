@@ -1,5 +1,5 @@
 import os
-import PickledObject
+from PickledObject import PickledObject
 from pathlib import Path
 
 # find the project file
