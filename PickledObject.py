@@ -1,3 +1,6 @@
+from typing import Callable
+import pickle
+
 class PickledObject:
     """Wraps objects for easy pickling. The object in question is accessed
     directly through the `obj` member."""
