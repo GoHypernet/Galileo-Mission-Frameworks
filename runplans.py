@@ -25,7 +25,8 @@ runstarttime = PickledObject(starttime_path, dict)
 
 file, mtime = None, None
 for file in Path(os.getcwd()).iterdir():
-    mtime = file.stat().st_mtime
+    if file.suffix not in {".old",".py",".bat"}: 
+        mtime = file.stat().st_mtime
 
 runstarttime.obj[str(file)] = mtime
 runstarttime.dump()

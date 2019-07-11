@@ -25,4 +25,4 @@ for file in Path(os.getcwd()).iterdir():
             shutil.rmtree(file)
         else:
             # files should be removed individually
-            file.unlink(
+            file.unlink()
