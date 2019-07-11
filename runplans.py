@@ -25,7 +25,7 @@ runstarttime = PickledObject(starttime_path, dict)
 
 file, mtime = None, None
 for file in Path(os.getcwd()).iterdir():
-    if file.suffix not in {".old",".py",".bat"}: 
+    if (file.suffix not in {".old",".py",".bat"}) and (file != "__pycache__"): 
         mtime = file.stat().st_mtime
 
 print("beacon file is:",file)
