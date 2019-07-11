@@ -1,6 +1,6 @@
 import os
 import shutil
-import PickledObject
+from PickledObject import PickledObject
 from pathlib import Path
 
 print("... Cleaning up results ...")
