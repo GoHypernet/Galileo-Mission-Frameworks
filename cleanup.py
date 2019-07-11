@@ -16,9 +16,11 @@ for k in runstarttime.obj.keys():
 
 # query the cutoff time from the beaconfile
 cutofftime = beaconfile.stat().st_mtime
+print("cutofftime is ",cutofftime)
 
 # if the file make time is before or equal to the cutoff, delete it
 for file in Path(os.getcwd()).iterdir():
+    print(file,file.stat(),st_mtime)
     if cutofftime <= file.stat().st_mtime:
         if file.is_dir():
             # directories should be removed entirely

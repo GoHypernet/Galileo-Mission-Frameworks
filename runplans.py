@@ -28,6 +28,8 @@ for file in Path(os.getcwd()).iterdir():
     if file.suffix not in {".old",".py",".bat"}: 
         mtime = file.stat().st_mtime
 
+print("beacon file is:",file)
+
 runstarttime.obj[str(file)] = mtime
 runstarttime.dump()
 
