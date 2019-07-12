@@ -23,14 +23,15 @@ print("Project file detected:",RASProject)
 starttime_path = os.path.join(os.getcwd(),"starttime.bin")
 runstarttime = PickledObject(starttime_path, dict)
 
-file, mtime = None, None
+beacon, mtime = None, None
 for file in Path(os.getcwd()).iterdir():
     if (file.suffix not in {".old",".py",".bat"}) and (file.stem != "__pycache__"): 
         mtime = file.stat().st_mtime
+        beacon = file
 
-print("beacon file is:",file)
+print("beacon file is:",beacon)
 
-runstarttime.obj[str(file)] = mtime
+runstarttime.obj[str(beacon)] = mtime
 runstarttime.dump()
 
 # form the contents of the project.bat file
