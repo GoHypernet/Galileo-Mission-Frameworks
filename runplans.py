@@ -35,7 +35,7 @@ runstarttime.obj[str(beacon)] = mtime
 runstarttime.dump()
 
 # form the contents of the project.bat file
-rasruncontents = f'"C:\\Program Files (x86)\\HEC\\HEC-RAS\\5.0.7\\Ras.exe" -test "C:\\data [Test]\\{RASProject}"'
+rasruncontents = f'"C:\\Program Files (x86)\\HEC\\HEC-RAS\\5.0.7\\Ras.exe" -test "C:\\data [Test]\\{RASProject}" \npy "C:\\data [Test]\\cleanup.py"'
 
 # open and write the project.bat file
 rasrunfile = os.path.join(os.getcwd(),"project.bat")
