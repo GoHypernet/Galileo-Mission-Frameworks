@@ -1,4 +1,5 @@
 import h5py, os, sys, time, fnmatch, subprocess, shutil
+from pathlib import WindowsPath
 
 # start the HECRAS process
 try:
@@ -7,8 +8,11 @@ except:
     print("Please make sure you have placed a project in C:\\Users\\Public")
     quit()
 
-working_dir = os.path.join(os.environ["RAS_BASE_DIR"],os.environ["RAS_EXPERIMENT"]+" [Test]") # directory where RAS is operating
-experiment_dest = os.path.join(os.environ["OUTPUT_DIRECTORY"],os.environ["RAS_EXPERIMENT"])   # name of folder where results will be moved
+# directory where RAS is operating
+working_dir = WindowsPath(os.path.join(os.environ["RAS_BASE_DIR"],os.environ["RAS_EXPERIMENT"])) 
+working_dir = working_dir.parent / (working_dir.name + " [Test]")
+
+experiment_dest = WindowsPath(os.path.join(os.environ["OUTPUT_DIRECTORY"],os.environ["RAS_EXPERIMENT"]))   # name of folder where results will be moved
 
 output_file = ''     # Full path to temporary plan file output in the working directory
 new_output_file = '' # location to copy temporary plan file data so as not to interfere with RAS
@@ -23,15 +27,20 @@ while proc.poll() == None: # Poll returns null while process is running
         time.sleep(5)
         try:
             # find the the temporary plan output file
-            for file in os.listdir(working_dir):
-                if fnmatch.fnmatch(file,"*.p*.tmp.hdf"):
-                    output_file = os.path.join(working_dir,file)
-                    experiment = file
-                    
-                    # put the copy of the temporary hdf file in the output directory
-                    new_output_file = os.path.join(os.environ["RAS_BASE_DIR"],experiment)
-        except:
-            print("Running Simulation")
+            if os.path.isdir(working_dir):
+                for file in os.listdir(working_dir):
+                    if fnmatch.fnmatch(file,"*.p*.tmp.hdf"):
+                        output_file = os.path.join(working_dir,file)
+                        experiment = file
+                        
+                        # put the copy of the temporary hdf file in the output directory
+                        new_output_file = os.path.join(os.environ["RAS_BASE_DIR"],experiment)
+            else:
+                continue
+        except Exception as e:
+            print("Running Simulation:",e)
+            sys.stdout.flush()
+            
     else:
         time.sleep(60)
         try:
@@ -70,16 +79,11 @@ while proc.poll() == None: # Poll returns null while process is running
                 del fhandle
             except Exception as e:
                 print("Simulation Running, time stamp data not available: ", e)
+                sys.stdout.flush()
                 
         except Exception as e:
             print("Exception: ", e)
+            sys.stdout.flush()
 
 if os.path.isfile(new_output_file):        
     os.remove(new_output_file)
-
-# when the simulation is complete, move the results into the output directory
-#print(f'moving {working_dir} to {experiment_dest}')
-#try:
-#    shutil.move(working_dir,experiment_dest)
-#except Exception as e:
-#    print("Could not move results to output directory: ", e)

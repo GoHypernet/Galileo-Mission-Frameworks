@@ -4,26 +4,10 @@ from pathlib import WindowsPath
 # the working directory must always be in the container filesystem
 working_dir = WindowsPath(os.path.join(os.environ["RAS_BASE_DIR"],os.environ["RAS_EXPERIMENT"])) # directory where RAS is operating
 experiment_dest = WindowsPath(os.path.join(os.environ["OUTPUT_DIRECTORY"],os.environ["RAS_EXPERIMENT"]))   # name of folder where results will be moved
-
-#library_model = ''
-
-#try:
-#    library_model = os.environ["READ_ONLY_MODEL_PATH"]
-#except:
-#    print("No library model specified, falling back to default behavior")
-
-#if os.path.isdir(library_model):
-#    # first remove the working directory if its there already
-#    if os.path.isdir(working_dir):
-#        shutil.rmtree(working_dir)
-#    # Next copy from the read-only libray
-#    try:
-#        print(f'Copying the project located at {library_model}')
-#        sys.stdout.flush()
-#        shutil.copytree(library_model,working_dir)
-#    except Exception as e:
-#        print(f'Failed to copy model from {library_model}:',e)
-#        sys.stdout.flush()
+try:
+    rasversion = os.environ["RAS_VERSION"]
+except:
+    rasversion = '5.0.7'
 
 # find the project file and current plan
 RASproject = ''
@@ -45,7 +29,7 @@ try:
     sys.stdout.flush()
 
     # form the contents of the project.bat file, run the plan, then copy it to destination
-    rasruncontents = f'"C:\\Program Files (x86)\\HEC\\HEC-RAS\\5.0.7\\Ras.exe" -test={plan_number} "{RASProject}"'   
+    rasruncontents = f'"C:\\Program Files (x86)\\HEC\\HEC-RAS\\{rasversion}\\Ras.exe" -test={plan_number} "{RASProject}"'   
     rasruncontents += f'\nXCOPY "{working_dir} [Test]" "{experiment_dest}" /f /z /j /s /i /y && rd /Q /S "{working_dir}" && rd /Q /S "{working_dir} [Test]"'
 
     # open and write the project.bat file
