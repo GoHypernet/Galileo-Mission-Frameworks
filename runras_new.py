@@ -3,7 +3,7 @@ from dateutil.parser import parse
 from pathlib import WindowsPath
 
 # this is an auxilary function that checks for missing files
-def check_file_paths(project):
+def check_file_paths(working_dir,project):
     project_rasmap = project.split('.')[0] + ".rasmap"
     if os.path.isfile(project_rasmap):
         rasmap = open(project_rasmap,'r')
@@ -11,14 +11,25 @@ def check_file_paths(project):
         # this regex searches for all instances of Filename="..." where ... is any string
         hits = set(re.findall('Filename="(.*?)"',contents))
         for h in hits:
-            if not os.path.isfile(h):
+            if not os.path.isfile(os.path.join(working_dir,h)):
                 print(f'Warning, {h} is referenced in {project_rasmap} but was not found')
+
+# this is an auxilary function that checks if writes are committed to disk, returns a boolean
+def check_hdf_flush(plan_file_name):
+    if os.path.isfile(plan_file_name):
+        plan_file = open(plan_file_name,'r')
+        contents = plan_file.read()
+        # this regex searches for all instances of Filename="..." where ... is any string
+        hdfflush = bool(int(re.findall('HDF Flush=(.*)',contents)[0]))
+        return hdfflush
+    else:
+        return None
+            
 
 # the working directory must always be in the container filesystem
 try:
     working_dir = WindowsPath(os.path.join(os.environ["RAS_BASE_DIR"],os.environ["RAS_EXPERIMENT"])) # directory where RAS is operating
     experiment_dest = WindowsPath(os.path.join(os.environ["OUTPUT_DIRECTORY"],os.environ["RAS_EXPERIMENT"]))   # name of folder where results will be moved
-    scratch_path = WindowsPath(os.environ["SCRATCH"])
     run_all_plans = bool(int(os.environ["RUN_ALL_PLANS"]))
     ras_plans = str(os.environ["RAS_PLANS"])
 except Exception as e:
@@ -48,7 +59,7 @@ for file in os.listdir(working_dir):
         header = f.readline()
         if header.find("Proj Title") != -1:
             RASProject = str(os.path.join(working_dir, file))
-            check_file_paths(RASProject)
+            check_file_paths(working_dir,RASProject)
             if ras_plans == "active plan":
                 # now extract current plan
                 current_plan = f.readline()
@@ -90,20 +101,20 @@ except:
 # directory where RAS is operating
 working_dir = working_dir.parent / (working_dir.name + " [Test]")
 
-output_file = ''     # Full path to temporary plan file output in the working directory
-new_output_file = '' # location to copy temporary plan file data so as not to interfere with RAS
-experiment = ''      # just the name of the temporary plan file output
-
+output_file = '' # Full path to temporary plan file output in the working directory
+plan_file = ''   # name of running plan file
 time_stamp_path = "Results/Unsteady/Output/Output Blocks/Base Output/Unsteady Time Series/Time Date Stamp"
 information_path = "Plan Data/Plan Information"
 
-last_time_stamp = '' # make empty string for last time step observed
-final_time_stamp = None
-initial_time_stamp = None
-time_window = None
-progress = None
+last_time_stamp = ''      # make empty string for last time step observed
+results_size = None       # last known size of the output file
+check_progress = False    # boolean that tells us whether or not to check the progress in the .hdf file
+final_time_stamp = None   # last time stamp specified by the simulation
+initial_time_stamp = None # t=0 for the simulation
+time_window = None        # physical time window length
+progress = None           # progress of the simulation
 
-RasUnsteady64 = None
+RasUnsteady64 = None      # process of the unsteady flow solver
 
 # perform a while loop with proc.poll() == None and try to get time stamps while waiting for simulation to complete
 while proc.poll() == None: # Poll returns null while process is running
@@ -115,52 +126,48 @@ while proc.poll() == None: # Poll returns null while process is running
             if os.path.isdir(working_dir):
                 for file in os.listdir(working_dir):
                     if fnmatch.fnmatch(file,"*.p*.tmp.hdf"):
-                        output_file = os.path.join(working_dir,file)
-                        experiment = file
-                        
-                        # put the copy of the temporary hdf file in the output directory
-                        new_output_file = os.path.join(scratch_path,experiment)
+                        output_file = os.path.join(working_dir,file)                        
+                        results_size = os.stat(output_file)[6]
+                        plan_file = file.split(".")[0] + "." + file.split(".")[1]
+                        check_progress = check_hdf_flush(os.path.join(working_dir,plan_file))
+                        print("\n",f'Running {plan_file}')
+                        sys.stdout.flush()
                         
             # try to find the RasUnsteady64.exe process ID
             for task in psutil.process_iter():
                 taskinfo = task.as_dict(attrs=['pid','name'])
                 if taskinfo['name'] == "RasUnsteady64.exe":
-                    RasUnsteady64 = taskinfo['pid']
+                    RasUnsteady64 = psutil.Process(taskinfo['pid'])
             else:
                 continue
         except Exception as e:
             print("Running Simulation:",e)
             sys.stdout.flush()
             
-    else:
-        for i in range(0,100):
+    elif check_progress:
+        for i in range(0,5):
             time.sleep(3)
             if (proc.poll() != None): # if proc.poll() returns something other than None, then it has exited, there is no need to continue the loop
-                if os.path.isfile(new_output_file):
-                    os.remove(new_output_file)
                 print("Terminating progress monitoring loop")
                 sys.stdout.flush()
                 exit()
         try:
             
-            # check if the current temporary hdf file is bigger than the last copy
-            try:
-                if os.stat(output_file)[6] == os.stat(new_output_file)[6]: # if the files are the same size, skip the rest of the loop
-                    continue
-            except: # this block is triggered the first loop
-                if os.path.isfile(output_file):
-                    # make a copy so as not to interrupt HECRAS
-                    subprocess.check_output(f'copy "{output_file}" "{new_output_file}" /y',shell=True)
+            # stop this loop if already done
+            if (not os.path.isfile(output_file)) or (not psutil.pid_exists(RasUnsteady64.pid)):
                 continue
 
-            if (progress and progress > 98) or (not os.path.isfile(output_file)) or (not psutil.pid_exists(RasUnsteady64)): # stop this loop if almost done
+            # check if the current temporary hdf file is has changed size
+            if os.stat(output_file)[6] == results_size: # if nothing has been written to disk, skip the rest of the loop
                 continue
+ 
+            results_size = os.stat(output_file)[6]
 
-            if os.path.isfile(output_file): # check to make sure its still a file
-                subprocess.check_output(f'copy "{output_file}" "{new_output_file}" /y',shell=True) # make a copy so as not to interupt HECRAS
+            # First pause the simulation engine, so as not to interupt the process
+            RasUnsteady64.suspend()
 
             try: # attempt to retrieve the latest time step
-                fhandle = h5py.File(new_output_file,"r")
+                fhandle = h5py.File(output_file,"r")
                     
                 try:
                     # the parse fuction formats the time stamp for us into a more readable string
@@ -173,6 +180,9 @@ while proc.poll() == None: # Poll returns null while process is running
                     # if we don't already know what the initial time stamp is, try to read it
                     if not initial_time_stamp:
                         initial_time_stamp = parse(fhandle[information_path].attrs["Simulation Start Time"])
+
+                    # Resume the simulation process 
+                    RasUnsteady64.resume()
                         
                     # Calculate the physical duration of the simultation if we don't already know it
                     if not time_window and (final_time_stamp and initial_time_stamp):
@@ -182,9 +192,10 @@ while proc.poll() == None: # Poll returns null while process is running
                     if last_time_stamp != ts:
                         last_time_stamp = ts
                         progress = (ts - initial_time_stamp)/time_window * 100
-                        print("Last Flushed Time Stamp: ", last_time_stamp," - ","{:3.2f}".format(progress),"% complete")
+                        print(f'{plan_file} progress: ', last_time_stamp,' - ','{:3.2f}'.format(progress),'% complete')
                         sys.stdout.flush()
                 except:
+                    RasUnsteady64.resume()
                     ts = "Simulation Running, Time stamp data unavailable"
                     if last_time_stamp != ts:
                         last_time_stamp = ts
@@ -199,6 +210,3 @@ while proc.poll() == None: # Poll returns null while process is running
         except Exception as e:
             print("Exception: ", e)
             sys.stdout.flush()
-
-if os.path.isfile(new_output_file):
-    os.remove(new_output_file)

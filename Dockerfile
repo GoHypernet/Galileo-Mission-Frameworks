@@ -1,19 +1,20 @@
 #FROM microsoft/dotnet-framework:latest
-FROM hyperdyne/simulator:hecras-14393
+FROM hyperdyne/simulator:hecras
 #FROM hyperdyne/simulator:hecras507-14393
 #FROM hyperdyne/simulator:hecras507-17763-pre
 #FROM hyperdyne/simulator:hecras-17763-test
 #FROM mcr.microsoft.com/windows:1809
 
-# Install python 3.7.1 64bit for running scripts against COM object
+# Install python 3.7.6 64bit for running scripts against COM object
 #COPY python-3.7.1-amd64.exe .
 #RUN c:\python-3.7.1-amd64.exe /quiet /install 
 #RUN del c:\python-3.7.1-amd64.exe
 
 # Install pywin32 and numpy modules
-RUN py -m pip install --upgrade pip && py -m pip install pywin32 && py -m pip install h5py && py -m pip install python-dateutil && py -m pip install psutil
+#RUN py -m pip install --upgrade pip && py -m pip install pywin32 && py -m pip install h5py && py -m pip install python-dateutil && py -m pip install psutil
 
 # Install Visual C++ runtimes 
+#COPY Visual-C-Runtimes-All-in-One /vc_runtimes
 #COPY .\\Visual-C-Runtimes-All-in-One.zip C:\\vc_runtimes.zip
 #COPY .\\extractRuntimes.py C:\\extractRuntimes.py
 #RUN py extractRuntimes.py
@@ -38,22 +39,25 @@ RUN py -m pip install --upgrade pip && py -m pip install pywin32 && py -m pip in
 #RUN msiexec /log C:\\hecras503\\logfile503.txt /i "C:\\hecras503\\HEC-RAS 5.0.3.msi" /quiet && del C:\HECRASInstall503.exe && rd /S /Q C:\\hecras503
 
 # Register the executable
-COPY .\\GetSystemStatistic.py C:\\GetSystemStatistic.py
-#COPY ["runplans.py","\\runplans.py"]
+#COPY .\\GetSystemStatistic.py C:\\GetSystemStatistic.py
 
-#COPY ["detectproject.py","\\detectproject.py"]
+#COPY ["runras.bat","\\runras.bat"]
 
-COPY ["runras.bat","\\runras.bat"]
+COPY ["runras_new.py","\\runras.py"]
 
-COPY ["runras.py","\\runras.py"]
+#ENV OUTPUT_DIRECTORY="C:\Users\Public\Output"
+#ENV RAS_BASE_DIR="C:\Users\Public\RAS"
+#ENV RAS_EXPERIMENT="."
+#ENV RAS_VERSION=5.0.7
+#ARG SCRATCH
+#ENV SCRATCH="C:\Users\Scratch"
+#ENV RUN_ALL_PLANS=0
+#ENV RAS_PLANS="active plan"
 
-ENV RAS_BASE_DIR="C:\Users\Public\RAS"
-ENV RAS_EXPERIMENT="."
-ENV RAS_VERSION=5.0.7
-ARG SCRATCH
-ENV SCRATCH="C:\Users\Scratch"
+#RUN mkdir "C:\Users\Scratch"
 
-RUN mkdir "C:\Users\Scratch"
+# COPY /rclone.exe /rclone.exe
+# COPY /rclone.conf /Users/ContainerAdministrator/.config/rclone/rclone.conf
 
-ENTRYPOINT ["C:\\runras.bat"]
+#ENTRYPOINT ["C:\\runras.bat"]
 #ENTRYPOINT ["cmd"]
