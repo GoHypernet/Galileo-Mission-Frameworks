@@ -23,7 +23,7 @@ if not os.path.isfile(swmm_lib_path):
     print(f'SWMM DLL: {swmm_lib_path} not found. Version not supported.')
     exit()
 
-print(f'\nSWMM Version {swmm_version}')
+print(f'\n\n    SWMM Version {swmm_version}')
 
 # get name of input file
 swmm_name = str(os.environ["SWMMFILE"])
