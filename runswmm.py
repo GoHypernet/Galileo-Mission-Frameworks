@@ -23,7 +23,7 @@ if not os.path.isfile(swmm_lib_path):
     print(f'SWMM DLL: {swmm_lib_path} not found. Version not supported.')
     exit()
 
-print(f'SWMM Version {swmm_version}')
+print(f'\nSWMM Version {swmm_version}')
 
 # get name of input file
 swmm_name = str(os.environ["SWMMFILE"])
@@ -53,6 +53,7 @@ errcode = swmm5.swmm_start(ctypes.c_bool(True))
 
 print("\n")
 
+# simulation loop
 percent_complete = 0
 elapsed_time = ctypes.c_double()
 swmm5.swmm_step(ctypes.byref(elapsed_time))
@@ -64,6 +65,7 @@ while elapsed_time.value > 0.0:
          print(f'{swmm_name} progress:',' {:3.2f}'.format(percent_complete),'% complete')
          sys.stdout.flush()
 
+# close the simulator
 swmm5.swmm_end()
 swmm5.swmm_close()
 time2 = datetime.datetime.now()
