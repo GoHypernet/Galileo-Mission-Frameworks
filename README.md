@@ -1,2 +1,2 @@
-# HECRAS
-repository containing dockerfile and runtime environment for HECRAS simulator
+# EPA-SWMM
+repository containing dockerfile and runtime environment for EPA-SWMM engine
