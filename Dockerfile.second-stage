@@ -1,0 +1,29 @@
+FROM hypernetlabs/matlab:first-stage
+
+RUN printf "SERVER ec2-52-206-248-81.compute-1.amazonaws.com INTERNET=52.206.248.81 27000\nUSE_SERVER" > /usr/local/MATLAB/R2019b/licences/network.lic && \
+
+# File installer_input.txt defines the installation configuration and contains the Installation key
+printf "destinationFolder=/usr/local/MATLAB/R2019b\nfileInstallationKey=61566-39044-31103-25387\nagreeToLicense=yes\noutputFile=/tmp/mathworks_install_R2019b.log\nmode=silent\nlicensePath=/usr/local/MATLAB/R2019b/licences/network.lic\nlmgrFiles=false\nlmgrService=false" > /tools/matlab/installer_input.txt && \
+
+# This automatically installs all of the Mathworks products that they are licensed for. You can limit it to just certain products in the installer_input.txt file
+cd .. && \
+# Running the installer with input configuration as an argument
+/tools/matlab/install -inputFile /tools/matlab/installer_input.txt && \
+
+# Clean up : The install files are very big. Make sure you delete them when you're down in.
+rm -rf /tools/matlab && \
+rm -rf /var/lib/apt/lists/*
+
+# Add a script to start MATLAB
+ADD startmatlab.sh /opt/startscript/startmatlab.sh
+
+# Setting Environment Variables for MATLAB
+ENV PATH "/usr/local/MATLAB/R2019b/bin:$PATH"
+
+#Provide Sudo in container
+RUN useradd -ms /bin/bash ubuntu
+RUN echo "ubuntu ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/matlab \
+&& chmod 0440 /etc/sudoers.d/matlab
+
+# Call MATLAB startup script
+CMD  [ "/opt/startscript/startmatlab.sh" ]
