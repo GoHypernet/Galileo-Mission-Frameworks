@@ -27,3 +27,16 @@ For any of these, you need to set the display mode switch to 1 = Batch mode in C
  
 
 The engine will run if it is in the project folder or you can call it from the batch code.
+
+When you are ready to add a status bar, I have some info for you.  
+CONT.DAT 
+variable 1 line 1 is simulation time.  You can take this as the final time of length of the status bar.  
+variable 2 line 1 is output interval.  This variable is how often we write data to the Summary.out.  It is usually 0.1 but changes depending on the project type.
+
+SUMMARY.OUT
+We write data to this file at the end of each Output Interval.  That means the file will update 240 times for a 24 hour simulation with 0.1 output intervals.
+
+For example  a 24 hour simulation at 0.1 hr output...
+24 would define the length of the status bar.
+0.1 or 240 would define the steps.
+The status would change each time the time stamp of the summary.out file changes.
