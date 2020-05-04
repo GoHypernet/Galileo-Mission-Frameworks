@@ -4,28 +4,7 @@ from pathlib import WindowsPath
 print("Current dir:",os.getcwd())
 sys.stdout.flush()
 
-# the working directory must always be in the container filesystem
-try:
-    # where the executable will find the input files
-    working_dir = WindowsPath(os.path.join(os.environ["FLO_BASE_DIR"],os.environ["FLO_EXPERIMENT"])) # directory where FLO2D is operating
-    # where the results will be pushed after the simulation is finished
-    experiment_dest = WindowsPath(os.path.join(os.environ["OUTPUT_DIRECTORY"],os.environ["FLO_EXPERIMENT"]))   # name of folder where results will be moved
-except:
-    print("Error retrieving necessary environment variables")
-    exit()
-
-print("working_dir:",working_dir)
-sys.stdout.flush()
-
-print("experiment_dest:",experiment_dest)
-sys.stdout.flush()
-
-# this ensures we do not inadvertently delete the results
-if working_dir == experiment_dest:
-    print(f'Input directory: {working_dir}')
-    print(f'Output directory: {experiment_dest}')
-    print(f'Input and Output directories must be set to different paths, aborting')
-    exit()
+working_dir = os.getcwd()
 
 # Set the model to run in headless batch mode by opening the CONT.DAT file and setting the 3 variable on the first line to 1 
 contfile = working_dir / WindowsPath('CONT.DAT')
