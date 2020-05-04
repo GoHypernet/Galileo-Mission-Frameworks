@@ -28,18 +28,17 @@ with in_place.InPlace(contfile) as contdat:
                     newline += thing + '  '
             # contruct the new header line
             line = newline
+        firstline = False
         # write the line back to the file
-        contdat.write(newline)
+        contdat.write(line)
 
 
 # write a .bat file that for running FLO2D and moveing results around
 try:
     flo2dexe = WindowsPath('C:/flo2d/FLOPRO.exe')
     # form the contents of the project.bat file, run the plan, then copy it to destination
-    runcontents = f'cd {working_dir}'
-    runcontents += f'\n{flo2dexe}'   
+    runcontents = f'\n{str(flo2dexe)}'
     runcontents += f'\n@echo off'
-    runcontents += f'\nXCOPY "{working_dir}" "{experiment_dest}" /f /z /j /s /i /y && rd /Q /S "{working_dir}"'
 
     # open and write the project.bat file
     runfile = "C:\project.bat"
@@ -47,11 +46,9 @@ try:
     f.write(runcontents)
     f.close()
 except Exception as e:
-    print("Could not locate project file.")
+    print("Could not locate project file.",e)
     sys.stdout.flush()
     exit()
-
-subprocess.Popen(f'cmd /C dir')
 
 # start the FLOPRO process in the background
 try:
@@ -62,19 +59,33 @@ except:
 
 summary_file = working_dir / WindowsPath('SUMMARY.OUT') # Full path to temporary plan file output in the working directory
 
+old_stat = None
+new_stat = None
+
+last_len_stdout = 0
+stdout = None
+
 # perform a while loop with proc.poll() == None and tail the summary file
 while proc.poll() == None: # Poll returns null while process is running
-    print("top of loop")
     sys.stdout.flush()
-    subprocess.Popen(f'cmd /C dir')
     if (not os.path.isfile(summary_file)) : 
-        print("waiting for summary file")
-        sys.stdout.flush()
         time.sleep(5)
     else :
         time.sleep(10)
-        print("tailing summary")
+        # don't print to screen if nothing has changed
+        new_stat = os.stat(summary_file)[6]
+        if new_stat == old_stat:
+            continue
+        old_stat = os.stat(summary_file)[6]
+
         sys.stdout.flush()
-        subprocess.run(f'cmd /C type {summary_file}')
-        # tail the summary file            
+        cp = subprocess.run(f'cmd /C type {str(summary_file)}',capture_output=True)
+        stdout = cp.stdout.decode('ascii')
+
+        num_lines_to_print = len(stdout.split('\n')) - last_len_stdout
+        
+        for line in range(last_len_stdout,last_len_stdout+num_lines_to_print):
+            print(stdout.split('\n')[line])
+            sys.stdout.flush()
     
+        last_len_stdout += num_lines_to_print - 1
