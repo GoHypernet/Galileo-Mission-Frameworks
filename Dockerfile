@@ -1,45 +1,130 @@
-#FROM microsoft/dotnet-framework:latest
-#FROM hyperdyne/simulator:hecras507-14393-pre
-FROM hyperdyne/simulator:hecras507-14393
-#FROM hyperdyne/simulator:hecras507-17763-pre
-#FROM hyperdyne/simulator:hecras507-17763
+FROM nvidia/cuda:10.2-devel-ubuntu18.04 as builder
 
-# Install python 3.7.1 64bit for running scripts against COM object
-#COPY .\\python-3.7.1-amd64.exe .
-#RUN c:\python-3.7.1-amd64.exe /quiet /install 
-#RUN del c:\python-3.7.1-amd64.exe
+# Update according to http://manual.gromacs.org/documentation/
+ARG GROMACS_VERSION=2020.1
+ARG GROMACS_MD5=1c1b5c0f904d4eac7e3515bc01ce3781
 
-# Install pywin32 and numpy modules
-#RUN py -m pip install --upgrade pip && py -m pip install pywin32 && py -m pip install h5py
+ARG FFTW_VERSION=3.3.8
+ARG FFTW_MD5=8aac833c943d8e90d51b697b27d4384d
 
-# Install Visual C++ runtimes 
-#COPY .\\Visual-C-Runtimes-All-in-One.zip C:\\vc_runtimes.zip
-#COPY .\\extractRuntimes.py C:\\extractRuntimes.py
-#RUN py extractRuntimes.py
-#RUN C:\\vc_runtimes\install_all.bat && del C:\vc_runtimes.zip && del extractRuntimes.py
-#RUN del /Q C:\vc_runtimes\*
-#RUN rd C:\vc_runtimes
+# number of make jobs during compile
+ARG JOBS=16
 
-# Install oledlg.dll to mimic gui utilities
-#COPY .\\oledlg.dll C:\\Windows\\SysWOW64\\oledlg.dll
-#COPY .\\srpapi.dll C:\\Windows\\SysWOW64\\srpapi.dll
 
-# Copy the HECRAS installer
-#COPY .\\HEC-RAS_507_Without_Examples_Setup.exe C:\\HECRASInstall.exe
+# default loop value
+ARG GROMACS_ARCH='SSE2 AVX_256 AVX2_256 AVX_512'
 
-# install HECRAS and remove installer
-#RUN .\\HECRASInstall.exe /s /x /b"C:\hecras" /v"/qn"
-#RUN msiexec /log logfile.txt /i "C:\\hecras\\HEC-RAS 5.0.7.msi" /quiet && del C:\HECRASInstall.exe
 
-# Register the executable
-#COPY .\\GetSystemStatistic.py C:\\GetSystemStatistic.py
-#COPY ["runplans.py","\\runplans.py"]
+# install required packages
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    cmake \
+    curl \
+    libopenmpi-dev \
+    openmpi-bin \
+    openmpi-common \
+    python \
+  && rm -rf /var/lib/apt/lists/*
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/openmpi/lib
 
-#COPY ["detectproject.py","\\detectproject.py"]
+# Download sources
+RUN mkdir -p /gromacs /gromacs-src
+WORKDIR /gromacs-src
+RUN curl -o gromacs.tar.gz http://ftp.gromacs.org/pub/gromacs/gromacs-${GROMACS_VERSION}.tar.gz &&\ 
+    echo "${GROMACS_MD5}  gromacs.tar.gz" > gromacs.tar.gz.md5 &&\
+    md5sum -c gromacs.tar.gz.md5 &&\
+    tar zxf gromacs.tar.gz &&\
+    mv gromacs-${GROMACS_VERSION}/* .
 
-#COPY ["runras.bat","\\runras.bat"]
+# Install fftw with more optimizations than the default packages
+# It is not critical to run the tests here, since our experience is that the
+# Gromacs unit tests will catch fftw build errors too.
+RUN curl -o fftw.tar.gz http://www.fftw.org/fftw-${FFTW_VERSION}.tar.gz \
+  && echo "${FFTW_MD5}  fftw.tar.gz" > fftw.tar.gz.md5 \
+  && md5sum -c fftw.tar.gz.md5 \
+  && tar -xzvf fftw.tar.gz && cd fftw-${FFTW_VERSION} \
+  && ./configure --disable-double --enable-float --enable-sse2 --enable-avx --enable-avx2 --enable-avx512 --enable-shared --disable-static \
+  && make -j ${JOBS} \
+  && make install
 
-#ENV RAS_BASE_DIR="C:\Users\Public\RAS"
-ENV RAS_EXPERIMENT="."
+# build GROMACS and run unit tests
+# To cater to different architectures, we build for all of them
+# and install in different bin/lib directories.
 
-#ENTRYPOINT ["C:\\runras.bat"]
+# You can change the architecture list here to add more SIMD types,
+# but make sure to always include SSE2 as a fall-back.
+RUN for ARCH in ${GROMACS_ARCH}; do \
+     mkdir -p /gromacs-build.${ARCH} && cd /gromacs-build.${ARCH} \
+  && CC=gcc CXX=g++ cmake /gromacs-src \
+    -DGMX_OPENMP=ON \
+    -DGMX_GPU=ON \
+    -DGMX_MPI=OFF \
+    -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda \
+    -DCMAKE_INSTALL_PREFIX=/gromacs \
+    -DREGRESSIONTEST_DOWNLOAD=ON \
+#    -DMPIEXEC_PREFLAGS=--allow-run-as-root \
+    -DGMX_SIMD=${ARCH} \
+    -DCMAKE_INSTALL_BINDIR=bin.${ARCH} \
+    -DCMAKE_INSTALL_LIBDIR=lib.${ARCH} \
+  && make -j ${JOBS} \
+  && make install; done
+
+# Run tests (optional)
+# We avoid running tests for AVX_512, since that hardware might not be available
+#RUN for ARCH in SSE2 AVX_256 AVX2_256; do \
+#    cd /gromacs-build.${ARCH} && make -j ${JOBS} check; done
+
+#
+# Build the program to identify number of AVX512 FMA units
+# This will only be executed on AVX-512-capable hosts. If there
+# are dual AVX-512 FMA units, it will be faster to use AVX-512 SIMD, but if
+# there's only a single one we prefer AVX2_256 SIMD instead.
+#
+RUN if [ -d "/gromacs-build.AVX_512" ]; \
+    then cd /gromacs-build.AVX_512 \
+  && g++ -O3 -mavx512f -std=c++11 \
+    -DGMX_IDENTIFY_AVX512_FMA_UNITS_STANDALONE=1 \
+    -DGMX_X86_GCC_INLINE_ASM=1 \
+    -DSIMD_AVX_512_CXX_SUPPORTED=1 \
+    -o /gromacs/bin.AVX_512/identifyavx512fmaunits \
+    /gromacs-src/src/gromacs/hardware/identifyavx512fmaunits.cpp; \
+    fi;
+
+# 
+# Add architecture-detection script
+COPY gmx-chooser /gromacs/bin/gmx
+RUN chmod +x /gromacs/bin/gmx
+
+###############################################################################
+# Final stage
+###############################################################################
+FROM nvidia/cuda:10.2-runtime-ubuntu18.04
+
+# install required packages
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    libgomp1 \
+    libopenmpi-dev \
+    openmpi-bin \
+    openmpi-common \
+    python \
+  && rm -rf /var/lib/apt/lists/*
+
+# copy fftw libraries
+COPY --from=builder /usr/local/lib /usr/local/lib
+
+# copy gromacs install
+COPY --from=builder /gromacs /gromacs
+ENV PATH=$PATH:/gromacs/bin
+
+# setup labels
+LABEL com.nvidia.gromacs.version="${GROMACS_VERSION}"
+
+# NVIDIA-specific stuff?
+RUN mkdir /data
+WORKDIR /data
+#COPY examples examples 
+
+#
+# Enable the entrypoint to use the dockerfile as a GROMACS binary
+ENTRYPOINT [ "/gromacs/bin/gmx" ]
