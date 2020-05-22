@@ -1,4 +1,4 @@
-import os, sys, time, subprocess, in_place
+import os, sys, time, shutil, subprocess, in_place
 from pathlib import WindowsPath
 
 print("Current dir:",os.getcwd())
@@ -6,8 +6,22 @@ sys.stdout.flush()
 
 working_dir = os.getcwd()
 
+# check for the existance of a license file, if it does not exist, exit, otherwise move it to windows/system32
+systemflP = working_dir / WindowsPath('systemflP.dll')
+
+if not systemflP.is_file():
+    print("License file was not found, please place valid license in the parent folder")
+    exit()
+else: 
+    shutil.move(systemflP,WindowsPath('/windows/system32') / systemflP.name)
+
 # Set the model to run in headless batch mode by opening the CONT.DAT file and setting the 3 variable on the first line to 1 
 contfile = working_dir / WindowsPath('CONT.DAT')
+
+if not contfile.is_file():
+    print("Could not locate CONT.DAT")
+    exit()
+
 # loop over each line
 with in_place.InPlace(contfile) as contdat:
     # but only edit the first line
@@ -33,9 +47,15 @@ with in_place.InPlace(contfile) as contdat:
         contdat.write(line)
 
 
-# write a .bat file that for running FLO2D and moveing results around
+# write a .bat file that for running FLO2D and moving results around
 try:
-    flo2dexe = WindowsPath('C:/flo2d/FLOPRO.exe')
+    # first check if a FLOPRO.exe file was supplied
+    flo2dexe = working_dir / WindowsPath('FLOPRO.exe')
+    if not flo2dexe.is_file():
+        flo2dexe = WindowsPath('C:/flo2d/FLOPRO.exe')
+    else:
+        print('Using FLOPRO executable supplied by user')
+        
     # form the contents of the project.bat file, run the plan, then copy it to destination
     runcontents = f'\n{str(flo2dexe)}'
     runcontents += f'\n@echo off'

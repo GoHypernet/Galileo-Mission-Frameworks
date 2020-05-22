@@ -16,14 +16,14 @@ RUN C:\\vc_runtimes\install_all.bat && del C:\vc_runtimes.zip && del C:\extractR
 RUN rd /S /Q C:\vc_runtimes
 
 COPY ./flo2d /flo2d
-COPY systemflP.dll /windows/system32/.
-#COPY ./runflo.bat /runflo.bat
+##COPY systemflP.dll /windows/system32/.
+##COPY ./runflo.bat /runflo.bat
 COPY ./runflo.py /runflo.py
 
 WORKDIR /Users/Public/flo2d
 
-ENV FLO_BASE_DIR="C:\Users\Public\flo2d"
-ENV FLO_EXPERIMENT="."
-ENV OUTPUT_DIRECTORY="C:\Users\Public\Output"
+#ENV FLO_BASE_DIR="C:\Users\Public\flo2d"
+#ENV FLO_EXPERIMENT="."
+#ENV OUTPUT_DIRECTORY="C:\Users\Public\Output"
 
 ENTRYPOINT ["py","/runflo.py"]
