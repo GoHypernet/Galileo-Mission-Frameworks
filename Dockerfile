@@ -13,16 +13,16 @@ RUN cd ${AMBERHOME} && echo 'Y' | ./configure --with-python /usr/bin/python -mpi
 RUN cd ${AMBERHOME} && . ./amber.sh && make install
 
 FROM ubuntu:16.04
-COPY --from=0 /root/amber16/amber.sh /root/amber16/amber.sh
-COPY --from=0 /root/amber16/bin /root/amber16/bin
-COPY --from=0 /root/amber16/lib /root/amber16/lib
-COPY --from=0 /root/amber16/dat /root/amber16/dat
+ENV AMBER_VERSION 19
+COPY --from=0 /root/amber${AMBER_VERSION}/amber.sh /root/amber${AMBER_VERSION}/amber.sh
+COPY --from=0 /root/amber${AMBER_VERSION}/bin /root/amber${AMBER_VERSION}/bin
+COPY --from=0 /root/amber${AMBER_VERSION}/lib /root/amber${AMBER_VERSION}/lib
+COPY --from=0 /root/amber${AMBER_VERSION}/dat /root/amber${AMBER_VERSION}/dat
 RUN apt-get update -y 
 RUN apt-get install -y python openmpi-bin ssh libgfortran3 python-pip
 RUN pip install numpy
 RUN echo 'source $AMBERHOME/amber.sh' >> /root/.bashrc
 RUN echo '#!/bin/bash' > /usr/local/bin/mysander && echo 'cores=`nproc --all`' >> /usr/local/bin/mysander && echo 'source ${AMBERHOME}/amber.sh && mpirun -np $cores --allow-run-as-root sander.MPI $@' >> /usr/local/bin/mysander && chmod +x /usr/local/bin/mysander
-ENV AMBER_VERSION 16
 ENV AMBERHOME /root/amber${AMBER_VERSION}
 ENTRYPOINT ["/usr/local/bin/mysander"]
 CMD []
