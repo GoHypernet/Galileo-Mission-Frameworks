@@ -15,7 +15,8 @@ RUN apt-get update \
     ffmpeg libboost-dev fftw3 fftw3-dev pkg-config \
     python3-dev python3-pip python3-six \
     zlibc zlib1g zlib1g-dev \
-    pnetcdf-bin voro++ voro++-dev \
+    libnetcdf-dev pnetcdf-bin libpnetcdf-dev voro++ voro++-dev \
+    libblas-dev liblapack-dev libgsl-dev\
   && rm -rf /var/lib/apt/lists/*
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/mpich/lib
 
@@ -45,45 +46,30 @@ RUN git clone https://github.com/ornladios/ADIOS2.git && \
 
 RUN git clone https://github.com/lammps/lammps.git && mkdir /lammps-build
 WORKDIR /lammps-build
-#this will build the GPU version with all of the packages
-#RUN cmake -C /lammps/cmake/presets/all_on.cmake /lammps/cmake && make -j16 && make install
 # this will build the cpu version with most of the packages
 RUN cmake -C /lammps/cmake/presets/most.cmake /lammps/cmake && make -j${PROCS} && make install
-ENV PATH=$PATH:/lammps-build
-#RUN useradd -ms /bin/bash galileo
-#WORKDIR /home/galileo
-#USER galileo
+# this will biuld the GPU version with most of the packages
+#RUN cmake -C /lammps/cmake/presets/most.cmake /lammps/cmake -D PKG_GPU=on -D GPU_API=cuda && make -j${PROCS} && make install
 
 ###############################################################################
 # Final stage
 ###############################################################################
-#FROM nvidia/cuda:10.2-runtime-ubuntu18.04
+FROM nvidia/cuda:10.2-runtime-ubuntu18.04
 
-# install required packages
-#RUN apt-get update \
-#  && apt-get install -y --no-install-recommends \
-#    libgomp1 \
-#    libopenmpi-dev \
-#    openmpi-bin \
-#    openmpi-common \
-#    python \
-#  && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    mpich libmpich12 libmpich-dev\
+    ffmpeg libboost-dev fftw3 fftw3-dev pkg-config \
+    python3-dev python3-pip python3-six \
+    zlibc zlib1g zlib1g-dev \
+    libnetcdf-dev pnetcdf-bin libpnetcdf-dev voro++ voro++-dev \
+    libblas-dev liblapack-dev libgsl-dev\
+  && rm -rf /var/lib/apt/lists/*
 
-# copy fftw libraries
-#COPY --from=builder /usr/local/lib /usr/local/lib
+COPY --from=builder /lammps-build /lammps-build
+COPY --from=builder /adios2-build /adios2-build
 
-# copy gromacs install
-#COPY --from=builder /gromacs /gromacs
-#ENV PATH=$PATH:/gromacs/bin
-
-# setup labels
-#LABEL com.nvidia.gromacs.version="${GROMACS_VERSION}"
-
-# NVIDIA-specific stuff?
-#RUN mkdir /data
-#WORKDIR /data
-#COPY examples examples 
-
-#
-# Enable the entrypoint to use the dockerfile as a GROMACS binary
-#ENTRYPOINT [ "/gromacs/bin/gmx" ]
+ENV PATH=$PATH:/lammps-build
+RUN useradd -ms /bin/bash galileo
+WORKDIR /home/galileo
+USER galileo
