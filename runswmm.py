@@ -14,13 +14,14 @@ def get_date_time(inputfile,startend):
         return None
 
 # what version of swmm engine to run 
-swmm_version = os.environ["SWMMVERSION"]
+swmm_version = os.environ["VERSION"]
 
 swmm_lib_path = str(Path(f'C:\\Program Files (x86)\\EPA SWMM {swmm_version}\\swmm5.dll'))
 
 # make sure version is supported
 if not os.path.isfile(swmm_lib_path):
     print(f'SWMM DLL: {swmm_lib_path} not found. Version not supported.')
+    print(f'Please chose from: \n 5.1.006,\n 5.1.007,\n 5.1.008,\n 5.1.009,\n 5.1.010,\n 5.1.011,\n 5.1.012,\n 5.1.013,\n 5.1.014')
     exit()
 
 print(f'\n\n    SWMM Version {swmm_version}')
