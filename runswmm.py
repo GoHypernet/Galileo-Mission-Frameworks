@@ -57,14 +57,18 @@ print("\n")
 # simulation loop
 percent_complete = 0
 elapsed_time = ctypes.c_double()
-swmm5.swmm_step(ctypes.byref(elapsed_time))
-while elapsed_time.value > 0.0:
-     swmm5.swmm_step(ctypes.byref(elapsed_time))
+errcode = swmm5.swmm_step(ctypes.byref(elapsed_time))
+while elapsed_time.value > 0.0 and not errcode:
+     errcode = swmm5.swmm_step(ctypes.byref(elapsed_time))
      dummy = int(datetime.timedelta(elapsed_time.value)/simulation_window *100)
      if dummy > percent_complete:
          percent_complete = dummy
          print(f'{swmm_name} progress:',' {:3.2f}'.format(percent_complete),'% complete')
          sys.stdout.flush()
+
+# check for error code if thrown
+if errcode:
+    print("Errcode: ", errcode)
 
 # close the simulator
 swmm5.swmm_end()
