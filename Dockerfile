@@ -3,7 +3,6 @@ FROM mcr.microsoft.com/windows:1809
 # transfer all installers into container
 COPY swmm_installers/swmm51006_setup.exe /swmm51006_setup.exe
 COPY swmm_installers/swmm51007_setup.exe /swmm51007_setup.exe
-COPY swmm_installers/swmm51008_setup.exe /swmm51008_setup.exe
 COPY swmm_installers/swmm51009_setup.exe /swmm51009_setup.exe
 COPY swmm_installers/swmm51010_setup.exe /swmm51010_setup.exe
 COPY swmm_installers/swmm51011_setup.exe /swmm51011_setup.exe
