@@ -13,10 +13,10 @@ RUN apt-get install -y csh flex patch gfortran g++ make xorg-dev bison libbz2-de
 ADD AmberTools${AMBER_VERSION}.tar.bz2 /
 ENV AMBERHOME /amber${AMBER_VERSION}
 RUN mv /${WHAT_IT_UNPACKS_TO} /amber${AMBER_VERSION} && cd ${AMBERHOME} && echo 'Y' | ./configure --with-python /usr/bin/python3 gnu
-RUN cd ${AMBERHOME} && . ./amber.sh && make install
+RUN cd ${AMBERHOME} && . ./amber.sh && make -j8 install
 RUN cd ${AMBERHOME} && make clean
 RUN cd ${AMBERHOME} && echo 'Y' | ./configure --with-python /usr/bin/python3 -mpi gnu
-RUN cd ${AMBERHOME} && . ./amber.sh && make install
+RUN cd ${AMBERHOME} && . ./amber.sh && make -j8 install
 
 FROM ubuntu:16.04
 ENV AMBER_VERSION 19
