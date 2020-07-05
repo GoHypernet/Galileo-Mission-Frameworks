@@ -1,2 +1,2 @@
-# HECRAS
-repository containing dockerfile and runtime environment for HECRAS simulator
+# Hypernet Labs frameworks 
+repository containing dockierfiles to build frameworks supported by Galileo
