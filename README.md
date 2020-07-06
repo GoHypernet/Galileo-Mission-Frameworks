@@ -4,7 +4,7 @@ Industry: Molecular Dynamics, Drug discovery
 
 Target OS: Linux
 
-License: open source, licensed
+License: open source
 
 Website: http://vina.scripps.edu/
 
