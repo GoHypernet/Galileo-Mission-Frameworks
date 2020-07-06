@@ -1,4 +1,5 @@
-#STATA
+# STATA
+
 Industry: Statistics, Economectrics
 
 Target OS: Linux
