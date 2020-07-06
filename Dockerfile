@@ -9,10 +9,15 @@
 #RUN tar -xvf Stata16Linux64.tar.gz && rm Stata16Linux64.tar.gz
 #WORKDIR /usr/local/stata16
 ##### Stage 2 ######
-## commit container with Stata installion to new base image
+## commit container with Stata installation to new base image
 FROM hypernetlabs/stata:16
-RUN mkdir /data
+
 ENV PATH=/usr/local/stata16:$PATH
-WORKDIR /data
-COPY runstata.sh /runstata.sh
-ENTRYPOINT ["bash","/runstata.sh"]
+COPY runstata.sh /usr/local/stata16/runstata.sh
+
+# add non-root user
+RUN useradd -ms /bin/bash galileo
+USER galileo
+WORKDIR /home/galileo
+
+ENTRYPOINT ["bash","/usr/local/stata16/runstata.sh"]
