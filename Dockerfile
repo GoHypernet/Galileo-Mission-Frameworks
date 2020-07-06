@@ -10,10 +10,12 @@
 #WORKDIR /usr/local/stata16
 ##### Stage 2 ######
 ## commit container with Stata installation to new base image
-FROM hypernetlabs/stata:16
+FROM hypernetlabs/stata:16batch
 
 ENV PATH=/usr/local/stata16:$PATH
 COPY runstata.sh /usr/local/stata16/runstata.sh
+
+ENV STATA stata
 
 # add non-root user
 RUN useradd -ms /bin/bash galileo
