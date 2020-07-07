@@ -1,0 +1,25 @@
+common:
+ adapter: pool
+ tasks_per_worker: 1
+ cores_per_worker: 1 # change this 
+ memory_per_worker: 2 # in GB
+ max_workers: 1 # keep this at 1
+ #scratch_directory: "$TMPDIR"
+
+#cluster:
+# scheduler: slurm
+
+server:
+ #fractal_uri: https://localhost:7777/
+ fractal_uri: 192.168.240.1:7777
+ username: aaa
+ password: bbb
+ verify: False
+
+manager:
+ manager_name: local_manager
+ queue_tag: null
+ log_file_prefix: null
+ update_frequency: 30
+ test: False
+
