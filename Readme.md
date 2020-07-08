@@ -1,6 +1,6 @@
 # OpenFF
 
-Industry: Molecular Dynamics
+Industry: Molecular Dynamics, drug discovery, fundamental science
 
 Target OS: Linux
 
