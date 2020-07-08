@@ -12,5 +12,8 @@ elif test -e ./STATA.LIC; then
    sleep 1
    tail --pid $! -n +1 -f $DOFILE.log
 else
+   echo "--------------------------------------------------------------------------"
    echo "Please provide a valid stata.lic file for Stata16"
+   echo "See https://galileoapp.io/gettingstarted/tutorial-stata for more details"
+   echo "--------------------------------------------------------------------------"
 fi
