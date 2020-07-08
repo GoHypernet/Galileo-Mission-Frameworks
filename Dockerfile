@@ -48,10 +48,9 @@ ENV OUTPUT_DIRECTORY="C:\Users\Public\Output"
 ENV RAS_BASE_DIR="C:\Users\Public\RAS"
 ENV RAS_EXPERIMENT="."
 ENV RAS_VERSION=5.0.7
-#ARG SCRATCH
-#ENV SCRATCH="C:\Users\Scratch"
 ENV RUN_ALL_PLANS=0
 ENV RAS_PLANS="active plan"
+WORKDIR $RAS_BASE_DIR
 
 #RUN mkdir "C:\Users\Scratch"
 
