@@ -17,6 +17,9 @@ COPY runstata.sh /usr/local/stata16/runstata.sh
 
 ENV STATA stata
 
+# need write permissions to put license in correct location
+RUN chmod 777 /usr/local/stata16
+
 # add non-root user
 RUN useradd -ms /bin/bash galileo
 USER galileo
