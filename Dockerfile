@@ -1,12 +1,16 @@
 # use alpine base for small
 FROM alpine
-COPY vina/. /usr/loca/bin/.
+
+# add the autodock executable to the user path
+ADD autodock_vina_1_1_2_linux_x86.tgz .
+ENV PATH=/autodock_vina_1_1_2_linux_x86/bin:$PATH
+COPY runvina.sh /usr/local/bin/.
+RUN chmod +x /usr/local/bin/runvina.sh
+
 
 # run as the user "galileo" with associated working directory
-RUN useradd -ms /bin/bash galileo
+RUN adduser -s /bin/sh galileo -u 1000 -D
 USER galileo
 WORKDIR /home/galileo
 
-COPY runvina.sh /usr/local/bin/.
-
-ENTRYPOINT ["sh","runvina.sh"]
+ENTRYPOINT ["sh","/usr/local/bin/runvina.sh"]
