@@ -1,5 +1,5 @@
 # place this dockerfile in parent directory of q-e source code
-FROM ubuntu:16.04
+FROM ubuntu:18.04 as builder
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
   subversion \
   autoconf \
@@ -22,10 +22,14 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
   gedit \ 
   vim \
   python2.7 \
-  python-pip 
-COPY . /q-e
-WORKDIR /q-e
-RUN ./configure && make all
+  python-pip \
+  git
+
+RUN git clone https://github.com/QEF/q-e.git && cd q-e && ./configure && make all -j8
+
 ENV PATH="/q-e/bin:${PATH}"
-RUN mkdir /data
-WORKDIR /data
+
+# run as the user "galileo" with associated working directory
+RUN useradd -ms /bin/bash galileo
+USER galileo
+WORKDIR /home/galileo
