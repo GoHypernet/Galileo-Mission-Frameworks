@@ -120,10 +120,10 @@ ENV PATH=$PATH:/gromacs/bin
 # setup labels
 LABEL com.nvidia.gromacs.version="${GROMACS_VERSION}"
 
-# NVIDIA-specific stuff?
-RUN mkdir /data
-WORKDIR /data
-#COPY examples examples 
+# run as the user "galileo" with associated working directory
+RUN useradd -ms /bin/bash galileo
+USER galileo
+WORKDIR /home/galileo
 
 #
 # Enable the entrypoint to use the dockerfile as a GROMACS binary
