@@ -1,2 +1,2 @@
 #!/bin/bash
-vina --config $CONFIGFILE
+vina --cpu $(nproc) --config $CONFIGFILE
