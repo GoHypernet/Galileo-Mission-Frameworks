@@ -27,4 +27,4 @@ docker container exec ngrok curl -i -X GET 127.0.0.1:4040/api/tunnels
 
 docker container exec ngrok curl -i -X DELETE 127.0.0.1:4040/api/tunnels/<name of tunnel>
   
-docker container exec ngrok curl -i -X POST -H "Content-Type: application/json" --data "{\"addr\":\"qcserver:7777\",\"proto\":\"http\",\"name\":\"jupyter\"}" 127.0.0.1:4040/api/tunnels
+docker container exec ngrok curl -i -X POST -H "Content-Type: application/json" --data "{\"addr\":\"qcserver:7777\",\"proto\":\"http\",\"name\":\"openff\"}" 127.0.0.1:4040/api/tunnels
