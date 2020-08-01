@@ -1,11 +1,9 @@
-# Autodock Vina
+Industry: H&H
 
-Industry: Molecular Dynamics, Drug discovery
+Target OS: Windows
 
-Target OS: Linux
+License: Closed source, free to user
 
-License: open source
+Website: https://www.usbr.gov/tsc/techreferences/computer%20software/models/srh2d/index.html
 
-Website: http://vina.scripps.edu/
-
-Notes: Download the source code from the website as a tar.gz file.
+Notes: This branch builds a windows container for running the SRH2D simulator for versions  3.2.4 which was released in June 2019.
