@@ -20,6 +20,9 @@ RUN swmm51012_setup.exe /s && del swmm51012_setup.exe && move "/Program Files (x
 RUN swmm51013_setup_1.exe /SP- /VERYSILENT && del swmm51013_setup_1.exe
 RUN swmm51014_setup.exe /SP- /VERYSILENT && del swmm51014_setup.exe
 
+# copy dlls into environment
+COPY ["./swmm_dlls","C:/program files (x86)/swmm_dlls"]
+
 # Install python 3.7.1 64bit for running scripts 
 COPY python-3.7.7.exe .
 RUN c:\python-3.7.7.exe /quiet /install 
