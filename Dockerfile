@@ -9,6 +9,7 @@ COPY swmm_installers/swmm51011_setup.exe /swmm51011_setup.exe
 COPY swmm_installers/swmm51012_setup.exe /swmm51012_setup.exe
 COPY swmm_installers/swmm51013_setup_1.exe /swmm51013_setup_1.exe
 COPY swmm_installers/swmm51014_setup.exe /swmm51014_setup.exe
+COPY swmm_installers/swmm51015_setup.exe /swmm51015_setup.exe
 
 # run installers in silient mode
 RUN swmm51006_setup.exe /s && del swmm51006_setup.exe && move "/Program Files (x86)/EPA SWMM 5.1" "\Program Files (x86)\EPA SWMM 5.1.006" && setx path "%path%;C:\\Program Files (x86)\\EPA SWMM 5.1.006\\"
