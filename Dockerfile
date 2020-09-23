@@ -19,6 +19,7 @@ RUN swmm51011_setup.exe /s && del swmm51011_setup.exe && move "/Program Files (x
 RUN swmm51012_setup.exe /s && del swmm51012_setup.exe && move "/Program Files (x86)/EPA SWMM 5.1" "\Program Files (x86)\EPA SWMM 5.1.012" && setx path "%path%;C:\\Program Files (x86)\\EPA SWMM 5.1.012\\"
 RUN swmm51013_setup_1.exe /SP- /VERYSILENT && del swmm51013_setup_1.exe
 RUN swmm51014_setup.exe /SP- /VERYSILENT && del swmm51014_setup.exe
+RUN swmm51015_setup.exe /SP- /VERYSILENT && del swmm51015_setup.exe
 
 # copy dlls into environment
 COPY ["./swmm_dlls","C:/program files (x86)/swmm_dlls"]
