@@ -1,4 +1,6 @@
 @echo off
+
+cd C:\Users\Public
 C:\Users\ContainerAdministrator\AppData\Local\Programs\Python\Python37\python.exe C:\GetSystemStatistic.py
 C:\Windows\System32\reg.exe import C:\ras07reg.reg
 C:\Windows\System32\reg.exe import C:\ras05reg.reg
