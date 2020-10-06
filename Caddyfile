@@ -4,7 +4,7 @@
 :8080 {
     log
     root * /data
-    reverse_proxy qgis-app:8080
+    reverse_proxy :8080
 
     handle_path /files/* {
         file_server browse
