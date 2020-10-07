@@ -13,4 +13,4 @@ Github: https://github.com/qgis/QGIS
 Notes: This is a GUI application that requires a reverse proxy.
 
 docker build -t qgis .
-docker run --rm -d -p 8080:2016 qgis
+docker run --rm -d -p 8888:8888 qgis
