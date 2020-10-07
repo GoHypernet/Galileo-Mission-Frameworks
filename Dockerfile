@@ -1,3 +1,4 @@
+# get easy-novnc to run novnc from a single binary
 FROM golang:1.14-buster AS easy-novnc-build
 
 # build easy-novnc
@@ -6,17 +7,8 @@ RUN go mod init build && \
     go get github.com/geek1011/easy-novnc@v1.1.0 && \
     go build -o /bin/easy-novnc github.com/geek1011/easy-novnc
 
-FROM golang:1.14-buster AS caddy-build
-WORKDIR /src
-RUN echo 'module caddy' > go.mod && \
-    echo 'require github.com/caddyserver/caddy/v2 v2.1.1' >> go.mod && \
-    echo 'require github.com/mholt/caddy-webdav v0.0.0-20200523051447-bc5d19941ac3' >> go.mod
-RUN echo 'package main' > caddy.go && \
-    echo 'import caddycmd "github.com/caddyserver/caddy/v2/cmd"' >> caddy.go && \
-    echo 'import _ "github.com/caddyserver/caddy/v2/modules/standard"' >> caddy.go && \
-    echo 'import _ "github.com/mholt/caddy-webdav"' >> caddy.go && \
-    echo 'func main() { caddycmd.Main() }' >> caddy.go
-RUN go build -o /bin/caddy .
+# get the caddy executable
+FROM caddy AS caddy-build
 
 FROM qgis/qgis
 
@@ -32,23 +24,21 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists
 
 # copy configuration files and easy-novnc binary to this image
-COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/
+COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/easy-novnc
 COPY menu.xml /etc/xdg/openbox/
 COPY supervisord.conf /etc/
-EXPOSE 8080
 
-# set user properties appropriatly 
-RUN groupadd --gid 1000 app && \
-    useradd --home-dir /data --shell /bin/bash --uid 1000 --gid 1000 app && \
-    mkdir -p /data
-VOLUME /data
+# add non-root user
+RUN useradd -ms /bin/bash galileo
+USER galileo
+WORKDIR /home/galileo
 
 # copy the caddy server build into this container
-COPY --from=caddy-build /bin/caddy /usr/local/bin/
+COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
 
 # set the username and password hash for the caddy server
-ENV APP_USERNAME "myusr"
+ENV APP_USERNAME "bigbillybaddass"
 ENV APP_PASSWORD_HASH "JDJhJDEwJHkySERNZVJlcUpoSkgvbldxRHZ5aHVHRjFDRXdDZXMvN0VpQ0ZKTncwaHJYQjBBdFdHYW0y"
 
-CMD ["sh", "-c", "chown app:app /data /dev/stdout && exec gosu app supervisord"]
+CMD ["sh", "-c", "supervisord"]

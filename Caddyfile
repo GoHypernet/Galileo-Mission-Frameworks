@@ -1,22 +1,12 @@
-{
-    order webdav last
-}
-:8080 {
+:8888 {
     log
-    root * /data
-    reverse_proxy :8080
+    root * /home/galileo
+    reverse_proxy :6969
 
     handle_path /files/* {
         file_server browse
     }
-    redir /files /files/
-
-    handle /webdav/* {
-        webdav {
-            prefix /webdav
-        }
-    }
-    redir /webdav /webdav/
+    redir /home/galileo /files/
 
     basicauth /* {
         {env.APP_USERNAME} {env.APP_PASSWORD_HASH}
