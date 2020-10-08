@@ -10,18 +10,20 @@ RUN go mod init build && \
 # get the caddy executable
 FROM caddy AS caddy-build
 
-FROM qgis/qgis
+FROM rstudio/r-base:4.0.2-bionic
 
 # install bare minimum required to run GUI applications 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu && \
+    apt-get install -y libglu1-mesa libdbus-1-3 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libasound2 gdebi-core wget && \
     rm -rf /var/lib/apt/lists && \
     mkdir -p /usr/share/desktop-directories
 
-# install some general-purpose utilities 
-#RUN apt-get update -y && \
-#    apt-get install -y --no-install-recommends lxterminal nano wget openssh-client rsync ca-certificates xdg-utils htop tar xzip gzip bzip2 zip unzip && \
-    #rm -rf /var/lib/apt/lists
+# install R studio
+RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.3.1093-amd64.deb
+Run apt-get update -y && \
+    apt-get upgrade -y
+RUN gdebi --n rstudio-1.3.1093-amd64.deb
 
 # copy configuration files and easy-novnc binary to this image
 COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/easy-novnc
