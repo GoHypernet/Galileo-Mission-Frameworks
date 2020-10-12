@@ -1,0 +1,17 @@
+#### Stage 1 #######
+# first build the base image with required dependencies
+# then start interactive session to manually perform installation
+# run container in interactive mode, execute install: /media/install
+# follow install instructions
+# commit resulting container to a new image
+
+FROM ubuntu:18.04
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y libgtk2.0.0 libpng16-16 vim
+
+WORKDIR /media
+Add Stata16Linux64.tar.gz .
+#RUN mkdir /usr/local/stata16
+#RUN tar -xvf Stata16Linux64.tar.gz && rm Stata16Linux64.tar.gz
+WORKDIR /usr/local/stata16
+

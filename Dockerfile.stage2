@@ -1,0 +1,67 @@
+##### Stage 2 ######
+## commit container with Stata installation to new base image
+
+###################################################################
+# get easy-novnc to run novnc from a single binary
+FROM golang:1.14-buster AS easy-novnc-build
+
+# build easy-novnc
+WORKDIR /src
+RUN go mod init build && \
+    go get github.com/geek1011/easy-novnc@v1.1.0 && \
+    go build -o /bin/easy-novnc github.com/geek1011/easy-novnc
+
+####################################################################
+# get the caddy executable
+FROM caddy AS caddy-build
+
+####################################################################
+# get the stata executable
+FROM stage2 as stata-build
+#RUN rm /usr/local/stata16/stata.lic
+
+####################################################################
+FROM ubuntu:18.04
+
+# install bare minimum required to run GUI applications 
+RUN apt-get update -y && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu \
+    libgtk2.0.0 libpng16-16 vim && \
+    rm -rf /var/lib/apt/lists && \
+    mkdir -p /usr/share/desktop-directories
+
+# add non-root user
+RUN useradd -ms /bin/bash galileo
+USER galileo
+WORKDIR /home/galileo
+
+COPY --from=stata-build /usr/local/stata16 /home/galileo/stata16
+
+USER root
+
+RUN chmod 777 /home/galileo/stata16
+
+ENV PATH=/home/galileo/stata16:$PATH
+COPY runstatabatch.sh /home/galileo/runstatabatch.sh
+COPY runstatagui.sh /home/galileo/runstatagui.sh
+    
+# copy configuration files and easy-novnc binary to this image
+COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/easy-novnc
+COPY menu.xml /etc/xdg/openbox/
+COPY supervisord.conf /etc/
+
+# switch to non-root user
+USER galileo
+
+# copy the caddy server build into this container
+COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
+COPY Caddyfile /etc/
+
+ENV STATA xstata
+
+# set the username and password hash (mypass) for the caddy server
+ENV APP_USERNAME "myuser"
+ENV APP_PASSWORD_HASH "JDJhJDEwJHkySERNZVJlcUpoSkgvbldxRHZ5aHVHRjFDRXdDZXMvN0VpQ0ZKTncwaHJYQjBBdFdHYW0y"
+
+#ENTRYPOINT ["bash","/usr/local/stata16/runstatabatch.sh"]
+ENTRYPOINT ["sh", "-c", "supervisord"]
