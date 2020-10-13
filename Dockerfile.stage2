@@ -18,7 +18,7 @@ FROM caddy AS caddy-build
 ####################################################################
 # get the stata executable
 FROM stage2 as stata-build
-#RUN rm /usr/local/stata16/stata.lic
+RUN rm /usr/local/stata16/stata.lic
 
 ####################################################################
 FROM ubuntu:18.04
@@ -51,7 +51,7 @@ COPY menu.xml /etc/xdg/openbox/
 COPY supervisord.conf /etc/
 
 # switch to non-root user
-USER galileo
+#USER galileo
 
 # copy the caddy server build into this container
 COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
@@ -60,8 +60,11 @@ COPY Caddyfile /etc/
 ENV STATA xstata
 
 # set the username and password hash (mypass) for the caddy server
-ENV APP_USERNAME "myuser"
-ENV APP_PASSWORD_HASH "JDJhJDEwJHkySERNZVJlcUpoSkgvbldxRHZ5aHVHRjFDRXdDZXMvN0VpQ0ZKTncwaHJYQjBBdFdHYW0y"
+ENV USERNAME "myuser"
+ENV PASSWORD "testpass"
+RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    echo "}" >> /tmp/hashpass.txt
 
 #ENTRYPOINT ["bash","/usr/local/stata16/runstatabatch.sh"]
 ENTRYPOINT ["sh", "-c", "supervisord"]

@@ -8,7 +8,5 @@
     }
     redir /home/galileo /files/
 
-    basicauth /* {
-        {env.APP_USERNAME} {env.APP_PASSWORD_HASH}
-    }
+    import /tmp/hashpass.txt
 }

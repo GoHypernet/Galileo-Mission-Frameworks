@@ -17,5 +17,5 @@ Notes: This framework requires a two-stage build.
 docker build -t stage1 -f Dockerfile.stage1 .
 docker run -name stage1 -it --entrypoint bash stage1
 docker commit stage1 stage2
-docker build -t hypernetlabs/stata:16 .
+docker build -t hypernetlabs/stata:16 -f Dockerfile.stage2 .
 docker push hypernetlabs/stata:16

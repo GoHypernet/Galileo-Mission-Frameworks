@@ -11,7 +11,4 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y libgtk2.0.0 libpn
 
 WORKDIR /media
 Add Stata16Linux64.tar.gz .
-#RUN mkdir /usr/local/stata16
-#RUN tar -xvf Stata16Linux64.tar.gz && rm Stata16Linux64.tar.gz
 WORKDIR /usr/local/stata16
-
