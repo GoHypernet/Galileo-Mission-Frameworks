@@ -26,7 +26,7 @@ FROM ubuntu:18.04
 # install bare minimum required to run GUI applications 
 RUN apt-get update -y && apt-get upgrade -y && \
     apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu \
-    libgtk2.0.0 libpng16-16 vim && \
+    libgtk2.0.0 libpng16-16 vim xterm htop && \
     rm -rf /var/lib/apt/lists && \
     mkdir -p /usr/share/desktop-directories
 
@@ -35,15 +35,15 @@ RUN useradd -ms /bin/bash galileo
 USER galileo
 WORKDIR /home/galileo
 
-COPY --from=stata-build /usr/local/stata16 /home/galileo/stata16
+COPY --from=stata-build /usr/local/stata16 /usr/local/stata16
 
 USER root
 
-RUN chmod 777 /home/galileo/stata16
+RUN chmod 777 /usr/local/stata16
 
-ENV PATH=/home/galileo/stata16:$PATH
-COPY runstatabatch.sh /home/galileo/runstatabatch.sh
-COPY runstatagui.sh /home/galileo/runstatagui.sh
+ENV PATH=/usr/local/stata16:$PATH
+COPY runstatabatch.sh /usr/local/stata16/runstatabatch.sh
+COPY runstatagui.sh /usr/local/stata16/runstatagui.sh
     
 # copy configuration files and easy-novnc binary to this image
 COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/easy-novnc
@@ -51,7 +51,7 @@ COPY menu.xml /etc/xdg/openbox/
 COPY supervisord.conf /etc/
 
 # switch to non-root user
-#USER galileo
+USER galileo
 
 # copy the caddy server build into this container
 COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy

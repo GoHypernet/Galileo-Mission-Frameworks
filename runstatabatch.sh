@@ -1,13 +1,13 @@
 #!/bin/bash
 if test -e ./stata.lic; then
    echo "License file detected, starting Stata"
-   mv ./stata.lic /home/galileo/stata16/stata.lic
+   mv ./stata.lic /usr/local/stata16/stata.lic
    $STATA -b $DOFILE.do $STATAARGS &
    sleep 1
    tail --pid $! -n +1 -f $DOFILE.log
 elif test -e ./STATA.LIC; then
    echo "License file detected, starting Stata"
-   mv ./STATA.LIC /home/galileo/stata16/stata.lic
+   mv ./STATA.LIC /usr/local/stata16/stata.lic
    $STATA -b $DOFILE.do $STATAARGS &
    sleep 1
    tail --pid $! -n +1 -f $DOFILE.log
