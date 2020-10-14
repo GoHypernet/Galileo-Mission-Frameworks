@@ -6,6 +6,11 @@
                 <execute>/usr/local/stata16/xstata</execute>
             </action>
         </item>
+        <item label="Stata-MP">
+            <action name="Execute">
+                <execute>/usr/local/stata16/xstata-mp</execute>
+            </action>
+        </item>
         <item label="Terminal">
             <action name="Execute">
                 <execute>/usr/bin/xterm</execute>
