@@ -32,9 +32,6 @@ WORKDIR /home/galileo
 COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
 
-# ######
-#RUN echo $(caddy hash-password -plaintext 'mypass') >> 
-
 # set the username and password hash (mypass) for the caddy server
 
 ENV USERNAME "myuser"
