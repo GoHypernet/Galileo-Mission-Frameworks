@@ -6,7 +6,7 @@ Target OS: Linux
 
 License: Open Source
 
-Website: qgis.org
+Website: https://qgis.org/en/site/
 
 Github: https://github.com/qgis/QGIS
 

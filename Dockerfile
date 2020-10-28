@@ -18,11 +18,6 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists && \
     mkdir -p /usr/share/desktop-directories
 
-# install some general-purpose utilities 
-RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends lxterminal nano wget openssh-client rsync ca-certificates xdg-utils htop tar xzip gzip bzip2 zip unzip && \
-    rm -rf /var/lib/apt/lists
-
 # copy configuration files and easy-novnc binary to this image
 COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/easy-novnc
 COPY menu.xml /etc/xdg/openbox/
@@ -37,7 +32,11 @@ WORKDIR /home/galileo
 COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
 
+# ######
+#RUN echo $(caddy hash-password -plaintext 'mypass') >> 
+
 # set the username and password hash (mypass) for the caddy server
+
 ENV USERNAME "myuser"
 ENV PASSWORD "testpass"
 RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
