@@ -28,13 +28,12 @@ RUN apt-get update \
     python3-git \
   && rm -rf /var/lib/apt/lists/*
 
+# need to set WALLET and potentially PASSWORD
 ENV PATH /ethminer/build/ethminer:$PATH
 ENV SCHEME stratum
-ENV WALLET
-ENV WORKERNAME 
-ENV PASSWORD
-ENV POOLNAME
-ENV PORT 
+ENV WORKERNAME galileo
+ENV POOLNAME us1.ethermine.org
+ENV PORT 4444
 
 COPY --from=builder /ethminer/build /ethminer/build 
 
@@ -42,5 +41,5 @@ RUN useradd -ms /bin/bash galileo
 USER galileo
 WORKDIR /home/galileo
 
-COPY runxmrig.sh .
-ENTRYPOINT ["bash","runxmrig.sh"]
+COPY runethminer.sh .
+ENTRYPOINT ["bash","runethminer.sh"]
