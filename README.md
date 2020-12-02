@@ -1,11 +1,11 @@
-# XMRIG
+# MAFFT
 
-Industry: Cryptocurrency, Monero
+Industry: Computational Genetics
 
 Target OS: Linux
 
 License: open source
 
-Website: https://github.com/xmrig/xmrig
+Website: https://mafft.cbrc.jp/alignment/software/
 
-Notes: This is a cryptocurrency miner specifically designed to mine XMR (Monero). It works both for CPU and GPU mining. 
+Notes: Multiple alignment program for amino acid or nucleotide sequences. 
