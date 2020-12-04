@@ -1,2 +1,2 @@
 #!/bin/bash
-ethminer -U --pool $SCHEME://$WALLET.$WORKERNAME:$PASSWORD@$POOLNAME:$PORT
+ethminer -U --pool $SCHEME://$WALLET.$WORKERNAME@$POOLNAME:$PORT
