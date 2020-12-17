@@ -15,7 +15,7 @@ FROM rstudio/r-base:4.0.2-bionic
 # install bare minimum required to run GUI applications 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu && \
-    apt-get install -y libglu1-mesa libdbus-1-3 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libasound2 gdebi-core wget && \
+    apt-get install -y libglu1-mesa libdbus-1-3 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libasound2 gdebi-core wget xterm htop && \
     rm -rf /var/lib/apt/lists && \
     mkdir -p /usr/share/desktop-directories
 
@@ -38,12 +38,5 @@ WORKDIR /home/galileo
 # copy the caddy server build into this container
 COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
-
-# ######
-#RUN echo $(caddy hash-password -plaintext 'mypass') >> 
-
-# set the username and password hash (mypass) for the caddy server
-ENV APP_USERNAME "myuser4"
-ENV APP_PASSWORD_HASH "JDJhJDEwJHkySERNZVJlcUpoSkgvbldxRHZ5aHVHRjFDRXdDZXMvN0VpQ0ZKTncwaHJYQjBBdFdHYW0y"
 
 CMD ["sh", "-c", "supervisord"]
