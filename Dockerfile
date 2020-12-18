@@ -10,20 +10,18 @@ RUN go mod init build && \
 # get the caddy executable
 FROM caddy AS caddy-build
 
-FROM rstudio/r-base:4.0.2-bionic
+FROM ubuntu:18.04
 
 # install bare minimum required to run GUI applications 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu && \
-    apt-get install -y libglu1-mesa libdbus-1-3 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libasound2 gdebi-core wget xterm htop && \
+    apt-get install -y libglu1-mesa libdbus-1-3 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libasound2 gdebi-core wget xterm htop openjdk-8-jdk openjdk-8-jre unzip && \
     rm -rf /var/lib/apt/lists && \
     mkdir -p /usr/share/desktop-directories
 
-# install R studio
-RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.3.1093-amd64.deb
-Run apt-get update -y && \
-    apt-get upgrade -y
-RUN gdebi --n rstudio-1.3.1093-amd64.deb
+# install Rapid Miner
+COPY rapidminer-studio-9.8.1.zip .
+RUN unzip rapidminer-studio-9.8.1.zip && rm rapidminer-studio-9.8.1.zip
 
 # copy configuration files and easy-novnc binary to this image
 COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/easy-novnc
@@ -31,12 +29,18 @@ COPY menu.xml /etc/xdg/openbox/
 COPY supervisord.conf /etc/
 
 # add non-root user
-RUN useradd -ms /bin/bash galileo
-USER galileo
-WORKDIR /home/galileo
+# RUN useradd -ms /bin/bash galileo
+# USER galileo
+# WORKDIR /home/galileo
 
 # copy the caddy server build into this container
 COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
+
+ENV USERNAME "myuser"
+ENV PASSWORD "testpass"
+RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    echo "}" >> /tmp/hashpass.txt
 
 CMD ["sh", "-c", "supervisord"]
