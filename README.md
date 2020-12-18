@@ -1,16 +1,14 @@
-# RStudio
+# RapidMiner
 
-Industry: Statistical Data Science
+Industry: Data Science and Data Mining
 
 Target OS: Linux
 
-License: Open Source
+License: Paid Subscription model 
 
-Website: https://rstudio.com/products/rstudio/download/#download
+Website: rapidminer.com
 
-Github: https://github.com/rstudio/rstudio
+Notes: This is a GUI application that requires a reverse proxy. 
 
-Notes: This is a GUI application that requires a reverse proxy.
-
-docker build -t rstudio .
-docker run --rm -d -p 8888:8888 rstudio
+docker build -t rapidminer .
+docker run --rm -d -p 8888:8888 rapidminer
