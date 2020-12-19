@@ -3,7 +3,7 @@
     <menu id="root-menu" label="Openbox 3">
         <item label="QGIS">
             <action name="Execute">
-                <execute>/usr/bin/QGIS</execute>
+                <execute>/usr/bin/qgis</execute>
             </action>
         </item>
         <item label="Terminal">

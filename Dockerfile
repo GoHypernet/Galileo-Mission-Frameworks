@@ -14,7 +14,7 @@ FROM qgis/qgis
 
 # install bare minimum required to run GUI applications 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu && \
+    apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu xterm htop && \
     rm -rf /var/lib/apt/lists && \
     mkdir -p /usr/share/desktop-directories
 
@@ -36,8 +36,8 @@ COPY Caddyfile /etc/
 
 ENV USERNAME "myuser"
 ENV PASSWORD "testpass"
-RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    echo "}" >> /tmp/hashpass.txt
+#RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+#    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+#    echo "}" >> /tmp/hashpass.txt
 
 CMD ["sh", "-c", "supervisord"]
