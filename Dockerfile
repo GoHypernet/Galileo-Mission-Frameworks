@@ -10,7 +10,7 @@ RUN go mod init build && \
 # get the caddy executable
 FROM caddy AS caddy-build
 
-FROM rstudio/r-base:4.0.2-bionic
+FROM rocker/rstudio
 
 # install bare minimum required to run GUI applications 
 RUN apt-get update -y && \
