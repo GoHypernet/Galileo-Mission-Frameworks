@@ -1,11 +1,13 @@
-# XMRIG
+# PCSWMM
 
-Industry: Cryptocurrency, Monero
+Industry: Hydrology and Hydraulic Modeling
 
-Target OS: Linux
+Target OS: Windows
 
-License: open source
+License: Closed Source
 
-Website: https://github.com/xmrig/xmrig
+Website: www.pcswmm.com
 
-Notes: This is a cryptocurrency miner specifically designed to mine XMR (Monero). It works both for CPU and GPU mining. 
+Notes: This branch contains python scripts for the integration of Galileo functions into the 
+PCSWMM desktop application. The scripts deploy a SWMM5 job to a remote instance, track its 
+progress, download the results, and refresh the currently loaded model. 
