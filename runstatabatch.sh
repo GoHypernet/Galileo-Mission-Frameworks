@@ -14,6 +14,6 @@ elif test -e ./STATA.LIC; then
 else
    echo "--------------------------------------------------------------------------"
    echo "Please provide a valid stata.lic file for Stata16"
-   echo "See https://galileoapp.io/gettingstarted/tutorial-stata for more details"
+   echo "See https://hypernetlabs.io/galileo/tutorials/tutorial-stata/ for more details"
    echo "--------------------------------------------------------------------------"
 fi

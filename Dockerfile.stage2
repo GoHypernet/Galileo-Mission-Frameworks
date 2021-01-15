@@ -57,14 +57,8 @@ USER galileo
 COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
 
+# This environment variable determines which executable is called for stata (i.e. stata, stata-mp, etc.)
 ENV STATA xstata
 
-# set the username and password hash (mypass) for the caddy server
-ENV USERNAME "myuser"
-ENV PASSWORD "testpass"
-RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    echo "}" >> /tmp/hashpass.txt
-
 #ENTRYPOINT ["bash","/usr/local/stata16/runstatabatch.sh"]
-ENTRYPOINT ["sh", "-c", "supervisord"]
+#ENTRYPOINT ["sh", "-c", "supervisord"]
