@@ -20,27 +20,21 @@ RUN apt-get update -y && \
     mkdir -p /usr/share/desktop-directories
 
 # install Rapid Miner
-COPY rapidminer-studio-9.8.1.zip .
-RUN unzip rapidminer-studio-9.8.1.zip && rm rapidminer-studio-9.8.1.zip
+COPY rapidminer-studio-9.8.1.zip /rapidminer-studio-9.8.1.zip
+RUN unzip /rapidminer-studio-9.8.1.zip && rm /rapidminer-studio-9.8.1.zip
+
+# add non-root user
+RUN useradd -ms /bin/bash galileo
+USER galileo
+WORKDIR /home/galileo
 
 # copy configuration files and easy-novnc binary to this image
 COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/easy-novnc
 COPY menu.xml /etc/xdg/openbox/
 COPY supervisord.conf /etc/
 
-# add non-root user
-# RUN useradd -ms /bin/bash galileo
-# USER galileo
-# WORKDIR /home/galileo
-
 # copy the caddy server build into this container
 COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
-
-ENV USERNAME "myuser"
-ENV PASSWORD "testpass"
-RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    echo "}" >> /tmp/hashpass.txt
 
 CMD ["sh", "-c", "supervisord"]
