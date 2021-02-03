@@ -1,6 +1,7 @@
 # tags: CloudComputing,RunSWMM,parallel,Galileo
-# file: galileo
+# file: galileo_v1
 # 2020-08-11
+# updated on: 2021-02-03
 # name: Run in Galileo
 # description: Perform parallel analysis in the cloud with Galileo (https://galileo.hypernetlabs.io). 
 #              Galileo not only lets you easily run many simultaneous analyses in the cloud, 
@@ -38,11 +39,11 @@ class GalileoWrapper:
         self.station = None
         self.cpu_count = 4 # default number of CPUs
         self.memory_amount = 4096 # default MB of RAM
-        self.authenticate()
-
+        
     # first authenticate the user
     def authenticate(self):
         try:        
+                                         
             myauth = AuthSdk(client_id=_pcswmm_audience)
             access_token, refresh_token, et = myauth.initialize(_ini_fname)
             self.galileo = GalileoSdk(auth_token=access_token, refresh_token=refresh_token)
@@ -56,7 +57,7 @@ class GalileoWrapper:
 
     # select the Station to run on and how many CPUs and amount of RAM to request
     def set_galileo_parameters(self):
-       
+
         try:
             
             # get the station obect to the requested station
@@ -92,14 +93,14 @@ class GalileoWrapper:
                     <p>Select amount of RAM per scenario (gigabytes):</p>
                     <select id="Memory Amount">%s</select>
                     """
-            name_options = ['<option value="{0}">{0}</option>'.format(name) for name in station_names]
+            name_options = ['<option value="{0}">{0}</option>'.format(name) for name in station_names if name.lower() != 'linux']
             cpu_count = ['<option value="{0}">{0}</option>'.format(count) for count in ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"]]
             memory_amount = ['<option value="{0}">{0}</option>'.format(amount) for amount in ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"]]
             self.web.DocumentText = html_fmt%( _image_path, ''.join(name_options), ''.join(cpu_count), ''.join(memory_amount))
 
             self.select_station_form.Button1.Text = 'Dashboard...'
             self.select_station_form.Button1.Click += lambda sender, e: webbrowser.open_new_tab(_dashboard)
-            self.select_station_form.Button2.Text = 'OK...'
+            self.select_station_form.Button2.Text = 'Run...'
             self.select_station_form.Button2.Click += self.set_parameter_values
             self.select_station_form.CurrentY -= 20
             self.select_station_form.show()
@@ -123,12 +124,14 @@ class GalileoWrapper:
             # get the selected amount of RAM 
             element = self.web.Document.GetElementById('Memory Amount')
             self.memory_amount = int(element.GetAttribute('value'))*1000
-            
+
             self.select_station_form.close()
 
             # make sure a station was found
             if not self.station:
                 raise ValueError("Problem with selecting compute station.")
+
+            self.run_scenarios()
                 
         except Exception as e:
             error = str(e) + '\n' + traceback.format_exc()
@@ -142,7 +145,7 @@ class GalileoWrapper:
             self.run_fm.fm.HelpLink = _dashboard
             self.scenarios = [ RunOneScenario(self.galileo, self.station, inp_file, sn.Version, self.run_fm, self.cpu_count, self.memory_amount) 
                                for inp_file, sn in pcpy.SWMM.Scenarios.iteritems() if sn.ToRun ]
-#            self.scenarios = [ RunOneScenario(self.galileo, station, pcpy.SWMM.FilePath, pcpy.SWMM.Version, self.run_fm) ]
+#            self.scenarios = [ RunOneScenario(self.galileo, self.station, pcpy.SWMM.FilePath, pcpy.SWMM.Version, self.run_fm) ]
             self.run_fm.show_fm()
 
         except Exception as e:
@@ -150,12 +153,15 @@ class GalileoWrapper:
             show_error([error, "Contact Galileo support at support@hypernetlabs.io or visit the Help link for more info."])
 
     def abort_callback(self):
-        ######################################################################################################
-        # This function needs to ask if the user wants to kill the scenario or let it continue to run remotely 
-        ######################################################################################################
+        # if any job is still running, confirm killing
+        is_all_done = all( [scen.is_done for scen in self.scenarios] )
+        if not is_all_done:
+            feedback = pcpy.show_messagebox('Your jobs are running in Galileo, do you want to kill them?', '', pcpy.Enum.IconType.Question, pcpy.Enum.ButtonType.YesNo)
+            if feedback == pcpy.Enum.DlgResult.No:
+                return
+        
         for scen in self.scenarios:
-            print("Scenario '%s' will continue to run in Galileo. To stop it, visit the Galileo Dashboard." % scen.prj_name)
-        #    scen.kill_job()
+            scen.kill_job()
 
     def run_in_thread(self):
         # run multiple scenarios in one thread.
@@ -357,5 +363,6 @@ class RunOneScenario:
             self.run_fm.printout("Error in Job RunOneScenario.after_done.")
             return str(e)
 
+
 GW = GalileoWrapper()
-GW.run_scenarios()
+GW.authenticate()
