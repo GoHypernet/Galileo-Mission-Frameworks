@@ -14,7 +14,7 @@ A well defined containerized framework should have the following attributes:
 2. The default working directory is /home/galileo for linux and C:\Users\Public\ for windows (or a subdirectory of these paths)
 3. The framework must not require special kernel priviledges (i.e. the container should run with the flag [--cap-drop all](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) enabled)
 4. The framework should be architecture-agnostic and should detect the architecture available to it and adapt accordingly (i.e. multi-core or GPU acceleration)
-5. The framework author should contruct the entrypoint with such that it requires minimal user input to execute properly. 
+5. The framework author should contruct the entrypoint such that it requires minimal user input to execute properly. 
 6. The framework author should leverage clearly named environment variables to pass relevant arguments to the target application. 
 7. For frameworks built around software that require a license, the framework should test that a license is included before attempting to run the software and alert the user if it does not detect an appropriate license file. 
 8. Best effort should be made to print relevant information to stdout for progress tracking. 
