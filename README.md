@@ -1,3 +1,5 @@
+![alt](galileo_pres.png)
+
 # Galileo Mission Framework Types
 This repository contains [Dockerfiles](https://docs.docker.com/engine/reference/builder/) and associated data to 
 build frameworks supported by the [Galileo](https://hypernetlabs.io/galileo/) platform. Each branch is named after
