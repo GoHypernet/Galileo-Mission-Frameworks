@@ -1,4 +1,4 @@
-<img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/master/galileo_pres.png" width="300">
+<img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/master/galileo_pres.png" align="center" width="500">
 
 # Galileo Mission Framework Types
 This repository contains [Dockerfiles](https://docs.docker.com/engine/reference/builder/) and associated data to 
