@@ -1,6 +1,10 @@
-# Hypernet Labs Mission Framework Types
-Repository containing dockerfiles to build frameworks supported by Galileo.
+# Galileo Mission Framework Types
+This repository contains [Dockerfiles](https://docs.docker.com/engine/reference/builder/) and associated data to 
+build frameworks supported by the [Galileo](https://hypernetlabs.io/galileo/) platform. Each branch is named after
+the target application and contains information on the target audience of the application, how it is built, and how
+it is intended to be executed. 
 
+## Framework Guidelines
 A well defined containerized framework should have the following attributes:
 1. The default user is non-root user named galileo with uid 1000
 2. The default working directory is /home/galileo for linux and C:\Users\Public\ for windows
