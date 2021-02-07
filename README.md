@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/epa-swmm/swmm.png" width="250">
+</p>
+
 # EPA-SWMM
 Industry: H&H
 
