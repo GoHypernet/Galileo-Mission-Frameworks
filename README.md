@@ -1,4 +1,4 @@
-![alt](galileo_pres.png)
+![alt](galileo_pres.png  | width=300)
 
 # Galileo Mission Framework Types
 This repository contains [Dockerfiles](https://docs.docker.com/engine/reference/builder/) and associated data to 
