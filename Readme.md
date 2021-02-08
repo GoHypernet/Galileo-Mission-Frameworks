@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/flo2d/flo2d_logo.jpg" width="225">
+  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/flo2d/flo2d_logo.jfif" width="225">
 </p>
 
 # FLO2D
