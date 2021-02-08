@@ -11,9 +11,9 @@
 - **Github**: https://github.com/USEPA/Stormwater-Management-Model
 
 ## Notes
-This repository builds the container runtime used the the SWMM Mission type in Galileo. Additionally, users of the desktop-based PCSWMM software can deploy scenarios to Galileo by first converting their models to EPA SWMM format and then uploading the input files as a SWMM Mission type. 
+This repository builds the container runtime used in the SWMM Mission type in [Galileo](hypernetlabs.io/galileo/). Additionally, users of the desktop-based [PCSWMM](www.pcswmm.com) software can deploy scenarios to Galileo by first converting their models to EPA-SWMM format and then uploading the input files as a SWMM Mission type. 
 
-This application is multithreaded and can benifit from multi-core architectures, however, there is limited computational speedup above 16 cores. 
+This application is multi-threaded and can benifit from multi-core architectures, however, there is limited computational speedup above 16 cores. 
 
 ## Building
 In order to build the epa swmm container, first install docker for windows: https://docs.docker.com/docker-for-windows/
