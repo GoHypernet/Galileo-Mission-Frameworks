@@ -4,11 +4,11 @@
 
 # EPA-SWMM
 ## Overview
-**Industry**: H&H
-**Target Container OS**: Windows 
-**Source Code**: open source
-**Website**: https://www.epa.gov/water-research/storm-water-management-model-swmm
-**Github**: https://github.com/USEPA/Stormwater-Management-Model
+- **Industry**: H&H
+- **Target Container OS**: Windows 
+- **Source Code**: open source
+- **Website**: https://www.epa.gov/water-research/storm-water-management-model-swmm
+- **Github**: https://github.com/USEPA/Stormwater-Management-Model
 
 ## Notes
 This repository builds the container runtime used the the SWMM Mission type in Galileo. Additionally, users of the desktop-based PCSWMM software can deploy scenarios to Galileo by first converting their models to EPA SWMM format and then uploading the input files as a SWMM Mission type. 
