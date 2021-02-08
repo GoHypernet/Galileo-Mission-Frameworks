@@ -1,28 +1,38 @@
 <p align="center">
-  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/epa-swmm/swmm.png" width="250">
+  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/epa-swmm/swmm.png" width="225">
 </p>
 
 # EPA-SWMM
-Industry: H&H
+## Overview
+**Industry**: H&H
+**Target Container OS**: Windows 
+**Source Code**: open source
+**Website**: https://www.epa.gov/water-research/storm-water-management-model-swmm
+**Github**: https://github.com/USEPA/Stormwater-Management-Model
 
-Target OS: Windows 
+## Notes
+This repository builds the container runtime used the the SWMM Mission type in Galileo. Additionally, users of the desktop-based PCSWMM software can deploy scenarios to Galileo by first converting their models to EPA SWMM format and then uploading the input files as a SWMM Mission type. 
 
-License: open source
+This application is multithreaded and can benifit from multi-core architectures, however, there is limited computational speedup above 16 cores. 
 
-Website: https://www.epa.gov/water-research/storm-water-management-model-swmm
-
-Github: https://github.com/USEPA/Stormwater-Management-Model
-
-Notes: Used in conjunction with PCSWMM software as well as stand alone. Dockerfile should build properly with no user intervention or modification. 
-
+## Building
 In order to build the epa swmm container, first install docker for windows: https://docs.docker.com/docker-for-windows/
-Once docker is installed on your windows machine, ensure that you are running windows containers. You control this through the Docker Desktop Settings
+Once docker is installed on your windows machine, ensure that you are running windows containers. You control this through the Docker Desktop Settings.
 
-Open a powershell, cd into this folder and run:
+Open a powershell, cd into the folder and run:
 
+```
 docker build -t swmm5 .
+```
 
-This will build a container base image called swmm5 which you can confirm by running:
+This will build the a Docker image called swmm5 that contains all currently available SWMM5 engines and a startup script that runs the simulation and prints the progress to stdout. 
+## Running
 
-docker images
+This framework has the following environment variables:
 
+1. VERSION - The version of the SWMM engine you want to run (i.e. VERSION = '5.1.011').
+2. SWMMFILE - The name of the input file without the file extension (i.e. SWMMFILE = 'Example9').
+3. RETURNINPUT - A boolean determining whether to return the input files in the results payload, default is 1 for yes. 
+
+The working directory of the container runtime is C:\User\Public\SWMM. Input files should be placed in this directory for them to be detected by the startup script. 
+Results will also be available in this folder after completion. 
