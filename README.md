@@ -16,8 +16,8 @@ This repository builds the container runtime used in the SWMM Mission type in [G
 This application is multi-threaded and can benifit from multi-core architectures, however, there is limited computational speedup above 16 cores. 
 
 ## Building
-In order to build the epa swmm container, first install docker for windows: https://docs.docker.com/docker-for-windows/
-Once docker is installed on your windows machine, ensure that you are running windows containers. You control this through the Docker Desktop Settings.
+In order to build the epa swmm container, first install [Docker for Windows](https://docs.docker.com/docker-for-windows/).
+Once Docker is installed on your Windows machine, ensure that you are running windows containers. You control this through the Docker Desktop Settings.
 
 Open a powershell, cd into the folder and run:
 
