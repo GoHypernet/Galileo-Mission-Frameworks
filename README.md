@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/ethminer/ethereum.png" width="225">
+  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/ethminer/ethereum.png" width="100">
 </p>
 
 # ETHMINER
