@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/xmrig/monero.png" width="200">
+</p>
+
 # XMRIG
 
 ## Overview
