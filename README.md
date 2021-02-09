@@ -33,19 +33,19 @@ This framework has the following environment variables:
 1. VERSION 
 	- Options (The version of the SWMM engine you want to run) 
 		- 5.1.001
-      		- 5.1.002
-     		- 5.1.003
-     		- 5.1.004
+		- 5.1.002
+		- 5.1.003
+		- 5.1.004
 		- 5.1.005
 		- 5.1.006
 		- 5.1.007
-  		- 5.1.009
-      		- 5.1.010
-     		- 5.1.011
-     		- 5.1.012
-     		- 5.1.013
-     		- 5.1.014
-      		- 5.1.015
+		- 5.1.009
+		- 5.1.010
+		- 5.1.011
+		- 5.1.012
+		- 5.1.013
+		- 5.1.014
+		- 5.1.015
 		
 2. SWMMFILE
 	- Options:
