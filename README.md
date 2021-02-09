@@ -1,4 +1,8 @@
-#SRH2D
+<p align="center">
+  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/srh2d/srh2d_logo.png" width="225">
+</p>
+
+# SRH2D
 
 ## Overview
 
