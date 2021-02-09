@@ -1,10 +1,12 @@
 # TUFLOW
-Industry: H&H
+## Overview
+- **Industry**: H&H
 
-Target OS: Windows
+- **Target Container OS**: Windows
 
-License: Closed source, licensed software
+- **Source Code**: Closed source, site-license recquired
 
-Website: https://www.tuflow.com/
+- **Website**: https://www.tuflow.com/
 
-Notes: This framework is still in testing. It is still very easy for a user to launch a tuflow simulation that appears to be running properly but is actually stalled. More work on contstraining the entrypoint needs to be done. 
+## Notes
+This framework is still in testing. It is still very easy for a user to launch a Tuflow simulation that appears to be running properly but is actually stalled. More work on contstraining the entrypoint needs to be done. 
