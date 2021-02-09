@@ -1,13 +1,18 @@
 # HECRAS
-Industry: H&H
 
-Target OS: Windows
+## Overview 
 
-License: Closed source, free to user
+- **Industry**: H&H
 
-Website: https://www.hec.usace.army.mil/software/hec-ras/
+- **Target Container OS**: Windows
 
-Notes: This branch builds a windows container for running the HECRAS simulator 
+- **Source Code**: Closed source, pre-compiled binaries are free to use
+
+- **Website**: https://www.hec.usace.army.mil/software/hec-ras/
+
+## Notes
+
+This branch builds a windows container for running the HECRAS simulator 
 for versions 5.0.7 and 5.0.5. 
 
 It installs python 3.7 and the entrypoint is the runras.bat file which
