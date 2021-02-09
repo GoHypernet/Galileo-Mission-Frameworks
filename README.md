@@ -32,16 +32,25 @@ This framework has the following environment variables:
 
 1. VERSION 
 	- Options (The version of the SWMM engine you want to run) 
+		- 5.1.001
+      		- 5.1.002
+     		- 5.1.003
+     		- 5.1.004
+		- 5.1.005
+		- 5.1.006
+		- 5.1.007
   		- 5.1.009
-      - 5.1.010
-      - 5.1.011
-      - 5.1.012
-      - 5.1.013
-      - 5.1.014
-      - 5.1.015
+      		- 5.1.010
+     		- 5.1.011
+     		- 5.1.012
+     		- 5.1.013
+     		- 5.1.014
+      		- 5.1.015
+		
 2. SWMMFILE
 	- Options:
     - The name of the input file without the file extension. (i.e. SWMMFILE = 'Example9')
+    
 3. RETURNINPUT
 	- Options:
     - A boolean determining whether to return the input files in the results payload, default is 1 for yes. 
