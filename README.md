@@ -1,9 +1,14 @@
-Industry: H&H
+#SRH2D
 
-Target OS: Windows
+## Overview
 
-License: Closed source, free to user
+- **Industry**: H&H
 
-Website: https://www.usbr.gov/tsc/techreferences/computer%20software/models/srh2d/index.html
+- **Target Container OS**: Windows
 
-Notes: This branch builds a windows container for running the SRH2D simulator for versions  3.2.4 which was released in June 2019.
+- **Source Code**: Closed source, free use of pre-compiled binary
+
+- **Website**: https://www.usbr.gov/tsc/techreferences/computer%20software/models/srh2d/index.html
+
+## Notes
+This branch builds a windows container for running the SRH2D simulator for versions  3.2.4 which was released in June 2019.
