@@ -1,16 +1,23 @@
 # RStudio
 
-Industry: Statistical Data Science
+## Overview
+- **Industry**: Statistical Data Science
 
-Target OS: Linux
+- **Target Container OS**: Linux
 
-License: Open Source
+- **Source Code**: Open Source
 
-Website: https://rstudio.com/products/rstudio/download/#download
+- **Website**: https://rstudio.com/products/rstudio/download/#download
 
-Github: https://github.com/rstudio/rstudio
+- **Github**: https://github.com/rstudio/rstudio
 
-Notes: This is a GUI application that requires a reverse proxy.
+## Notes
+
+This is a GUI application that requires a reverse proxy.
+
+## Building
 
 docker build -t rstudio .
+
+## Running
 docker run --rm -d -p 8888:8888 rstudio
