@@ -1,14 +1,20 @@
 # RapidMiner
 
-Industry: Data Science and Data Mining
+## Overview
 
-Target OS: Linux
+- **Industry**: Data Science and Data Mining
 
-License: Paid Subscription model 
+- **Target Container OS**: Linux
 
-Website: rapidminer.com
+- **Source Code**: Closed Source, Paid Subscription model 
 
-Notes: This is a GUI application that requires a reverse proxy. 
+- **Website**: https://wwrapidminer.com
 
+## Notes
+
+This is a GUI application that requires a reverse proxy. 
+
+```
 docker build -t rapidminer .
 docker run --rm -d -p 8888:8888 rapidminer
+```
