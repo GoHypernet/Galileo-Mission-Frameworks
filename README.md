@@ -29,4 +29,4 @@ docker build -t geth .
 ```
 
 ## Running
-Environment varaibles:
+Environment variables:

@@ -1,0 +1,11 @@
+:8888/ws/ {
+    log
+	root * /home/galileo
+    reverse_proxy 127.0.0.1:8546
+}
+
+:8888/rpc/ {
+    log
+	root * /home/galileo
+    reverse_proxy 127.0.0.1:8545
+}
