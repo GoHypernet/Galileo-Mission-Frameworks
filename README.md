@@ -17,7 +17,12 @@ This is a GUI application that requires a reverse proxy.
 
 ## Building
 
+```
 docker build -t rstudio .
+```
 
 ## Running
+
+```
 docker run --rm -d -p 8888:8888 rstudio
+```
