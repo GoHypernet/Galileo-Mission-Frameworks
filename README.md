@@ -16,20 +16,16 @@
 - **Github**: https://github.com/ethereum/go-ethereum
 
 ## Notes
-This is a containerization of the go-ethereum node (geth). To build run 
-
-```
-docker build -t geth .
-```
+This is a containerization of the go-ethereum node (geth). 
 
 ## Building
 
 This container runtime is targeted for linux machines.
 
-To build, run:
+To build run:
 
 ```
-docker build -t ethminer .
+docker build -t geth .
 ```
 
 ## Running
