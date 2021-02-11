@@ -6,7 +6,7 @@
 ## Overview
 - **Industry**: H&H
 - **Target Container OS**: Windows 
-- **Source Code**: open source
+- **Source Code**: EPA SWMM is an open source code base
 - **Website**: https://www.epa.gov/water-research/storm-water-management-model-swmm
 - **Github**: https://github.com/USEPA/Stormwater-Management-Model
 - **Docker Hub**: `docker pull hypernetlabs/simulator:swmm`
