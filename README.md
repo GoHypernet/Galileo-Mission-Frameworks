@@ -9,7 +9,7 @@ the target application and contains information on the target audience of the ap
 it is intended to be executed. 
 
 ## Framework Guidelines
-A well defined containerized framework should have the following attributes:
+A well defined containerized framework should adhere to the following pattern:
 1. The default user is non-root user named galileo with uid 1000
 2. The default working directory is /home/galileo for linux and C:\Users\Public\ for windows (or a subdirectory of these paths)
 3. The framework must not require special kernel priviledges (i.e. the container should run with the flag [--cap-drop all](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) enabled)
