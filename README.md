@@ -9,7 +9,7 @@
 
 - **Target OS**: Windows
 
-- **Source Code**: PCSWMM desktop application is closed source, the associated deployment script (given here) is open source. 
+- **Source Code**: PCSWMM desktop application is closed source, the associated deployment script (given here) is open sourced under the [Hypernet Community License](https://github.com/GoHypernet/CommunityLicense/blob/main/Hypernet%20Community%20License.pdf). 
 
 - **Website**: www.pcswmm.com
 
