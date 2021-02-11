@@ -57,3 +57,9 @@ This framework has the following environment variables:
 
 The working directory of the container runtime is C:\User\Public\SWMM. Input files should be placed in this directory for them to be detected by the startup script. 
 Results will also be available in this folder after completion. 
+
+To experiment with an interactive cmd shell, run:
+
+```
+docker run -it --rm --entrypoint cmd swmm5
+```
