@@ -19,6 +19,8 @@ This branch contains python scripts for the integration of [Galileo](https://hyp
 PCSWMM desktop application. The scripts deploy a [SWMM5](https://github.com/GoHypernet/Galileo-Mission-Frameworks/tree/epa-swmm) 
 job to a remote instance, track its progress, download the results, and refresh the currently loaded model. 
 
+![](pcswmm-galileo.gif)
+
 ## Installation
 
 You must be running the latest version of the PCSWMM desktop application. Place `galileo.py` and `run_form.py` in the
