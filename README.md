@@ -21,6 +21,8 @@ job to a remote instance, track its progress, download the results, and refresh 
 
 ## Installation
 
-You must be running the latest version of the PCSWMM desktop application. Place galileo.py and run_form.py in the
-`%AppData%\PCSWMM\Scripts` directory. Next, unzip the env-galileo folder (which is the Galileo SDK) and place it inside the PCSWMM Lib directory at 
-`C:\Program Files (x86)\PCSWMM Professional 2D (x64)\Lib\`. You will then be able to execute them from the PCSWMM IronPython environment. 
+You must be running the latest version of the PCSWMM desktop application. Place `galileo.py` and `run_form.py` in the
+`%AppData%\PCSWMM\Scripts` directory. Next, unzip the env-galileo folder (which is an IronPython compatible version 
+of the [Galileo SDK](https://github.com/GoHypernet/Galileo-sdk)) and place it inside the PCSWMM Lib directory 
+at `C:\Program Files (x86)\PCSWMM Professional 2D (x64)\Lib\`. You will then be able to execute them from the 
+PCSWMM IronPython environment. 
