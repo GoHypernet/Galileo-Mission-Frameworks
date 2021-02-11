@@ -57,9 +57,21 @@ This framework has the following environment variables:
 		- A boolean determining whether to return the input files in the results payload, default is 1 for yes. 
 
 The working directory of the container runtime is C:\User\Public\SWMM. Input files should be placed in this directory for them to be detected by the startup script. 
+Open a powershell in the folder containing your input files and run the following:
+
+```
+docker create --name swmm_example swmm5  # creates a new container from the swmm5 image you build above
+docker cp . swmm_example:.               # copy the files in this directory into the working directory of the new container
+docker run swmm_example                  # run the ENTRYPOINT command of the new container
+```
+
 Results will also be available in this folder after completion. 
 
-To experiment with an interactive cmd shell, run:
+```
+docker cp swmm_example:. . # copy working directory contents to this directory
+```
+
+To experiment with an interactive `cmd` shell, run:
 
 ```
 docker run -it --rm --entrypoint cmd swmm5
