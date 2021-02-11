@@ -50,11 +50,11 @@ This framework has the following environment variables:
 		
 2. SWMMFILE
 	- Options:
-    - The name of the input file without the file extension. (i.e. SWMMFILE = 'Example9')
+    		- The name of the input file without the file extension. (i.e. SWMMFILE = 'Example9')
     
 3. RETURNINPUT
 	- Options:
-    - A boolean determining whether to return the input files in the results payload, default is 1 for yes. 
+    		- A boolean determining whether to return the input files in the results payload, default is 1 for yes. 
 
 The working directory of the container runtime is C:\User\Public\SWMM. Input files should be placed in this directory for them to be detected by the startup script. 
 Results will also be available in this folder after completion. 
