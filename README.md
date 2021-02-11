@@ -15,7 +15,7 @@
 
 ## Notes
 
-This branch contains python scripts for the integration of Galileo functions into the 
+This branch contains python scripts for the integration of [Galileo](https://hypernetlabs.io/galileo/) functions into the 
 PCSWMM desktop application. The scripts deploy a [SWMM5](https://github.com/GoHypernet/Galileo-Mission-Frameworks/tree/epa-swmm) 
 job to a remote instance, track its progress, download the results, and refresh the currently loaded model. 
 
