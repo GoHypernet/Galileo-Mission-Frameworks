@@ -22,5 +22,5 @@ progress, download the results, and refresh the currently loaded model.
 ## Installation
 
 You must be running the latest version of the PCSWMM desktop application. Place galileo.py and run_form.py in the
-`%AppData%\PCSWMM\Scripts`. Next, unzip the env-galileo folder (which is the Galileo SDK) and place it in the PCSWMM path at 
-`C:\Program Files (x86)\PCSWMM Professional 2D (x64)\Lib`. You will then be able to execute them from the PCSWMM IronPython environment. 
+`%AppData%\PCSWMM\Scripts` directory. Next, unzip the env-galileo folder (which is the Galileo SDK) and place it inside the PCSWMM Lib directory at 
+`C:\Program Files (x86)\PCSWMM Professional 2D (x64)\Lib\`. You will then be able to execute them from the PCSWMM IronPython environment. 
