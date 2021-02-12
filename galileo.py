@@ -17,7 +17,7 @@ from System import DateTime, TimeSpan
 from galileo_sdk import GalileoSdk, AuthSdk
 _help_link = 'https://hypernetlabs.io/galileo/documentation'
 _dashboard = "https://galileo.hypernetlabs.io/dashboard"
-_image_path = os.path.join( _galileo_path, 'galileo-logo.jpg' )
+_image_path = os.path.join( _galileo_path, 'galileo-banner.png' )
 _pcswmm_audience = "xgSnn1kG97CZdKYoOjEY0YlgoFrc6U3N"  # identify a pcswmm user
 _ini_fname = os.path.join( os.path.dirname(os.path.dirname(__file__)), 'galileo.ini' )
 
@@ -80,18 +80,51 @@ class GalileoWrapper:
             self.web.Width = self.select_station_form.Form.Width
             self.web.Anchor = pcpy.Enum.Anchor.Left | pcpy.Enum.Anchor.Right | pcpy.Enum.Anchor.Top
             html_fmt = """
-                    <img src='%s'><br>
+
+            <style>
+                p {
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 14px;
+                }
+                select {
+                    width: 200px;
+                    height: 32px;
+                    border-radius: 4px;
+                    border: 1px solid #9e9e9e;
+                    padding-left: 8px;
+                }
+                select::-ms-expand {
+                    display: none;
+                }
+                #imageContainer {
+                    padding-left:-100px;
+                }   
+                 #selectionContainer {
+                    background: #F5F5F5;
+                    border-color: #607d8b0d;
+                    border-width: 0px;
+                    border-radius: 4px;
+                    border-style: solid;
+                    padding: 16px 16px 24px 24px;
+                    width: 600px;
+                }           
+             </style>
+            <div id="imageContainer">
+                <img src='%s'>
+            </div>
+            <div id="textContainer">
                     <p>Galileo is and all-in-one productivity tool for simulation engineers.</p>
-                    <p>Click the Help button for more info or the Run button to deploy your simulation to the cloud.</p>
                     <p>You will be prompted to sign in through your webbrowser on your first use.</p>
-                    <p>Choose the Galileo compute station you wish to deploy to.</p>
+                    <p>Choose the Galileo Station you wish to deploy to.</p>
                     <p>Note, you must deploy to a windows compatible station.</p>
-                    <p>Select compute station to deploy to:</p>
-                    <select id="Station">%s</select>
-                    <p>Select number of CPUs per scenario:</p>
+            <div id="selectionContainer">
+                    <p>Select Station to deploy to:</p>
+                    <select style="width:100px" id="Station">%s</select>
+                    <p>Select number of threads per scenario:</p>
                     <select id="CPUs">%s</select>
                     <p>Select amount of RAM per scenario (gigabytes):</p>
                     <select id="Memory Amount">%s</select>
+             </div>
                     """
             name_options = ['<option value="{0}">{0}</option>'.format(name) for name in station_names if name.lower() != 'linux']
             cpu_count = ['<option value="{0}">{0}</option>'.format(count) for count in ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"]]
