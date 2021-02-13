@@ -8,7 +8,7 @@
 
 - **Target Container OS**: Windows 
 
-- **Source Code**: Closed source, site-license 
+- **Source Code**: The FLO2d software is closed source and requires a site license. The associated deployment script (given here) is open sourced under the [Hypernet Community License](https://github.com/GoHypernet/CommunityLicense/blob/main/Hypernet%20Community%20License.pdf). 
 
 - **Website**: https://www.flo-2d.com/
 
