@@ -1,22 +1,22 @@
 <p align="center">
-  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/ethminer/ethereum.png" width="100">
+  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/fantom/fantom.png" width="100">
 </p>
 
-# GETH
+# Fantom Protocol
 
 ## Overview
-- **Industry**: Cryptocurrency, Ethereum
+- **Industry**: Cryptocurrency, Fantom Foundation
 
 - **Target Conatiner OS**: Linux
 
 - **Source Code**: open source
 
-- **Website**: https://www.ethermine.org;
+- **Website**: https://fantom.foundation/
 
-- **Github**: https://github.com/ethereum/go-ethereum
+- **Github**: https://github.com/Fantom-Foundation
 
 ## Notes
-This is a containerization of the go-ethereum node (geth). 
+This is a containerization of the Fantom's lachesis executable. 
 
 ## Building
 
@@ -25,7 +25,7 @@ This container runtime is targeted for linux machines.
 To build run:
 
 ```
-docker build -t geth .
+docker build -t fantom .
 ```
 
 ## Running
