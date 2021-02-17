@@ -1,9 +1,21 @@
-FROM ubuntu:18.04
+FROM jupyter/datascience-notebook
 
-# install system requirements
-RUN apt update -y \
-  && apt install -y build-essential wget make gcc g++ git \
-  && rm -rf /var/lib/apt/lists/*
+# set environment variable for password
+ENV JUPYTER_PASSWD mypassword
+
+# temporarily switch to root user to edit config and set working directories
+USER root
+
+RUN apt update -y && apt install vim -y
+
+# edit config file to set password 
+RUN echo "import os" >> /home/jovyan/.jupyter/jupyter_notebook_config.py \ 
+ && echo "from IPython.lib import passwd" >> /home/jovyan/.jupyter/jupyter_notebook_config.py \
+ && echo "hashed_passwd = passwd(os.environ['JUPYTER_PASSWD'])" >> /home/jovyan/.jupyter/jupyter_notebook_config.py \
+ && echo "c.NotebookApp.password = hashed_passwd" >> /home/jovyan/.jupyter/jupyter_notebook_config.py
+
+RUN ["mkdir", "-p", "/home/galileo/work"]
+RUN ["chown", "-R", "jovyan", "/home/galileo"]
 
 # install go runtime
 RUN wget https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz \
@@ -11,10 +23,9 @@ RUN wget https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz \
   && mv go /usr/local \
   && rm go1.13.3.linux-amd64.tar.gz
 
-# add non-root galileo user 
-RUN useradd -ms /bin/bash galileo
-USER galileo
-WORKDIR /home/galileo
+# switch back to jovyan user
+USER jovyan
+WORKDIR /home/galileo/work
 
 # set environment variables for go path
 ENV GOROOT '/usr/local/go'
@@ -30,4 +41,6 @@ RUN mkdir -p go/src/github.com/Fantom-foundation \
   && make build
   
 # add lachesis executable to user path
-ENV PATH ${PATH}:/home/galileo/go/src/github.com/Fantom-foundation/go-lachesis/build
+ENV PATH ${PATH}:/home/galileo/work/go/src/github.com/Fantom-foundation/go-lachesis/build
+
+ENTRYPOINT ["jupyter", "lab"]
