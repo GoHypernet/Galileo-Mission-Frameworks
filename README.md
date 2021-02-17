@@ -1,25 +1,26 @@
 # STATA
 
-Industry: Statistics, Economectrics
+## Overview
+**Industry**: Statistics, Economectrics
 
-Target OS: Linux
+**Target Container OS**: Linux
 
-License: Closed source, licensed software
+**License**: The Stata runtime environment is closed source and requires a user license. The containerization of the application given here is open sourced under the [Hypernet Community License](https://github.com/GoHypernet/CommunityLicense/blob/main/Hypernet%20Community%20License.pdf). 
 
-Website: https://www.stata.com/
+**Website**: https://www.stata.com/
 
-Notes: This framework requires a two-stage build.
+## Notes
+
+This framework requires a two-stage build.
 1. First build a base image that contains the installer package. 
 2. Next create a container from this base image and manually install the stata software. 
 3. Commit the container to a new base image. 
 4. Finish the build from the previous base image. 
 
+```
 docker build -t stage1 -f Dockerfile.stage1 .
-
 docker run -name stage1 -it --entrypoint bash stage1
-
 docker commit stage1 stage2
-
 docker build -t hypernetlabs/applications:stata16 -f Dockerfile.stage2 .
-
 docker push hypernetlabs/applications:stata16
+```
