@@ -15,7 +15,7 @@ FROM ubuntu:18.04
 # install bare minimum required to run GUI applications 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu && \
-    apt-get install -y libglu1-mesa libdbus-1-3 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libasound2 gdebi-core wget xterm htop openjdk-8-jdk openjdk-8-jre unzip && \
+    apt-get install -y libglu1-mesa libdbus-1-3 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libasound2 gdebi-core wget xterm wmctrl htop openjdk-8-jdk openjdk-8-jre unzip && \
     rm -rf /var/lib/apt/lists && \
     mkdir -p /usr/share/desktop-directories
 

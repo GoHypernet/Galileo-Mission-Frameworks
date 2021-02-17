@@ -6,6 +6,16 @@
                 <execute>bash /rapidminer-studio/RapidMiner-Studio.sh</execute>
             </action>
         </item>
+		<item label="Minimize RapidMiner">
+            <action name="Execute">
+                <execute>/usr/bin/wmctrl -r RapidMiner -b add,hidden</execute>
+            </action>
+        </item>
+		<item label="Restore RapidMiner">
+            <action name="Execute">
+                <execute>/usr/bin/wmctrl -r RapidMiner -b remove,hidden</execute>
+            </action>
+        </item>
         <item label="Terminal">
             <action name="Execute">
                 <execute>/usr/bin/xterm</execute>
