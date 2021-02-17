@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/ file:///usr/share/openbox/menu.xsd">
     <menu id="root-menu" label="Openbox 3">
-        <item label="RStudio">
+        <item label="New RStudio Session">
             <action name="Execute">
                 <execute>/usr/bin/rstudio</execute>
+            </action>
+        </item>
+		<item label="Minimize RStudio">
+            <action name="Execute">
+                <execute>/usr/bin/wmctrl -r "RStudio" -b add,hidden</execute>
+            </action>
+        </item>
+		<item label="Restore RStudio">
+            <action name="Execute">
+                <execute>/usr/bin/wmctrl -r "RStudio" -b remove,hidden</execute>
             </action>
         </item>
         <item label="Terminal">

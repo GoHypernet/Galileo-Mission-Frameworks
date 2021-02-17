@@ -15,15 +15,15 @@ FROM rocker/rstudio
 # install bare minimum required to run GUI applications 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu && \
-    apt-get install -y libglu1-mesa libdbus-1-3 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libasound2 gdebi-core wget xterm htop && \
+    apt-get install -y libglu1-mesa libdbus-1-3 libnss3 libxcomposite1 libxcursor1 libxi6 libxtst6 libasound2 gdebi-core wget xterm wmctrl htop && \
     rm -rf /var/lib/apt/lists && \
     mkdir -p /usr/share/desktop-directories
 
-# install R studio
-RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.3.1093-amd64.deb
+# install R studio 
+RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.4.1103-amd64.deb
 Run apt-get update -y && \
     apt-get upgrade -y
-RUN gdebi --n rstudio-1.3.1093-amd64.deb
+RUN gdebi --n rstudio-1.4.1103-amd64.deb
 
 # copy configuration files and easy-novnc binary to this image
 COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/easy-novnc
