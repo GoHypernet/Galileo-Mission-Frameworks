@@ -6,7 +6,7 @@
                 <execute>bash /rapidminer-studio/RapidMiner-Studio.sh</execute>
             </action>
         </item>
-		<item label="Minimize RapidMiner">
+        <item label="Minimize RapidMiner">
             <action name="Execute">
                 <execute>/usr/bin/wmctrl -r RapidMiner -b add,hidden</execute>
             </action>
