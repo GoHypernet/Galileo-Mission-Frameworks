@@ -1,16 +1,22 @@
 # QGIS
 
-Industry: Geospatial Information Systems
+## Overview
 
-Target OS: Linux
+**Industry**: Geospatial Information Systems
 
-License: Open Source
+**Target Container OS**: Linux
 
-Website: https://qgis.org/en/site/
+**License**: Open Source
 
-Github: https://github.com/qgis/QGIS
+**Website**: https://qgis.org/en/site/
 
-Notes: This is a GUI application that requires a reverse proxy.
+**Github**: https://github.com/qgis/QGIS
 
+## Notes
+
+This is a GUI application that requires a reverse proxy.
+
+```
 docker build -t qgis .
 docker run --rm -d -p 8888:8888 qgis
+```
