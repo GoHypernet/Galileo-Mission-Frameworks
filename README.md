@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/qgis/qgis-logo.png" width="225">
+</p>
+
 # QGIS
 
 ## Overview

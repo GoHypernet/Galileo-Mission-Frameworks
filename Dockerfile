@@ -14,7 +14,7 @@ FROM qgis/qgis
 
 # install bare minimum required to run GUI applications 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu xterm htop && \
+    apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu xterm htop wmctrl && \
     rm -rf /var/lib/apt/lists && \
     mkdir -p /usr/share/desktop-directories
 

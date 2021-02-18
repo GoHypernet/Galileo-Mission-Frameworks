@@ -6,6 +6,16 @@
                 <execute>/usr/bin/qgis</execute>
             </action>
         </item>
+		<item label="Minimize QGIS">
+            <action name="Execute">
+                <execute>/usr/bin/wmctrl -r QGIS -b add,hidden</execute>
+            </action>
+        </item>
+		<item label="Restore QGIS">
+            <action name="Execute">
+                <execute>/usr/bin/wmctrl -r QGIS -b remove,hidden</execute>
+            </action>
+        </item>
         <item label="Terminal">
             <action name="Execute">
                 <execute>/usr/bin/x-terminal-emulator</execute>
