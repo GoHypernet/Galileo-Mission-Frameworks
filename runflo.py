@@ -1,4 +1,4 @@
-import os, sys, time, shutil, subprocess, in_place
+import os, sys, time, shutil, subprocess, in_place, re
 from pathlib import WindowsPath
 
 print("Current dir:",os.getcwd())
@@ -30,7 +30,9 @@ with in_place.InPlace(contfile) as contdat:
         if firstline:
             counter = 0
             newline = ''
-            for thing in line.split('  '):
+            # format line to have a single space between variables
+            line = re.sub(' +', ' ', line)
+            for thing in line.split(' '):
                 if thing:
                     counter += 1
                 # find the 3rd variable on the header line
