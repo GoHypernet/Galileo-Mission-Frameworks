@@ -1,20 +1,49 @@
-<p align="center">
-  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/master/galileo_pres.png" width="500">
-</p>
+# Readme
 
-# Galileo Mission Framework Types
-This repository contains [Dockerfiles](https://docs.docker.com/engine/reference/builder/) and associated data to 
-build frameworks supported by the [Galileo](https://hypernetlabs.io/galileo/) platform. Each branch is named after
-the target application and contains information on the target audience of the application, how it is built, and how
-it is intended to be executed. 
+This repo provides scripts to build and run vector single container. The plan is to migrate one component at a time. Included components:
+- Vector node
+- Vector router
+- Redis cache server
+- Vector Dashboard
+- Nats server
+- Auth server
+- HAProxy server
 
-## Framework Guidelines
-A well defined containerized framework should adhere to the following pattern:
-1. The default user is non-root user named galileo with uid 1000
-2. The default working directory is /home/galileo for linux and C:\Users\Public\ for windows (or a subdirectory of these paths)
-3. The framework must not require special kernel priviledges (i.e. the container should run with the flag [--cap-drop all](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) enabled)
-4. The framework should be architecture-agnostic and should detect the architecture available to it and adapt accordingly (i.e. multi-core or GPU acceleration)
-5. The framework author should contruct the entrypoint such that it requires minimal user input to execute properly. 
-6. The framework author should leverage clearly named environment variables to pass relevant arguments to the target application. 
-7. For frameworks built around software that require a license, the framework should test that a license is included before attempting to run the software and alert the user if it does not detect an appropriate license file. 
-8. Best effort should be made to print relevant information to stdout for progress tracking. 
+## Not yet included
+- Local etherium provider node. Currently uses external eth provider node deployed at https://chain.k8s.lax-hamrostack.com
+- Postgres server(currently uses SQLite)
+
+## Current status
+Build works successfully. All the containers start successfully.
+
+## Caveats
+- I'm currently using default eth provider from connext(Docker image: connextproject/vector_ethprovider:0.2.0-beta.7). However, when deployed, router can't get eth provider info in metrics path. Ethprovider 1337 is not being registered properly. As a result, even the dasboard doesn't work properly. Dashboard was successfully deployed using upstream docker images [here](https://router.k8s.lax-hamrostack.com/dashboard/) [Error at](https://github.com/GoHypernet/vector/blob/9820aab8c0b55096967e7567cdd9ba15794ef6f3/modules/router/src/metrics.ts#L88) [WIP]
+```
+{"level":50,"time":1616758210830,"pid":560,"hostname":"5f911bc6e1e7","name":"vector8AXWmo3dFpK1drnjeWPyi9KTy9Fy3SkCydWx8waQrxhnW4KPmR","reqId":2,"req":{"method":"GET","url":"/metrics","hostname":"localhost:8000","remoteAddress":"127.0.0.1","remotePort":47510},"res":{"statusCode":500},"err":{"type":"TypeError","message":"Cannot read property 'name' of undefined","stack":"TypeError: Cannot read property 'name' of undefined\n    at Promise.all.Object.entries.map (webpack:///./src/metrics.ts?:64:45)\n    at process._tickCallback (internal/process/next_tick.js:68:7)"},"msg":"Cannot read property 'name' of undefined"}
+```
+
+## Getting started
+```
+Change IMAGE variable in vector-container/build.sh to update the target image name.
+# default value is
+IMAGE=hamropatrorepo/vector:unit #default
+
+# Build the container. 
+bash vector-container/build.sh
+
+
+# Port 80 for the proxy to router, node, dashboard, etc. 8000 to access the router directly
+docker run -it -p 8000:8000 -p 8080:80 $IMAGE
+
+```
+
+## Environment variables (non-exhaustive)
+- NODE_ENV
+- VECTOR_PROD
+- VECTOR_ENV
+- VECTOR_JWT_SIGNER_PRIVATE_KEY
+- VECTOR_MNEMONIC
+- VECTOR_NATS_URL
+- VECTOR_ADMIN_TOKEN
+- VECTOR_PORT
+
