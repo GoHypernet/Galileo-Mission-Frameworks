@@ -124,7 +124,6 @@ COPY --from=node_builder /root/node node
 COPY --from=router_builder /root/router router
 COPY --from=auth_builder /root/auth auth
 COPY --from=eth_builder /root/eth eth
-COPY eth.sh /root/eth/entry.sh
 RUN cd /root/eth && npm install --only=prod && npm i --save-dev typescript
 COPY ops/proxy /root/proxy
 COPY http.cfg /root/proxy/http.cfg
@@ -160,5 +159,5 @@ echo "Development: docker run -it -v `pwd`/vector-container/supervisord.conf:/et
 echo "Production: docker run -it -p 80:80 -p 443:443 $IMAGE"
 
 ### vector-container/build.sh 
-## docker run -it -v `pwd`/vector-container/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf -v `pwd`/vector-container/http.cfg:/root/proxy/http.cfg -p 8000:8000 -p 8080:80 hamropatrorepo/vector:unit
+## docker run -it -v `pwd`/vector-container/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf -v `pwd`/vector-container/http.cfg:/root/proxy/http.cfg -v `pwd`/vector-container/vector-config.json:/root/vector-config.json -p 8000:8000 -p 8080:80 hamropatrorepo/vector:unit
 # docker run -it -p 8000:8000 docker run -it -v `pwd`/vector-container/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf hamropatrorepo/vector:unit
