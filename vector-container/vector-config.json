@@ -5,7 +5,7 @@
     "messagingUrl": "http://localhost", 
     "logLevel": "debug", 
     "chainAddresses": { 
-      "1337": { 
+      "5": {
         "channelMastercopyAddress": "0x8CdaF0CD259887258Bc13a92C0a6dA92698644C0",
         "channelFactoryAddress": "0xF12b5dd4EAD5F743C6BaA640B0216200e89B60Da",
         "hashlockTransferAddress": "0x345cA3e014Aaf5dcA488057592ee47305D9B3e10",
@@ -15,7 +15,6 @@
       }
     }, 
     "chainProviders": { 
-      "1337": "https://chain.k8s.lax-hamrostack.com",
       "4": "https://eth-rinkeby.alchemyapi.io/v2/o26fgI9BGFUUuWF6CLqnvhqT4_Fc5H4o", 
       "5": "https://rpc.goerli.mudit.blog/"
     },

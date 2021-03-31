@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## Run this file from the root of the project
-IMAGE=hamropatrorepo/vector:unit
+IMAGE=hamropatrorepo/vector:unit-$(date +1%F)
 NODE_BASE=modules/server-node
 ROUTER_BASE=modules/router
 AUTH_BASE=modules/auth
