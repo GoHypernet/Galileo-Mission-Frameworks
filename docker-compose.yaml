@@ -1,0 +1,22 @@
+version: "3"
+services:
+    dashboard:
+        image: hamropatrorepo/vector:dashboard
+        environment:
+            - METRICS_URL=http://router:8000/metrics
+        ports:
+            - 3000:3000
+    router:
+        image: hamropatrorepo/vector:unit-12021-03-31
+        ports:
+            - 8000:8000
+    nginx:
+        image: nginx
+        volumes:
+            - ./nginx.d/:/etc/nginx/templates/:Z
+        environment:
+            - DASHBOARD_HOST=dashboard:3000
+            - ROUTER_HOST=router:8000
+            - NODE_HOST=router:8001
+        ports:
+            - 8080:80
