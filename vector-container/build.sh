@@ -117,14 +117,13 @@ ENV VECTOR_MNEMONIC \"candy maple cake sugar pudding cream honey rich smooth cru
 ENV VECTOR_NATS_URL nats://localhost:4222
 ENV VECTOR_ADMIN_TOKEN cxt1234
 ENV VECTOR_PORT 5040
-RUN apt update && apt upgrade -y && apt install -y software-properties-common jq
-RUN add-apt-repository ppa:vbernat/haproxy-2.1 --yes && apt update
+RUN apt update && apt upgrade -y && apt install -y software-properties-common jq nginx apache2-utils gettext-base
+RUN add-apt-repository ppa:vbernat/haproxy-2.1 --yes && apt update -y
 RUN apt install -y supervisor bash openssl curl postgresql ca-certificates sudo mariadb-server certbot net-tools netcat haproxy nodejs unzip npm
 RUN curl -L https://github.com/nats-io/nats-server/releases/download/v2.0.0/nats-server-v2.0.0-linux-amd64.zip -o nats-server.zip && unzip nats-server.zip && cp nats-server-v2.0.0-linux-amd64/nats-server /usr/bin
 RUN curl https://raw.githubusercontent.com/vishnubob/wait-for-it/ed77b63706ea721766a62ff22d3a251d8b4a6a30/wait-for-it.sh > /bin/wait-for && chmod +x /bin/wait-for
 RUN npm i -g npm
 RUN npm i -g @prisma/cli@v2.16.1 nodemon pino-pretty ts-node typescript @types/node npm
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY --from=node_builder /root/node node
 COPY --from=router_builder /root/router router
 COPY --from=auth_builder /root/auth auth
@@ -132,6 +131,7 @@ COPY --from=eth_builder /root/eth eth
 RUN cd /root/eth && npm install --only=prod && npm i --save-dev typescript
 COPY ops/proxy /root/proxy
 COPY http.cfg /root/proxy/http.cfg
+COPY supervisord.conf.template entrypoint.sh default.conf.template ./
 
 COPY --from=dashboard /usr/src/app/dashboard/package.json /root/dashboard/
 RUN npm install --only=prod
@@ -148,11 +148,14 @@ COPY --from=dashboard /usr/src/app/dashboard dashboard
 # Set the default command to run when starting the container
 # CMD /usr/lib/postgresql/9.6/bin/postgres -D /var/lib/postgresql/9.6/main -c config_file=/etc/postgresql/9.6/main/postgresql.conf
 
-RUN chmod +x /root/node/ops/entry.sh && chmod +x /root/router/ops/entry.sh && chmod +x /root/auth/ops/entry.sh && chmod +x /root/eth/entry.sh && chmod +x /root/proxy/entry.sh
+RUN chmod +x /root/node/ops/entry.sh /root/router/ops/entry.sh /root/auth/ops/entry.sh /root/eth/entry.sh /root/proxy/entry.sh /root/entrypoint.sh
 COPY vector-config.json .
 COPY $ROUTER_BASE/dist/prisma-sqlite/schema.prisma /root/router/dist/schema.prisma
 RUN echo '127.0.0.1 router' >> /etc/hosts
-CMD supervisord --nodaemon
+ENV ROUTER_HOST localhost:8000
+ENV DASHBOARD_HOST localhost:3000
+ENV NODE_HOST localhost:8001
+CMD /root/entrypoint.sh
 """ > Dockerfile
 
 # So that all the configuration files we have spewed are synced to the disk. Shouldn't be necessary but just in case.

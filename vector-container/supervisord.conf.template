@@ -1,7 +1,7 @@
 [program:node]
-redirect_stderr=true
-stdout_logfile=/proc/1/fd/1
-stdout_logfile_maxbytes=0
+#redirect_stderr=true
+#stdout_logfile=/proc/1/fd/1
+#stdout_logfile_maxbytes=0
 autostart=true
 autorestart=false
 startretries=3
@@ -34,8 +34,17 @@ autostart=true
 autorestart=false
 startretries=3
 command=bash -c "cd /root/dashboard && npm run start"
-environment=METRICS_URL=http://localhost:8000/metrics
+environment=METRICS_URL=http://localhost:8000/metrics,AUTO_REBALANCE_URL=http://localhost:8000/auto-rebalance,ADMIN_TOKEN=cxt1234
 
+[program:nginx]
+redirect_stderr=true
+stdout_logfile=/proc/1/fd/1
+stdout_logfile_maxbytes=0
+autostart=true
+autorestart=false
+startretries=3
+command=nginx -g 'daemon off;'
+environment=DASHBOARD_HOST=localhost:3000,ROUTER_HOST=localhost:8000,NODE_HOST=localhost:8001
 
 [program:router]
 redirect_stderr=true
