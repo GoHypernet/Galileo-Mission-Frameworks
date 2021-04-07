@@ -5,13 +5,9 @@ This repo provides scripts to build and run vector single container. The plan is
 - Vector router
 - Redis cache server
 - Vector Dashboard
-- Nats server
-- Auth server
-- HAProxy server
-
-## Not yet included
-- Local etherium provider node. Currently uses external eth provider node deployed at https://chain.k8s.lax-hamrostack.com
-- Postgres server(currently uses SQLite)
+- Nats server (to be removed. Part of auth server.)
+- Auth server (to be removed)
+- HAProxy server (to be removed. Part of auth server.)
 
 ## Current status
 Build works successfully. All the containers start successfully.
@@ -24,21 +20,34 @@ Build works successfully. All the containers start successfully.
 
 ## Getting started
 ```
-# Set version name
-export VERSION=$(date +%F)
-Change IMAGE variable in vector-container/build.sh to update the target image name.
-# default value is
-IMAGE=hamropatrorepo/vector
+# Set repo and version. Or leave it to set default
+export REPO=vector/single
+export VERSION=latest
 
 # Build the container. 
 make build
 
-# Port 80 for the proxy to router, node, dashboard, etc. 8000 to access the router directly
+# Uses REPO and VERSION from above and exposes port 8080 for local testing. 
 make run
 
 ```
 
+## Ports
+- 8080 for the nginx proxy that routes to the dashboard, node and router. You need to make this available to the external services to access the router and dashboard.
+   - /node - node
+   - /router - router
+   - /dashboard/ - dashboard
+- 8000 for router. Proxied via 8080 and no need to expose to outside world.
+- 8001 for node. Works similar to router.
+- 3000 for dashboard. Works similar to router.
+- 80 for auth proxy. This can be disabled via supervisord.conf.template. Currently embedded inside the image. Ideally, this will be an external service to be consumed by router and node.
+
+## Security
+For rebalance, the adminToken is given via the environment variable ``ADMIN_TOKEN``. The dasboard itself is secured via Basic Authentication(not the best security method out there but gets the job done for this demo).
+Default username and password are ``root`` and ``password`` respectively.
+
 ## Environment variables (non-exhaustive)
+See build.sh for exhaustive list of environment variables(search for ``ENV`` tags in dockerfile). All of the environment variables have sane defaults for development. Don't use it in production without proper security audit/testing.
 - NODE_ENV
 - VECTOR_PROD
 - VECTOR_ENV
@@ -47,4 +56,15 @@ make run
 - VECTOR_NATS_URL
 - VECTOR_ADMIN_TOKEN
 - VECTOR_PORT
+- ROUTER_HOST
+- DASHBOARD_HOST
+- NODE_HOST
+- ADMIN_TOKEN 
+- METRICS_URL
+- AUTO_REBALANCE_URL
+
+## Configuration
+Along with updating the environment variables, you might need to update the vector-config.json file. You can mount the configuration file at ``/root/vector-config.json`` and it will be picked up by the container.
+
+The file can be mounted as volume in docker stack and as configMap volume mount in k8s.
 

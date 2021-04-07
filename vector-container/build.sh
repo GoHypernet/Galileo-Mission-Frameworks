@@ -155,6 +155,9 @@ RUN echo '127.0.0.1 router' >> /etc/hosts
 ENV ROUTER_HOST localhost:8000
 ENV DASHBOARD_HOST localhost:3000
 ENV NODE_HOST localhost:8001
+ENV ADMIN_TOKEN cxt1234
+ENV METRICS_URL http://localhost:8000/metrics
+ENV AUTO_REBALANCE_URL http://localhost:8000/auto-rebalance
 CMD /root/entrypoint.sh
 """ > Dockerfile
 
