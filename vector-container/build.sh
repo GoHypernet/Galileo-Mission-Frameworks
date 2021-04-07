@@ -1,7 +1,12 @@
 #!/bin/bash
 
 ## Run this file from the root of the project
-IMAGE=hamropatrorepo/vector:unit-$(date +1%F)
+echo "Using image: $IMAGE"
+if [ -z $IMAGE ]; then
+    echo "Image is not set"
+    exit 1;
+fi
+
 NODE_BASE=modules/server-node
 ROUTER_BASE=modules/router
 AUTH_BASE=modules/auth
@@ -154,10 +159,3 @@ CMD supervisord --nodaemon
 sync
 docker build -t $IMAGE .
 echo "Successfully built $IMAGE"
-
-echo "Development: docker run -it -v `pwd`/vector-container/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf $IMAGE"
-echo "Production: docker run -it -p 80:80 -p 443:443 $IMAGE"
-
-### vector-container/build.sh 
-## docker run -it -v `pwd`/vector-container/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf -v `pwd`/vector-container/http.cfg:/root/proxy/http.cfg -v `pwd`/vector-container/vector-config.json:/root/vector-config.json -p 8000:8000 -p 8080:80 hamropatrorepo/vector:unit
-# docker run -it -p 8000:8000 docker run -it -v `pwd`/vector-container/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf hamropatrorepo/vector:unit

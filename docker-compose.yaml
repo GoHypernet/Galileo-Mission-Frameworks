@@ -4,19 +4,34 @@ services:
         image: hamropatrorepo/vector:dashboard
         environment:
             - METRICS_URL=http://router:8000/metrics
+            - AUTO_REBALANCE_URL=http://router:8000/auto-rebalance
+            - ADMIN_TOKEN=cxt1234
         ports:
             - 3000:3000
     router:
         image: hamropatrorepo/vector:unit-12021-03-31
         ports:
             - 8000:8000
+    passwd-setup:
+        image: httpd
+        environment:
+            - USER_NAME=root
+            - PASSWORD=password
+        command: bash -c "htpasswd -b -c /etc/nginx/auth/htpasswd root password"
+        volumes:
+            - vector_password:/etc/nginx/auth
     nginx:
         image: nginx
         volumes:
             - ./nginx.d/:/etc/nginx/templates/:Z
+            - vector_password:/etc/nginx/auth:ro
         environment:
             - DASHBOARD_HOST=dashboard:3000
             - ROUTER_HOST=router:8000
             - NODE_HOST=router:8001
+        depends_on:
+            - passwd-setup
         ports:
             - 8080:80
+volumes:
+    vector_password:

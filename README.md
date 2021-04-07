@@ -24,16 +24,17 @@ Build works successfully. All the containers start successfully.
 
 ## Getting started
 ```
+# Set version name
+export VERSION=$(date +%F)
 Change IMAGE variable in vector-container/build.sh to update the target image name.
 # default value is
-IMAGE=hamropatrorepo/vector:unit #default
+IMAGE=hamropatrorepo/vector
 
 # Build the container. 
-bash vector-container/build.sh
-
+make build
 
 # Port 80 for the proxy to router, node, dashboard, etc. 8000 to access the router directly
-docker run -it -p 8000:8000 -p 8080:80 $IMAGE
+make run
 
 ```
 

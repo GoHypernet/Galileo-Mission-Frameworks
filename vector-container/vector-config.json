@@ -20,7 +20,7 @@
     },
     "port": 3001, 
     "redisUrl": "redis://localhost:6379", 
-    "allowedSwaps": [ ], 
+    "allowedSwaps": [ ], adminToken
     "nodeUrl": "http://localhost:8001", 
     "rebalanceProfiles": [ 
       { 
