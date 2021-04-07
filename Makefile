@@ -13,3 +13,6 @@ run-dev:
 
 run:
 	docker run -it -p 8000:8000 -p 8001:8001 -p 8080:8080 ${IMAGE}
+
+push:
+	docker push ${IMAGE}
