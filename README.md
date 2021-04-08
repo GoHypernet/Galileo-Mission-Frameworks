@@ -62,6 +62,8 @@ See build.sh for exhaustive list of environment variables(search for ``ENV`` tag
 - ADMIN_TOKEN 
 - METRICS_URL
 - AUTO_REBALANCE_URL
+- USERNAME
+- PASSWORD
 
 ## Configuration
 Along with updating the environment variables, you might need to update the vector-config.json file. You can mount the configuration file at ``/root/vector-config.json`` and it will be picked up by the container.
