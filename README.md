@@ -26,7 +26,7 @@ Open a powershell, cd into the folder and run:
 docker build -t swmm5 .
 ```
 
-This will build the a Docker image called swmm5 that contains all currently available SWMM5 engines and a startup script that runs the simulation and prints the progress to stdout. 
+This will build a Docker image called swmm5 that contains all currently available SWMM5 engines and a startup script that runs the simulation and prints the progress to stdout. 
 ## Running
 
 This framework has the following environment variables:
