@@ -18,7 +18,9 @@ models very time consuming since each file requires an individual API call. TUFL
 uploading to a Galileo Mission. The build-in entrypoint will decompress the model automatically. 
 
 All major 2018 and 2020 builds are included in this repository and installed in the `/exe` folder. The environment
-variables `EXE_iDP` and `EXE_iSP` should be set to the desired version and used to reference the executables. 
+variables `EXE_iDP` and `EXE_iSP` should be set to the desired version and used to reference the executables. Additionally,
+these environment variables include the `-nmb` and `-nc` flags to ensure that GUI popup boxes do not stall the headless 
+session.
 
 ## Building
 
