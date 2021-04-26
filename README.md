@@ -13,8 +13,12 @@
 - **Website**: https://www.tuflow.com/
 
 ## Notes
-This framework is still in testing. It is still very easy for a user to launch a Tuflow simulation 
-that appears to be running properly but is actually stalled. More work on contstraining the entrypoint needs to be done. 
+Is is common for TUFLOW models to container a large number of small text files. This makes uploading raw TUFLOW
+models very time consuming since each file requires an individual API call. TUFLOW models should be zipped before
+uploading to a Galileo Mission. The build-in entrypoint will decompress the model automatically. 
+
+All major 2018 and 2020 builds are included in this repository and installed in the `/exe` folder. The environment
+variables `EXE_iDP` and `EXE_iSP` should be set to the desired version and used to reference the executables. 
 
 ## Building
 
