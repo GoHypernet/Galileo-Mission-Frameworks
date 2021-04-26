@@ -8,8 +8,8 @@ RUN powershell -Command "Get-ChildItem '/exe/.' -Filter *.zip | Expand-Archive -
 RUN powershell -Command "Get-ChildItem '/exe/.' -Filter *.zip | foreach ($_) {remove-item $_.fullname}"
 
 # set Default executable paths to be the latest version
-ENV EXE_iSP "C:\\exe\\TUFLOW.2020-01-AA\\TUFLOW_iSP_w64.exe -nmb -nc"
-ENV EXE_iDP "C:\\exe\\TUFLOW.2020-01-AA\\TUFLOW_iDP_w64.exe -nmb -nc"
+ENV EXE_iSP "C:\\exe\\2020-01-AA\\TUFLOW_iSP_w64.exe -nmb -nc"
+ENV EXE_iDP "C:\\exe\\2020-01-AA\\TUFLOW_iDP_w64.exe -nmb -nc"
 
 # set working directory to Public folder
 WORKDIR /Users/Public/tuflow
