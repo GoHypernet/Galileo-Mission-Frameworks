@@ -22,6 +22,10 @@ variables `EXE_iDP` and `EXE_iSP` should be set to the desired version and used 
 these environment variables include the `-nmb` and `-nc` flags to ensure that GUI popup boxes do not stall the headless 
 session.
 
+This framework comes with a React-based IDE for interactive sessions. A password and username must be set via the 
+`PASSWORD` and `USERNAME` environment variables for authentication with the interactive session. The IDE is served on 
+port 3000 and the authenticated enpoint which reverse-proxies the app is on port 8888. 
+
 ## Building
 
 In order to build the Tuflow base image, first install [Docker for Windows](https://docs.docker.com/docker-for-windows/). 

@@ -1,0 +1,7 @@
+:8888 {
+    log
+    root * C:\Users\Public\tuflow
+    reverse_proxy :3000
+
+    import C:\Users\Public\caddy\hashpass.txt
+}
