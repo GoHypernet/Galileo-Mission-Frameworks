@@ -76,9 +76,9 @@ COPY --from=caddy-build "C:\caddy.exe" "C:\Users\Public\caddy\caddy.exe"
 
 # set login credentials and write them to text file
 # uncomment these lines if testing locally
-ENV USERNAME "myuser"
-ENV PASSWORD "testpass2"
-RUN C:\\Users\\Public\\caddy\\caddy.exe hash-password -plaintext %PASSWORD% > "C:\Users\Public\caddy\hpassword.txt"
+#ENV USERNAME "myuser"
+#ENV PASSWORD "testpass2"
+#RUN C:\\Users\\Public\\caddy\\caddy.exe hash-password -plaintext %PASSWORD% > "C:\Users\Public\caddy\hpassword.txt"
 
 # set entrypoint for either batch or interactive mode
 #ENTRYPOINT ["run_tuflow.bat"]
