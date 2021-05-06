@@ -12,14 +12,14 @@ with open(WindowsPath('/Users/Public/caddy/hashpass.txt'), 'w') as f:
 
 # start the caddy server in the background
 try:
-    caddy_proc = subprocess.Popen(WindowsPath('/Users/Public/theia/run_caddy.bat'))
+    caddy_proc = subprocess.Popen(WindowsPath('/Users/Public/galileo-ide/run_caddy.bat'))
 except Exception as e:
     print("Problem starting Caddy Server:", e)
     exit()
     
 # start the IDE process in the background
 try:
-    ide_proc = subprocess.Popen(WindowsPath('/Users/Public/theia/run_ide.bat'))
+    ide_proc = subprocess.Popen(WindowsPath('/Users/Public/galileo-ide/run_ide.bat'))
 except Exception as e:
     print("Problem starting IDE process:", e)
     exit()
