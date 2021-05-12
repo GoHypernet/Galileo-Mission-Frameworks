@@ -53,7 +53,3 @@ ENV THEIA_DEFAULT_PLUGINS "c:\Users\Public\galileo-ide\plugins"
 #ENV USERNAME "myuser"
 #ENV PASSWORD "testpass2"
 #RUN C:\\Users\\Public\\caddy\\caddy.exe hash-password -plaintext %PASSWORD% > "C:\Users\Public\caddy\hpassword.txt"
-
-# set entrypoint for either batch or interactive mode
-#ENTRYPOINT ["run_tuflow.bat"]
-#ENTRYPOINT ["python","run_ide.py"]
