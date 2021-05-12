@@ -14,7 +14,14 @@ RUN powershell -Command "Get-ChildItem '/exe/.' -Filter *.zip | foreach ($_) {re
 # build the tuflow runtime image
 FROM mcr.microsoft.com/windows:1809
 
+# install necessary runtime environments for ide
+RUN powershell.exe -NoLogo -Command "Set-ExecutionPolicy RemoteSigned -scope CurrentUser; iwr -UseBasicParsing 'https://get.scoop.sh' | iex;"
+RUN scoop install nvm; nvm install 12.14.1; nvm use 12.14.1; scoop install python
+
+# get builds from stages 1 and 2
+COPY --from=ide "C:\Users\Public\galileo-ide" "C:\Users\Public\galileo-ide"
 COPY --from=ide /exe /exe
+COPY --from=caddy-build "C:\caddy.exe" "C:\Users\Public\caddy\caddy.exe"
 
 # set Default executable paths to be the latest version
 ENV EXE_iSP "C:\\exe\\2020-01-AA\\TUFLOW_iSP_w64.exe -nmb -nc"
@@ -26,7 +33,7 @@ WORKDIR /Users/Public/galileo-ide
 RUN mkdir "C:\Users\Public\tuflow"
 
 # add a runtime .bat files for batch and interactive modes
-COPY run_tuflow.bat run_tuflow.bat
+COPY run_tuflow.bat /Users/Public/tuflow/run_tuflow.bat
 COPY run_ide.py run_ide.py
 COPY Caddyfile "C:\Users\Public\caddy\Caddyfile"
 
@@ -41,14 +48,6 @@ ENV SCOOP_HOME "C:\scoop\apps\scoop\current"
 # set environment variable to look for the pulins in the correct directory
 ENV THEIA_DEFAULT_PLUGINS "c:\Users\Public\galileo-ide\plugins"
 
-# install necessary runtime environments for ide
-RUN powershell.exe -NoLogo -Command "Set-ExecutionPolicy RemoteSigned -scope CurrentUser; iwr -UseBasicParsing 'https://get.scoop.sh' | iex;"
-RUN scoop install nvm; nvm install 12.14.1; nvm use 12.14.1; scoop install python
-
-# get builds from stages 1 and 2
-COPY --from=ide "C:\Users\Public\galileo-ide" "C:\Users\Public\galileo-ide"
-COPY --from=caddy-build "C:\caddy.exe" "C:\Users\Public\caddy\caddy.exe"
-
 # set login credentials and write them to text file
 # uncomment these lines if testing locally
 #ENV USERNAME "myuser"
@@ -57,4 +56,4 @@ COPY --from=caddy-build "C:\caddy.exe" "C:\Users\Public\caddy\caddy.exe"
 
 # set entrypoint for either batch or interactive mode
 #ENTRYPOINT ["run_tuflow.bat"]
-ENTRYPOINT ["python","run_ide.py"]
+#ENTRYPOINT ["python","run_ide.py"]
