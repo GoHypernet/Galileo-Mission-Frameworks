@@ -36,7 +36,6 @@
     },
     "theiaPluginsDir": "plugins",
     "theiaPlugins": {
-
         "vscode-builtin-coffeescript": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/coffeescript-1.39.1-prel.vsix",
         "vscode-builtin-configuration-editing": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/configuration-editing-1.39.1-prel.vsix",
         "vscode-builtin-css": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/css-1.39.1-prel.vsix",
