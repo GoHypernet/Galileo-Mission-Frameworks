@@ -26,6 +26,7 @@ RUN yarn --pure-lockfile && \
     yarn autoclean --force && \
     yarn cache clean
 	
+# Final build stage
 FROM algorand/stable
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
@@ -35,7 +36,6 @@ RUN apt update -y && apt install vim curl supervisor git software-properties-com
 	add-apt-repository -y ppa:deadsnakes/ppa && \
 	apt-get update -y && \
 	apt-get install -y python3.8 python3-pip && \
-	apt-get install -y 
     curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
 	apt install -y nodejs
 
@@ -71,11 +71,11 @@ COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
 
 # set login credintials and write them to text file
-#ENV USERNAME "myuser"
-#ENV PASSWORD "testpass2"
-#RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-#    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-#    echo "}" >> /tmp/hashpass.txt
+ENV USERNAME "myuser"
+ENV PASSWORD "testpass2"
+RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    echo "}" >> /tmp/hashpass.txt
 
 USER galileo
 

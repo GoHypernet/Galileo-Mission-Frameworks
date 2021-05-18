@@ -5,10 +5,12 @@
             "config": {
                 "applicationName": "Algorand Terminal in Galileo",
                 "preferences": {
-                    "files.enableTrash": false
+					"files.enableTrash": false,
+                    "workbench.colorTheme": "Galileo Light"
                 }
             }
-        }
+        },
+		"target": "browser"
     },
     "dependencies": {
         "@theia/editor-preview": "latest",
