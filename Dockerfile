@@ -28,22 +28,28 @@ RUN yarn --pure-lockfile && \
 	
 FROM algorand/stable
 
-# install node, yarn, and other tools
-RUN apt update -y && apt install vim curl supervisor git -y && \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
+
+# install node, python, go, java, and other tools
+RUN apt update -y && apt install vim curl supervisor git software-properties-common -y && \
+	add-apt-repository -y ppa:deadsnakes/ppa && \
+	apt-get update -y && \
+	apt-get install -y python3.8 python3-pip && \
+	apt-get install -y 
     curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
 	apt install -y nodejs
 
 RUN useradd -ms /bin/bash galileo
 
-# create a build directory for the IDE
+# edit the node configuration file for operating as a relay node
 RUN mkdir /theia && \
     cp -r /root/node/* /home/galileo/. && \
-	chmod -R a+rwx /home/galileo && \
 	cp /home/galileo/data/config.json.example /home/galileo/data/config.json && \
-	sed -i 's/"VerifiedTranscationsCacheSize": 30000/"VerifiedTranscationsCacheSize": 30000,/g' /home/galileo/data/config.json && \
-	sed -i '/"VerifiedTranscationsCacheSize".*/a \ \ \ \ \"NetAddress": ":4161"' /home/galileo/data/config.json && \
+	sed -i 's/"NetAddress": "",/"NetAddress": ":4161",/g' /home/galileo/data/config.json && \
+	sed -i 's/"EnableDeveloperAPI": false,/"EnableDeveloperAPI": "true",/g' /home/galileo/data/config.json && \
 	sed -i 's/"EndpointAddress": "127.0.0.1:0",/"EndpointAddress": "127.0.0.1:8080",/g' /home/galileo/data/config.json && \
-	sed -i 's/"IncomingConnectionsLimit": 750,/"IncomingConnectionsLimit": 750,/g' /home/galileo/data/config.json 
+	sed -i 's/"IncomingConnectionsLimit": 750,/"IncomingConnectionsLimit": 750,/g' /home/galileo/data/config.json && \
+	chmod -R a+rwx /home/galileo
 WORKDIR /theia
 
 COPY --from=ide-build /theia /theia
