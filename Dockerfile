@@ -28,6 +28,15 @@ RUN yarn --pure-lockfile && \
     echo *.spec.* >> .yarnclean && \
     yarn autoclean --force && \
     yarn cache clean
+
+# get metrics binaries
+FROM ubuntu:18.04 as metrics
+	
+# get prometheus metrics monitoring
+ADD https://github.com/prometheus/prometheus/releases/download/v2.27.1/prometheus-2.27.1.linux-amd64.tar.gz .
+RUN tar -xvf prometheus-2.27.1.linux-amd64.tar.gz
+RUN sed -i 's/localhost:9090,/localhost:9900,/g' /prometheus-2.27.1.linux-amd64/prometheus.yml
+RUN ls -la
 	
 # Final build stage
 FROM ubuntu:18.04 
@@ -35,27 +44,34 @@ FROM ubuntu:18.04
 #RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 
 # install node, python, and other tools
-RUN apt update -y && apt install vim curl supervisor git software-properties-common systemd -y && \
+RUN apt update -y && apt install vim curl supervisor git software-properties-common systemd rclone -y && \
 	add-apt-repository -y ppa:deadsnakes/ppa && \
 	apt-get update -y && \
 	apt-get install -y python3.8 python3-pip && \
     curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
 	apt install -y nodejs 
 
-RUN mkdir /etc/prometheus /var/lib/prometheus
-
 RUN useradd -ms /bin/bash galileo
 USER galileo
 WORKDIR /home/galileo
 
-# get the galileo IDE and supervisor configuration file
+# get the galileo IDE
 COPY --from=ide-build /theia /theia
+
+# get metrics tools
+COPY --from=metrics /prometheus-2.27.1.linux-amd64/prometheus /usr/local/bin/.
+COPY --from=metrics /prometheus-2.27.1.linux-amd64/promtool /usr/local/bin/.
+COPY --from=metrics /prometheus-2.27.1.linux-amd64/consoles /etc/prometheus/.
+COPY --from=metrics /prometheus-2.27.1.linux-amd64/console_libraries /etc/prometheus/.
+COPY --from=metrics /prometheus-2.27.1.linux-amd64/prometheus.yml /etc/prometheus/prometheus.yml
+
+# get supervisor configuration file
 COPY supervisord.conf /etc/
 
 # get the go runtime
 COPY --from=go /go /go
 COPY --from=go /usr/local/go /usr/local/go
-ENV PATH $PATH:/usr/local/go/bin
+ENV PATH $PATH:/usr/local/go/bin:/home/galileo:/home/galileo/.local/bin
 
 # get the Caddy server executable
 # copy the caddy server build into this container
