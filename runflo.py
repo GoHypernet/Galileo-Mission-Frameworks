@@ -22,32 +22,13 @@ if not contfile.is_file():
     print("Could not locate CONT.DAT")
     exit()
 
-# loop over each line
 with in_place.InPlace(contfile) as contdat:
-    # but only edit the first line
-    firstline = True
-    for line in contdat:
-        if firstline:
-            counter = 0
-            newline = ''
-            # format line to have a single space between variables
-            line = re.sub(' +', ' ', line)
-            for thing in line.split(' '):
-                if thing:
-                    counter += 1
-                # find the 3rd variable on the header line
-                if counter == 3:
-                    # set it equal to one
-                    thing = '1'
-                    counter += 1
-                if thing:
-                    newline += thing + '  '
-            # contruct the new header line
-            line = newline
-        firstline = False
-        # write the line back to the file
+    parts = contdat.readline().split()
+    parts[2] = '1'
+    first_line = ' '.join(parts) + '\n'
+    contdat.write(first_line)
+    for line in contdat.readlines():
         contdat.write(line)
-
 
 # write a .bat file that for running FLO2D and moving results around
 try:
