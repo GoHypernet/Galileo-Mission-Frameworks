@@ -1,7 +1,10 @@
 # get the caddy executable
 FROM caddy AS caddy-build
 
-FROM algorand/stable as ide-build
+# get the go runtime
+FROM golang as go
+
+FROM ubuntu:18.04 as ide-build
 
 # install node, yarn, and other tools
 RUN apt update -y && apt install vim curl gcc g++ make libx11-dev libxkbfile-dev supervisor -y && \
@@ -27,34 +30,41 @@ RUN yarn --pure-lockfile && \
     yarn cache clean
 	
 # Final build stage
-FROM algorand/stable
+FROM ubuntu:18.04 
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
+#RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 
-# install node, python, go, java, and other tools
-RUN apt update -y && apt install vim curl supervisor git software-properties-common -y && \
+# install node, python, and other tools
+RUN apt update -y && apt install vim curl supervisor git software-properties-common systemd -y && \
 	add-apt-repository -y ppa:deadsnakes/ppa && \
 	apt-get update -y && \
 	apt-get install -y python3.8 python3-pip && \
     curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
-	apt install -y nodejs
+	apt install -y nodejs 
+
+RUN mkdir /etc/prometheus /var/lib/prometheus
 
 RUN useradd -ms /bin/bash galileo
+USER galileo
+WORKDIR /home/galileo
 
-# edit the node configuration file for operating as a relay node
-RUN mkdir /theia && \
-    cp -r /root/node/* /home/galileo/. && \
-	cp /home/galileo/data/config.json.example /home/galileo/data/config.json && \
-	sed -i 's/"NetAddress": "",/"NetAddress": ":4161",/g' /home/galileo/data/config.json && \
-	sed -i 's/"EnableDeveloperAPI": false,/"EnableDeveloperAPI": "true",/g' /home/galileo/data/config.json && \
-	sed -i 's/"EndpointAddress": "127.0.0.1:0",/"EndpointAddress": "127.0.0.1:8080",/g' /home/galileo/data/config.json && \
-	sed -i 's/"IncomingConnectionsLimit": 750,/"IncomingConnectionsLimit": 750,/g' /home/galileo/data/config.json && \
-	chmod -R a+rwx /home/galileo
-WORKDIR /theia
-
+# get the galileo IDE and supervisor configuration file
 COPY --from=ide-build /theia /theia
-	
 COPY supervisord.conf /etc/
+
+# get the go runtime
+COPY --from=go /go /go
+COPY --from=go /usr/local/go /usr/local/go
+ENV PATH $PATH:/usr/local/go/bin
+
+# get the Caddy server executable
+# copy the caddy server build into this container
+COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
+COPY Caddyfile /etc/
+
+# install the harmony node and cli binaries
+RUN curl -LO https://harmony.one/hmycli && mv hmycli hmy && chmod +x hmy && \
+    curl -LO https://harmony.one/binary && mv binary harmony && chmod +x harmony
 
 WORKDIR /theia
 
@@ -63,20 +73,11 @@ ENV SHELL=/bin/bash \
     THEIA_DEFAULT_PLUGINS=local-dir:/theia/plugins
 ENV USE_LOCAL_GIT true
 
-ENV ALGORAND_DATA /home/galileo/data
-
-# get the Caddy server executable
-# copy the caddy server build into this container
-COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
-COPY Caddyfile /etc/
-
 # set login credintials and write them to text file
 ENV USERNAME "myuser"
 ENV PASSWORD "testpass2"
 RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
     echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
     echo "}" >> /tmp/hashpass.txt
-
-USER galileo
 
 ENTRYPOINT ["sh", "-c", "supervisord"]

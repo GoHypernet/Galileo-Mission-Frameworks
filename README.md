@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/algorand/algorand_logo.png" width="200">
+  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/harmony/harmony-one-logo.png" width="200">
 </p>
 
 # Algorand
@@ -11,11 +11,11 @@
 
 - **Source Code**: open source
 
-- **Github**: https://github.com/algorand/
+- **Github**: https://github.com/harmony-one
 
 ## Notes
 
-Algorand is a Proof-of-Stake protocol. This branch couples the Galileo IDE with the official Algorand stable docker image. 
+Harmony is a Proof-of-Stake protocol. This branch couples the Galileo IDE with the official Harmony binary release. 
 
 Running a relay node requires syncing the full blockchain, which as of 5-12-2021 requires 490GB of disk space. 
 
