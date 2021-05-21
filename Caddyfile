@@ -15,5 +15,9 @@
 	handle_path /ws/* {
         reverse_proxy http://localhost:9800
     }
+	
+	handle_path /metrics/* {
+        reverse_proxy http://localhost:9900
+    }
     
 }
