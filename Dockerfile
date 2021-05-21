@@ -46,10 +46,12 @@ ENV SCOOP "C:\scoop"
 ENV SCOOP_HOME "C:\scoop\apps\scoop\current"
 
 # set environment variable to look for the pulins in the correct directory
-ENV THEIA_DEFAULT_PLUGINS "c:\Users\Public\galileo-ide\plugins"
+ENV THEIA_DEFAULT_PLUGINS "local-dir:c:\Users\Public\galileo-ide\plugins"
 
 # set login credentials and write them to text file
 # uncomment these lines if testing locally
 #ENV USERNAME "myuser"
 #ENV PASSWORD "testpass2"
 #RUN C:\\Users\\Public\\caddy\\caddy.exe hash-password -plaintext %PASSWORD% > "C:\Users\Public\caddy\hpassword.txt"
+
+#ENTRYPOINT ["python","run_ide.py"]
