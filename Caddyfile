@@ -1,12 +1,10 @@
 :8888 {
     log
     root * /home/galileo
-    reverse_proxy :6969
-
-    handle_path /files/* {
-        file_server browse
+    redir / /ui/
+	
+	handle_path /ui/* {
+        reverse_proxy http://localhost:3000
+		import /tmp/hashpass.txt
     }
-    redir /home/galileo /files/
-
-    import /tmp/hashpass.txt
 }
