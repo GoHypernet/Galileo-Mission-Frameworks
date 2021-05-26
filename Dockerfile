@@ -1,6 +1,10 @@
 # get the caddy executable
 FROM caddy AS caddy-build
 
+# get the go executable 
+FROM golang as go
+
+
 FROM algorand/stable as ide-build
 
 # install node, yarn, and other tools
@@ -32,12 +36,18 @@ FROM algorand/stable
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 
 # install node, python, go, java, and other tools
-RUN apt update -y && apt install vim curl supervisor git software-properties-common -y && \
+RUN apt update -y && apt install vim curl unzip rclone rsync supervisor git software-properties-common -y && \
 	add-apt-repository -y ppa:deadsnakes/ppa && \
 	apt-get update -y && \
 	apt-get install -y python3.8 python3-pip && \
     curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
-	apt install -y nodejs
+	apt install -y nodejs && \
+	curl https://rclone.org/install.sh | bash 
+
+# get the go runtime
+COPY --from=go /go /go
+COPY --from=go /usr/local/go /usr/local/go
+ENV PATH $PATH:/usr/local/go/bin:/home/galileo:/home/galileo/.local/bin
 
 RUN useradd -ms /bin/bash galileo
 
