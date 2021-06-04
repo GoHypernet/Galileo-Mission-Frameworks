@@ -3,7 +3,7 @@
     "theia": {
         "frontend": {
             "config": {
-                "applicationName": "Algorand Terminal in Galileo",
+                "applicationName": "Terra Terminal in Galileo",
                 "preferences": {
 					"files.enableTrash": false,
                     "workbench.colorTheme": "Galileo Light"

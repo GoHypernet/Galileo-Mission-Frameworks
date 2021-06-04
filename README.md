@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/algorand/algorand_logo.png" width="200">
+  <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/Terra/terra_logo.png" width="200">
 </p>
 
-# Algorand
+# Terra Core
 
 ## Overview
 - **Industry**: Cryptocurrency, node hosting
@@ -11,26 +11,38 @@
 
 - **Source Code**: open source
 
-- **Github**: https://github.com/algorand/
+- **Github**: https://github.com/terra-money/core
 
 ## Notes
 
-Algorand is a Proof-of-Stake protocol. This branch couples the Galileo IDE with the official Algorand stable docker image. 
+Terra Core is the reference implementation of the Terra protocol, written in Golang. Terra Core is built atop Cosmos SDK and uses Tendermint BFT consensus. If you intend to work on Terra Core source, it is recommended that you familiarize yourself with the concepts in those projects.
 
-Running a relay node requires syncing the full blockchain, which as of 5-12-2021 requires 490GB of disk space. 
+	handle_path /p2p/* {
+        reverse_proxy http://localhost:26656
+    }
+	
+	handle_path /RPC/* {
+        reverse_proxy http://localhost:26657
+    }
+	
+	handle_path /LCD/* {
+        reverse_proxy http://localhost:1317
+    }
+    
+	handle_path /prometheus/* {
+        reverse_proxy http://localhost:26660
+		import /tmp/hashpass.txt
+    }
 
-This containerized application exposes the following reverse proxy endpoints:
-
-- /relay/* -> locoalhost:4161 (Relay node connections)
-- /restapi/* -> localhost:8080 (Algod rest API)
-- /tealdbg/* -> localhost:9392 (for connecting to the tealdbg program if activated)
+- /p2p/* -> locoalhost:26656 (p2p connection port)
+- /RPC/* -> localhost:26657 (Remost Procedure Call API)
+- /LCD/* -> localhost:1317 (Lite Client Daemon API)
  
-Additionally, the runtime environment contains node and python 3.8 for Algorand Smart Contract development. 
 
 ## Building
 
 This container runtime is targeted at linux. To build the container run:
 
 ```
-docker build -t algorand .
+docker build -t terra .
 ```
