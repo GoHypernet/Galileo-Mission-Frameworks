@@ -4,7 +4,6 @@ FROM caddy AS caddy-build
 # get the go executable 
 FROM golang as go
 
-
 FROM algorand/stable as ide-build
 
 # install node, yarn, and other tools
@@ -33,10 +32,11 @@ RUN yarn --pure-lockfile && \
 # Final build stage
 FROM algorand/stable
 
+# enable noninteractive installation of deadsnakes/ppa
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 
 # install node, python, go, java, and other tools
-RUN apt update -y && apt install vim curl unzip rclone rsync supervisor git software-properties-common -y && \
+RUN apt update -y && apt install vim curl zip unzip supervisor git software-properties-common -y && \
 	add-apt-repository -y ppa:deadsnakes/ppa && \
 	apt-get update -y && \
 	apt-get install -y python3.8 python3-pip && \
@@ -49,6 +49,7 @@ COPY --from=go /go /go
 COPY --from=go /usr/local/go /usr/local/go
 ENV PATH $PATH:/usr/local/go/bin:/home/galileo:/home/galileo/.local/bin
 
+# add galileo non-root user
 RUN useradd -ms /bin/bash galileo
 
 # edit the node configuration file for operating as a relay node
@@ -80,12 +81,12 @@ ENV ALGORAND_DATA /home/galileo/data
 COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
 
-# set login credintials and write them to text file
-ENV USERNAME "myuser"
-ENV PASSWORD "testpass2"
-RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    echo "}" >> /tmp/hashpass.txt
+# # set login credintials and write them to text file
+# ENV USERNAME "myuser"
+# ENV PASSWORD "testpass2"
+# RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    # echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    # echo "}" >> /tmp/hashpass.txt
 
 USER galileo
 
