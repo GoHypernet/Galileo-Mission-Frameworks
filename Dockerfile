@@ -61,6 +61,7 @@ WORKDIR /theia
 COPY --from=ide-build /theia /theia
 	
 COPY supervisord.conf /etc/
+COPY limits.conf /etc/security/limits.conf
 
 WORKDIR /theia
 
@@ -84,5 +85,10 @@ COPY Caddyfile /etc/
      # echo "}" >> /tmp/hashpass.txt
 
 USER galileo
+
+RUN mkdir -p /home/galileo/.terrad/config && \
+    curl https://columbus-genesis.s3-ap-northeast-1.amazonaws.com/columbus-4-genesis.json > /home/galileo/.terrad/config/genesis.json && \
+    curl https://network.terra.dev/addrbook.json > /home/galileo/.terrad/config/addrbook.json
+    
 
 ENTRYPOINT ["sh", "-c", "supervisord"]
