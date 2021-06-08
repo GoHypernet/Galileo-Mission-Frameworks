@@ -1,8 +1,8 @@
 {
     "galileo.logo": "https://cryptologos.cc/logos/algorand-algo-logo.svg?v=010",
     "galileo.title": "Algorand",
-    "galileo.description": "Proof of Stake Network",
-    "galileo.widget_label": "Getting Started with Algorand.",
+    "galileo.description": "Technology Designed for FutureFi",
+    "galileo.widget_label": "Algorand Portal",
     "galileo.social_links": [
         {
         "icon": {
@@ -24,19 +24,46 @@
     "galileo.ui_components": [
         {
         "type": "custom",
-        "title": "Help",
+        "title": "Getting Started",
         "content": [
             {
-            "title": "Printable keyboard cheatsheet",
-            "href": "https://pablotheflamingo.com/",
+            "title": "Algorand Home Page",
+            "href": "https://algorand.com/",
             "priority": 0
             },
             {
-            "title": "Introductory videos",
-            "href": "https://pablotheflamingo.com/",
+            "title": "Algorand Wallet Information",
+            "href": "https://algorandwallet.com/",
+            "priority": 1
+            },
+            {
+            "title": "Developer Resources",
+            "href": "https://developer.algorand.org/",
+            "priority": 3
+            },
+            {
+            "title": "Algorand Node Guide",
+            "href": "https://developer.algorand.org/docs/run-a-node/setup/types/",
+            "priority": 3
+            }
+        ]
+        },
+        {
+        "type": "custom",
+        "title": "Help",
+        "content": [
+            {
+            "title": "Algorand FAQ",
+            "href": "https://www.algorand.com/technology/faq",
+            "priority": 0
+            },
+            {
+            "title": "Official Algorand Forum",
+            "href": "https://forum.algorand.org/",
             "priority": 1
             }
         ]
         }
-    ]
+    ],
+    "workbench.colorTheme": "Galileo Light"
 }

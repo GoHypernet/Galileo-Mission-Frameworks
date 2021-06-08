@@ -6,7 +6,15 @@
             "description": "Start the Algorand Relay node in the backgournd.",
             "missionType": "Algorand",
             "type": "shell",
-            "command": "/home/galileo/goal node start",
+            "command": "/home/galileo/goal node start"
+        },
+        {
+            "id": "stop-algorand-node",
+            "label": "Stop Relay Node",
+            "description": "Stop the Algorand Relay node.",
+            "missionType": "Algorand",
+            "type": "shell",
+            "command": "/home/galileo/goal node stop"
         },
 		{
             "id": "algorand-node-status",
@@ -14,7 +22,7 @@
             "description": "Check on the status of your Algorand node.",
             "missionType": "Algorand",
             "type": "shell",
-            "command": "/home/galileo/goal node status",
+            "command": "/home/galileo/goal node status"
         },
         {
             "id": "algorand-node-update",
@@ -22,7 +30,7 @@
             "description": "Check for upgrades and apply them if necessary.",
             "missionType": "Algorand",
             "type": "shell",
-            "command": "bash /home/galileo/update.sh -d /home/galileo/data",
-        },
+            "command": "bash /home/galileo/update.sh -d /home/galileo/data"
+        }
     ]
 }
