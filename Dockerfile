@@ -18,6 +18,7 @@ WORKDIR /theia
 
 # build the IDE
 COPY package.json .
+COPY preload.html .
 RUN yarn --pure-lockfile && \
     NODE_OPTIONS="--max_old_space_size=4096" yarn theia build && \
     yarn theia download:plugins && \
@@ -51,23 +52,30 @@ ENV PATH $PATH:/usr/local/go/bin:/home/galileo:/home/galileo/.local/bin
 
 # add galileo non-root user
 RUN useradd -ms /bin/bash galileo
+COPY .theia /home/galileo/.theia
+RUN chmod a+rwx /home/galileo/.theia
+
 
 # edit the node configuration file for operating as a relay node
 RUN mkdir /theia && \
     cp -r /root/node/* /home/galileo/. && \
 	cp /home/galileo/data/config.json.example /home/galileo/data/config.json && \
 	sed -i 's/"NetAddress": "",/"NetAddress": ":4161",/g' /home/galileo/data/config.json && \
-	sed -i 's/"EnableDeveloperAPI": false,/"EnableDeveloperAPI": "true",/g' /home/galileo/data/config.json && \
+	sed -i 's/"EnableDeveloperAPI": false,/"EnableDeveloperAPI": true,/g' /home/galileo/data/config.json && \
 	sed -i 's/"EndpointAddress": "127.0.0.1:0",/"EndpointAddress": "127.0.0.1:8080",/g' /home/galileo/data/config.json && \
 	sed -i 's/"IncomingConnectionsLimit": 750,/"IncomingConnectionsLimit": 750,/g' /home/galileo/data/config.json && \
 	chmod -R a+rwx /home/galileo
 WORKDIR /theia
 
+# switch to non-root user
+USER galileo
+WORKDIR /theia
+
+# get the IDE
 COPY --from=ide-build /theia /theia
 	
+# get superviserd
 COPY supervisord.conf /etc/
-
-WORKDIR /theia
 
 # set environment variable to look for plugins in the correct directory
 ENV SHELL=/bin/bash \
@@ -82,12 +90,11 @@ COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
 
 # # set login credintials and write them to text file
-# ENV USERNAME "myuser"
-# ENV PASSWORD "testpass2"
-# RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    # echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    # echo "}" >> /tmp/hashpass.txt
+ENV USERNAME "myuser"
+ENV PASSWORD "testpass2"
+RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    echo "}" >> /tmp/hashpass.txt
 
-USER galileo
 
 ENTRYPOINT ["sh", "-c", "supervisord"]

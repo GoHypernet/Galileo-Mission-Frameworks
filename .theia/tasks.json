@@ -1,0 +1,28 @@
+{
+    "tasks": [
+        {
+            "id": "start-algorand-node",
+            "label": "Start Relay Node",
+            "description": "Start the Algorand Relay node in the backgournd.",
+            "missionType": "Algorand",
+            "type": "shell",
+            "command": "/home/galileo/goal node start",
+        },
+		{
+            "id": "algorand-node-status",
+            "label": "Get Node Status",
+            "description": "Check on the status of your Algorand node.",
+            "missionType": "Algorand",
+            "type": "shell",
+            "command": "/home/galileo/goal node status",
+        },
+        {
+            "id": "algorand-node-update",
+            "label": "Upgrade Node",
+            "description": "Check for upgrades and apply them if necessary.",
+            "missionType": "Algorand",
+            "type": "shell",
+            "command": "bash /home/galileo/update.sh -d /home/galileo/data",
+        },
+    ]
+}
