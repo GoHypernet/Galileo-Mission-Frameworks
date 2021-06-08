@@ -1,11 +1,28 @@
-:8888/ws {
+:8888 {
     log
-	root * /home/galileo
-    reverse_proxy /* :8546
-}
-
-:8888/rpc {
-    log
-	root * /home/galileo
-    reverse_proxy /* :8545
+    root * /home/galileo
+    redir / /ui/
+	
+	handle_path /ui/* {
+        reverse_proxy http://localhost:3000
+		import /tmp/hashpass.txt
+    }
+	
+	handle_path /rpc/* {
+        reverse_proxy http://localhost:9500
+    }
+	
+	handle_path /ws/* {
+        reverse_proxy http://localhost:9800
+    }
+	
+	handle_path /metrics/* {
+        reverse_proxy http://localhost:9900/metrics
+    }
+	
+	handle_path /premetheus/* {
+        reverse_proxy http://localhost:9090
+		import /tmp/hashpass.txt
+    }
+    
 }
