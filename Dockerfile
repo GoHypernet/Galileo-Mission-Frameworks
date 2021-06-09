@@ -18,6 +18,7 @@ WORKDIR /theia
 
 # build the IDE
 COPY package.json .
+COPY preload.html .
 RUN yarn --pure-lockfile && \
     NODE_OPTIONS="--max_old_space_size=4096" yarn theia build && \
     yarn theia download:plugins && \
@@ -48,12 +49,27 @@ RUN apt update -y \
   && add-apt-repository -y ppa:ethereum/ethereum \ 
   && apt update -y \
   && apt install -y \
-    ethereum \
+    ethereum solc \
     supervisor \
-	vim curl git \
+	vim curl git zip unzip vim speedometer net-tools \
+  && curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
+  && apt install -y nodejs \
+  && npm install truffle -g \
+  && npm install -g solc \
+  && curl https://rclone.org/install.sh | bash \
   && rm -rf /var/lib/apt/lists/*
 
+
+# get the go runtime
+COPY --from=go /go /go
+COPY --from=go /usr/local/go /usr/local/go
+ENV PATH $PATH:/usr/local/go/bin:/home/galileo:/home/galileo/.local/bin
+
 RUN useradd -ms /bin/bash galileo
+
+COPY .theia /home/galileo/.theia
+RUN chmod a+rwx /home/galileo/.theia
+
 USER galileo
 WORKDIR /home/galileo
 
@@ -74,10 +90,11 @@ WORKDIR /theia
 ENV SHELL=/bin/bash \
     THEIA_DEFAULT_PLUGINS=local-dir:/theia/plugins
 ENV USE_LOCAL_GIT true
+ENV GALILEO_RESULTS_DIR /home/galileo
 
 # set login credintials and write them to text file
-ENV USERNAME "myuser"
-ENV PASSWORD "testpass2"
+ENV USERNAME "a"
+ENV PASSWORD "a"
 RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
     echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
     echo "}" >> /tmp/hashpass.txt

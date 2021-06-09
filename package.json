@@ -3,20 +3,20 @@
     "theia": {
         "frontend": {
             "config": {
-                "applicationName": "Harmony Terminal in Galileo",
-                "preferences": {
-					"files.enableTrash": false,
-                    "workbench.colorTheme": "Galileo Light"
-                },
-				"defaultTheme": "Galileo Light"
-            }
+                "applicationName": "Galileo Editor",
+                "defaultTheme": "Galileo Dark"
+              }
         },
-		"target": "browser"
+        "generator": {
+            "config": {
+              "preloadTemplate": "./preload.html"
+            }
+          }
     },
     "dependencies": {
+		"@hypernetwork/galileo-ide-widget": "latest",
         "@theia/editor-preview": "latest",
         "@theia/file-search": "latest",
-        "@theia/getting-started": "latest",
         "@theia/markers": "latest",
         "@theia/messages": "latest",
         "@theia/monaco": "latest",
@@ -27,7 +27,10 @@
         "@theia/preview": "latest",
         "@theia/search-in-workspace": "latest",
         "@theia/terminal": "latest",
-        "@theia/vsx-registry": "latest"
+        "@theia/vsx-registry": "latest",
+		"@theia/task": "latest",
+        "@theia/plugin-dev": "latest",
+        "@theia/plugin-ext": "latest"
     },
     "devDependencies": {
         "@theia/cli": "latest"

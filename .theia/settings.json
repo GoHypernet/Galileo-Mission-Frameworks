@@ -1,0 +1,48 @@
+{
+    "galileo.logo": "https://cryptologos.cc/logos/versions/ethereum-eth-logo-animated.gif?v=010",
+    "galileo.title": "Ethereum",
+    "galileo.description": "The foundation for our digital future.",
+    "galileo.widget_label": "Geth Portal",
+    "galileo.social_links": [
+        {
+        "icon": {
+            "prefix": "fab",
+            "name": "twitter"
+        },
+        "href": "https://twitter.com/vitalikbuterin",
+        "priority": 0
+        },
+        {
+        "icon": {
+            "prefix": "fab",
+            "name": "github"
+        },
+        "href": "https://github.com/ethereum/go-ethereum",
+        "priority": 1
+        }
+    ],
+    "galileo.ui_components": [
+        {
+        "type": "custom",
+        "title": "Getting Started",
+        "content": [
+            {
+            "title": "Etherum Home Page",
+            "href": "https://ethereum.org/",
+            "priority": 0
+            },
+            {
+            "title": "Developer Resources",
+            "href": "https://ethereum.org/en/developers/",
+            "priority": 3
+            },
+            {
+            "title": "Geth Node Guide",
+            "href": "https://geth.ethereum.org/docs/",
+            "priority": 3
+            }
+        ]
+        }
+    ],
+    "workbench.colorTheme": "Galileo Light"
+}
