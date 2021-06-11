@@ -3,34 +3,37 @@
         {
             "id": "start-geth-light",
             "label": "Start Geth Light Node",
-            "description": "Run a Geth Light Node.",
-            "missionType": "Algorand",
+            "description": "Downloads all block headers, block data, and verifies some randomly.",
             "type": "shell",
-            "command": "geth --syncmode light --cache 2048 --http --http.api eth,net,web3 --ws --nousb --graphql"
+            "command": "geth --syncmode light --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics"
         },
         {
             "id": "start-geth-fast",
             "label": "Start Geth Fast Node",
-            "description": "Run a Geth Fast-Sync Node",
-            "missionType": "Algorand",
+            "description": "Downloads all blocks (including headers, transactions and receipts), verifies all headers, and downloads the state and verifies it against the headers.",
             "type": "shell",
-            "command": "geth --syncmode fast --cache 2048 --http --http.api eth,net,web3 --ws --nousb --graphql"
+            "command": "geth --syncmode fast --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics"
         },
 		{
             "id": "start-geth-full",
             "label": "Start Geth Full Node",
-            "description": "Run a Geth Full Node. Great for the health of Ethereum Mainnet.",
-            "missionType": "Algorand",
+            "description": "Downloads all blocks (including headers, transactions and receipts) and generates the state of the blockchain incrementally by executing every block.",
             "type": "shell",
-            "command": "geth --syncmode full --cache 2048 --http --http.api eth,net,web3 --ws --nousb --graphql"
+            "command": "geth --syncmode full --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics"
         },
         {
             "id": "start-geth-archive",
             "label": "Start Geth Archive",
-            "description": "Check for upgrades and apply them if necessary.",
-            "missionType": "Algorand",
+            "description": "Downloads all blocks (including headers, transactions, receipts, and traces), verifies all headers, and downloads the state and verifies it against the headers.",
             "type": "shell",
-            "command": "bash /home/galileo/update.sh -d /home/galileo/data"
-        }
+            "command": "geth --syncmode full --gcmode archive --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics"
+        },
+		{
+            "id": "start-geth-light-goerli",
+            "label": "Start Geth Light Goerli Node (TestNet)",
+            "description": "Downloads all block headers, block data, and verifies some randomly.",
+            "type": "shell",
+            "command": "geth --goerli --syncmode light --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics"
+        },
     ]
 }

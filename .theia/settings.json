@@ -34,13 +34,28 @@
             {
             "title": "Developer Resources",
             "href": "https://ethereum.org/en/developers/",
-            "priority": 3
+            "priority": 1
             },
             {
             "title": "Geth Node Guide",
             "href": "https://geth.ethereum.org/docs/",
-            "priority": 3
-            }
+            "priority": 2
+            },
+			{
+			"title": "Eth2 Clients",
+			"href", "https://ethereum.org/en/eth2/get-involved/#clients/",
+			"priority": 3
+			},
+			{
+			"title": "Ethereum 2.0 Launchpad",
+			"href", "https://launchpad.ethereum.org/",
+			"priority": 4
+			},
+			{
+			"title": "Ethereum 2.0 Deposit CLI",
+			"href", "https://github.com/ethereum/eth2.0-deposit-cli/releases/", 
+			"priority": 5
+			}
         ]
         }
     ],

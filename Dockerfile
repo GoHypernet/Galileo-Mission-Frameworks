@@ -39,26 +39,27 @@ RUN tar -xvf prometheus-2.27.1.linux-amd64.tar.gz
 RUN sed -i 's/localhost:9090,/localhost:9900,/g' /prometheus-2.27.1.linux-amd64/prometheus.yml
 RUN ls -la
 
-
 # Final build stage
 FROM ubuntu:18.04 
 
-# install geth and nginx
+# install geth, python, node, and smart contract development tooling
 RUN apt update -y \
   && apt install -y software-properties-common gpg \
+  && add-apt-repository -y ppa:deadsnakes/ppa \
   && add-apt-repository -y ppa:ethereum/ethereum \ 
   && apt update -y \
   && apt install -y \
     ethereum solc \
     supervisor \
+    python3.8 python3-pip python3.8-dev \
 	vim curl git zip unzip vim speedometer net-tools \
+  && python3.8 -m pip install web3 py-solc py-solc-x slither \
   && curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
   && apt install -y nodejs \
   && npm install truffle -g \
   && npm install -g solc \
   && curl https://rclone.org/install.sh | bash \
   && rm -rf /var/lib/apt/lists/*
-
 
 # get the go runtime
 COPY --from=go /go /go
@@ -72,6 +73,8 @@ RUN chmod a+rwx /home/galileo/.theia
 
 USER galileo
 WORKDIR /home/galileo
+
+RUN mkdir /home/galileo/prysm
 
 # get the galileo IDE
 COPY --from=ide-build /theia /theia
