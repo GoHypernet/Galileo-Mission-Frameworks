@@ -27,22 +27,22 @@
         "title": "Getting Started",
         "content": [
             {
-            "title": "Algorand Home Page",
+            "title": "🏡 Algorand Home Page",
             "href": "https://algorand.com/",
             "priority": 0
             },
             {
-            "title": "Algorand Wallet Information",
+            "title": "💸 Algorand Wallet Information",
             "href": "https://algorandwallet.com/",
             "priority": 1
             },
             {
-            "title": "Developer Resources",
+            "title": "🤓 Developer Resources",
             "href": "https://developer.algorand.org/",
             "priority": 3
             },
             {
-            "title": "Algorand Node Guide",
+            "title": "📙 Algorand Node Guide",
             "href": "https://developer.algorand.org/docs/run-a-node/setup/types/",
             "priority": 3
             }
@@ -53,17 +53,17 @@
         "title": "Help",
         "content": [
             {
-            "title": "Algorand FAQ",
+            "title": "🤔 Algorand FAQ",
             "href": "https://www.algorand.com/technology/faq",
             "priority": 0
             },
             {
-            "title": "Official Algorand Forum",
+            "title": "🌎 Official Algorand Forum",
             "href": "https://forum.algorand.org/",
             "priority": 1
             }
         ]
         }
     ],
-    "workbench.colorTheme": "Galileo Light"
+    "workbench.colorTheme": "Galileo Dark"
 }
