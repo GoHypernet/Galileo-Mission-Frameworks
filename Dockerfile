@@ -69,7 +69,7 @@ ENV PATH $PATH:/usr/local/go/bin:/home/galileo:/home/galileo/.local/bin
 RUN useradd -ms /bin/bash galileo
 
 COPY .theia /home/galileo/.theia
-RUN chmod a+rwx /home/galileo/.theia
+RUN chmod -R a+rwx /home/galileo/.theia
 
 USER galileo
 WORKDIR /home/galileo
