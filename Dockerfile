@@ -53,10 +53,9 @@ RUN apt update -y \
     supervisor \
     python3.8 python3-pip python3.8-dev \
 	vim curl git zip unzip vim speedometer net-tools \
-  && python3.8 -m pip install web3 py-solc py-solc-x slither \
+  && python3.8 -m pip install web3 py-solc py-solc-x \
   && curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
   && apt install -y nodejs \
-  && npm install truffle -g \
   && npm install -g solc \
   && curl https://rclone.org/install.sh | bash \
   && rm -rf /var/lib/apt/lists/*
