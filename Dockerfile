@@ -70,35 +70,37 @@ RUN useradd -ms /bin/bash galileo
 COPY .theia /home/galileo/.theia
 RUN chmod -R a+rwx /home/galileo/.theia
 
+# get the Caddy server executable
+# copy the caddy server build into this container
+COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
+COPY Caddyfile /etc/
+RUN chmod a+rwx /etc/Caddyfile
+
+# get the galileo IDE
+COPY --from=ide-build /theia /galileo-ide
+RUN chmod -R a+rwx /galileo-ide
+
 USER galileo
 WORKDIR /home/galileo
 
 RUN mkdir /home/galileo/prysm
 
-# get the galileo IDE
-COPY --from=ide-build /theia /theia
-
-# get the Caddy server executable
-# copy the caddy server build into this container
-COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
-COPY Caddyfile /etc/
-
 # get supervisor configuration file
 COPY supervisord.conf /etc/
 
-WORKDIR /theia
+WORKDIR /galileo-ide
 
 # set environment variable to look for plugins in the correct directory
 ENV SHELL=/bin/bash \
-    THEIA_DEFAULT_PLUGINS=local-dir:/theia/plugins
+    THEIA_DEFAULT_PLUGINS=local-dir:/galileo-ide/plugins
 ENV USE_LOCAL_GIT true
 ENV GALILEO_RESULTS_DIR /home/galileo
 
 # set login credintials and write them to text file
-ENV USERNAME "a"
-ENV PASSWORD "a"
-RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    echo "}" >> /tmp/hashpass.txt
+# ENV USERNAME "a"
+# ENV PASSWORD "a"
+# RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    # echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    # echo "}" >> /tmp/hashpass.txt
 
 ENTRYPOINT ["sh", "-c", "supervisord"]

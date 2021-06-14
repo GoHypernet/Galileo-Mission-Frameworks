@@ -40,6 +40,11 @@
             "title": "🛸 Geth Node Guide",
             "href": "https://geth.ethereum.org/docs/",
             "priority": 2
+            },
+			{
+            "title": "👷‍♂️ Geth Dev Mode",
+            "href": "https://geth.ethereum.org/docs/getting-started/dev-mode",
+            "priority": 3
             }
         ]
         },
@@ -81,6 +86,27 @@
 			{
 			"title": "🍄 Truffle Environment",
 			"href": "https://www.trufflesuite.com/", 
+			"priority": 2
+			}
+        ]
+        },
+		{
+        "type": "custom",
+        "title": "Galileo APIs",
+        "content": [
+			{
+			"title": "🔱 HTTP API",
+			"href": "/http/",
+			"priority": 0
+			},
+			{
+			"title": "👁‍🗨 Web Sockets",
+			"href": "/ws/",
+			"priority": 1
+			},
+			{
+			"title": "🕸 Graph QL UI",
+			"href": "/http/graphql/ui", 
 			"priority": 2
 			}
         ]

@@ -5,7 +5,7 @@
             "label": "Geth Light Node (Homestead)",
             "description": "Downloads all block headers, block data, and verifies some randomly.",
             "type": "shell",
-            "command": "geth --syncmode light --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "geth --syncmode light --http.vhosts "*" --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
 			"icon": {
                 "prefix": "fas",
                 "name": "feather-alt"
@@ -16,7 +16,7 @@
             "label": "Geth Fast Node (Homestead)",
             "description": "Downloads all blocks (including headers, transactions and receipts), verifies all headers, and downloads the state and verifies it against the headers.",
             "type": "shell",
-            "command": "geth --syncmode fast --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "geth --syncmode fast --http.vhosts "*" --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
 			"icon": {
                 "prefix": "fas",
                 "name": "fast-forward"
@@ -27,7 +27,7 @@
             "label": "Geth Full Node (Homestead)",
             "description": "Downloads all blocks (including headers, transactions and receipts) and generates the state of the blockchain incrementally by executing every block.",
             "type": "shell",
-            "command": "geth --syncmode full --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "geth --syncmode full --http.vhosts "*" --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
 			"icon": {
                 "prefix": "fas",
                 "name": "battery-full"
@@ -38,7 +38,7 @@
             "label": "Geth Archive (Homestead)",
             "description": "Downloads all blocks (including headers, transactions, receipts, and traces), verifies all headers, and downloads the state and verifies it against the headers.",
             "type": "shell",
-            "command": "geth --syncmode full --gcmode archive --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "geth --syncmode full --http.vhosts "*" --gcmode archive --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
 			"icon": {
                 "prefix": "fas",
                 "name": "archive"
@@ -49,7 +49,7 @@
             "label": "Geth Light Node (Goerli)",
             "description": "Start a light synce node on the Goerli testnet.",
             "type": "shell",
-            "command": "geth --goerli --syncmode fast --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "geth --goerli --syncmode fast --http.vhosts "*" --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
 			"icon": {
                 "prefix": "fas",
                 "name": "feather-alt"
@@ -60,7 +60,7 @@
             "label": "Geth Fast Node (Goerli)",
             "description": "Start a fast sync node on the Goerli testnet.",
             "type": "shell",
-            "command": "geth --goerli --syncmode fast --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "geth --goerli --syncmode fast --http.vhosts "*" --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
 			"icon": {
                 "prefix": "fas",
                 "name": "fast-forward"
@@ -71,7 +71,7 @@
             "label": "Geth Light Node (Rinkeby)",
             "description": "Start light sync node on Rinkeby testnet.",
             "type": "shell",
-            "command": "geth --rinkeby --syncmode light --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "geth --rinkeby --syncmode light --http.vhosts "*" --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
 			"icon": {
                 "prefix": "fas",
                 "name": "feather-alt"
@@ -82,10 +82,21 @@
             "label": "Geth Fast Node (Rinkeby)",
             "description": "Start fast sync node on Rinkeby testnet.",
             "type": "shell",
-            "command": "geth --rinkeby --syncmode fast --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "geth --rinkeby --syncmode fast --http.vhosts "*" --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
 			"icon": {
                 "prefix": "fas",
                 "name": "fast-forward"
+            }
+        },
+		{
+            "id": "start-geth-dev",
+            "label": "Geth Dev Node (1337)",
+            "description": "Start a Geth developer node.",
+            "type": "shell",
+            "command": "geth --dev --http --http.vhosts "*" --http.api eth,net,web3 --ws --graphql --metrics",
+			"icon": {
+                "prefix": "fas",
+                "name": "hard-hat"
             }
         },
 		{
@@ -115,21 +126,10 @@
             "label": "Bash Terminal",
             "description": "Open a Bash terminal",
             "type": "shell",
-            "command": "/bin/bash && cd /home/galileo",
-			"icon": {
-                "prefix": "fab",
-                "name": "terminal"
-            }
-        },
-		{
-            "id": "start-hardhat",
-            "label": "Hardhat",
-            "description": "Create a new Hardhat project.",
-            "type": "shell",
-            "command": "npm install --save-dev hardhat @nomiclabs/hardhat-waffle ethereum-waffle chai @nomiclabs/hardhat-ethers ethers -g && npx hardhat",
+            "command": "cd /home/galileo && /bin/bash",
 			"icon": {
                 "prefix": "fas",
-                "name": "hard-hat"
+                "name": "terminal"
             }
         }
     ]
