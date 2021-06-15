@@ -1,7 +1,8 @@
 #!/bin/bash -e
 
-envsubst '$$ROUTER_HOST,$$DASHBOARD_HOST,$$NODE_HOST' < default.conf.template > /etc/nginx/conf.d/default.conf
-envsubst < supervisord.conf.template > /etc/supervisor/conf.d/supervisord.conf
+# envsubst '$$ROUTER_HOST,$$DASHBOARD_HOST,$$NODE_HOST' < default.conf.template > /etc/nginx/conf.d/default.conf
+envsubst < default.conf > /etc/nginx/conf.d/default.conf
+envsubst < supervisord.conf > /etc/supervisor/conf.d/supervisord.conf
 rm -rf /etc/nginx/sites-enabled/default
 
 # Setup basic auth

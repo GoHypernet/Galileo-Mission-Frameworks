@@ -1,1 +1,4 @@
-build/
+.env
+data/dbSnapshots/node/*.sql
+data/dbSnapshots/router/*.sql
+data/vectorConfig/*.json
