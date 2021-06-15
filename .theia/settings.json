@@ -63,6 +63,32 @@
             "priority": 1
             }
         ]
+        },
+		{
+        "type": "custom",
+        "title": "Galileo APIs",
+        "content": [
+            {
+            "title": "🏃‍♂️ Relay API",
+            "href": "/relay/",
+            "priority": 0
+            },
+            {
+            "title": "☁ Rest API",
+            "href": "/restapi/",
+            "priority": 1
+            },
+			{
+            "title": "📊 Node Metrics",
+            "href": "/restapi/metrics",
+            "priority": 2
+            },
+			{
+            "title": "🐛 Teal Debugger",
+            "href": "/tealdbg/",
+            "priority": 2
+            }
+        ]
         }
     ],
     "workbench.colorTheme": "Galileo Dark"

@@ -90,10 +90,10 @@ COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
 
 # # set login credintials and write them to text file
-ENV USERNAME "a"
-ENV PASSWORD "a"
-RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    echo "}" >> /tmp/hashpass.txt
+# ENV USERNAME "a"
+# ENV PASSWORD "a"
+# RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    # echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    # echo "}" >> /tmp/hashpass.txt
 
 ENTRYPOINT ["sh", "-c", "supervisord"]
