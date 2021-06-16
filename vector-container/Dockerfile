@@ -92,7 +92,7 @@ RUN sed -i "/^# DO NOT DISABLE\!/i # Allow access from any IP address" /etc/post
 RUN sed -i "/^# DO NOT DISABLE\!/i host all all 0.0.0.0/0 md5\n\n\n" /etc/postgresql/12/main/pg_hba.conf
 
 # set root password
-RUN echo "vector:vector" | chpasswd
+RUN echo "root:root" | chpasswd
 
 RUN chmod +x /root/node/ops/entry.sh /root/router/ops/entry.sh /root/proxy/entry.sh /root/entrypoint.sh
 
