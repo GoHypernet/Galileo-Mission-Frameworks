@@ -8,11 +8,11 @@ RUN apt update && apt install -y bash curl g++ gcc git jq make python openssl
 RUN npm install -g npm@6.14.7
 RUN npm i -g @prisma/cli@v2.16.1
 
-COPY build/ .
+# RUN git clone --branch vector-0.2.5-beta.6 https://github.com/connext/vector.git /root/vector
+# RUN cd vector
+# RUN make server-node-bundle && make router-bundle
 
-# RUN git clone --branch vector-0.2.5-beta.6 https://github.com/connext/vector.git
-# WORKDIR /vector
-# RUN make server-node-bundle router-bundle
+COPY build/ .
 
 FROM base_builder as node_builder
 WORKDIR /root/node
@@ -80,6 +80,7 @@ COPY entrypoint.sh ./
 COPY default.conf ./
 
 ## Setup for postgres
+WORKDIR /root/postgres
 RUN apt install -y gnupg dirmngr
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
@@ -94,11 +95,13 @@ RUN sed -i "/^# DO NOT DISABLE\!/i host all all 0.0.0.0/0 md5\n\n\n" /etc/postgr
 # set root password
 RUN echo "root:root" | chpasswd
 
+WORKDIR /root
+
 RUN chmod +x /root/node/ops/entry.sh /root/router/ops/entry.sh /root/proxy/entry.sh /root/entrypoint.sh
 
 COPY vector-config.json .
 COPY build/vector/modules/router/prisma-postgres/schema.prisma /root/router/dist/schema.prisma
-COPY build/vector/modules/router/prisma-postgres/schema.prisma /prisma-postgres/schema.prisma
+# COPY build/vector/modules/router/prisma-postgres/schema.prisma /prisma-postgres/schema.prisma
 # COPY /root/router/prisma-postgres/schema.prisma /root/router/dist/schema.prisma
 # RUN echo '127.0.0.1 router' >> /etc/hosts
 ENV ROUTER_HOST localhost:8000
