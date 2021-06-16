@@ -2,7 +2,7 @@
   <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/connext/connext_logo.png" width="200">
 </p>
 
-# Algorand
+# Connext Vector Node
 
 ## Overview
 - **Industry**: Cryptocurrency, Layer 2 Scaling
