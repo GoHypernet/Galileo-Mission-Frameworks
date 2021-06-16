@@ -1,0 +1,90 @@
+{
+    "galileo.logo": "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=010",
+    "galileo.title": "Connext Vector Node",
+    "galileo.description": "Say Hello to a Multichain Ethereum",
+    "galileo.widget_label": "Vector Node Portal",
+    "galileo.social_links": [
+        {
+        "icon": {
+            "prefix": "fab",
+            "name": "twitter"
+        },
+        "href": "https://twitter.com/connextnetwork",
+        "priority": 0
+        },
+        {
+        "icon": {
+            "prefix": "fab",
+            "name": "github"
+        },
+        "href": "https://github.com/connext",
+        "priority": 1
+        }
+    ],
+    "galileo.ui_components": [
+        {
+        "type": "custom",
+        "title": "Getting Started",
+        "content": [
+            {
+            "title": "🏡 Connext Home Page",
+            "href": "https://algorand.com/",
+            "priority": 0
+            },
+            {
+            "title": "🤓 Developer Resources",
+            "href": "https://docs.connext.network/",
+            "priority": 2
+            },
+            {
+            "title": "💸 Liquidity Guide",
+            "href": "https://developer.algorand.org/docs/run-a-node/setup/types/",
+            "priority": 3
+            }
+        ]
+        },
+        {
+        "type": "custom",
+        "title": "Help",
+        "content": [
+            {
+            "title": "🤔 Connext Chat",
+            "href": "https://discord.com/invite/VcNFQdKuxM",
+            "priority": 0
+            },
+            {
+            "title": "🌎 Connext FAQ",
+            "href": "https://docs.connext.network/faq",
+            "priority": 1
+            }
+        ]
+        },
+		{
+        "type": "custom",
+        "title": "Galileo APIs",
+        "content": [
+            {
+            "title": "🏃‍♂️ Relay API",
+            "href": "/relay/",
+            "priority": 0
+            },
+            {
+            "title": "☁ Rest API",
+            "href": "/restapi/",
+            "priority": 1
+            },
+			{
+            "title": "📊 Node Metrics",
+            "href": "/restapi/metrics",
+            "priority": 2
+            },
+			{
+            "title": "🐛 Teal Debugger",
+            "href": "/tealdbg/",
+            "priority": 2
+            }
+        ]
+        }
+    ],
+    "workbench.colorTheme": "Galileo Dark"
+}

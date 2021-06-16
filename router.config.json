@@ -1,0 +1,58 @@
+{
+  "adminToken":"asdf",
+  "chainProviders": {"1":"https://eth-mainnet.alchemyapi.io/v2/_2mBX3HGWRFlLSg_2JeqBn3Ljlfn2hqU"},
+  "mnemonic": "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat",
+  "messagingUrl": "https://messaging.connext.network",
+  "nodeUrl": "http://0.0.0.0:8000",
+  "routerUrl": "http://127.0.0.1:42069",
+  "port": 3001,
+  "allowedSwaps": [
+      {
+        "fromChainId": 1337,
+        "toChainId": 1338,
+        "fromAssetId": "0x0000000000000000000000000000000000000000",
+        "toAssetId": "0x0000000000000000000000000000000000000000",
+        "priceType": "hardcoded",
+        "hardcodedRate": "1"
+      },
+      {
+        "fromChainId": 1337,
+        "toChainId": 1338,
+        "fromAssetId": "0x9FBDa871d559710256a2502A2517b794B482Db40",
+        "toAssetId": "0x9FBDa871d559710256a2502A2517b794B482Db40",
+        "priceType": "hardcoded",
+        "hardcodedRate": "1"
+      }
+    ],
+    "production": false,
+    "rebalanceProfiles": [
+      {
+        "chainId": 1337,
+        "assetId": "0x0000000000000000000000000000000000000000",
+        "reclaimThreshold": "1",
+        "target": "0",
+        "collateralizeThreshold": "0"
+      },
+      {
+        "chainId": 1338,
+        "assetId": "0x0000000000000000000000000000000000000000",
+        "reclaimThreshold": "1",
+        "target": "0",
+        "collateralizeThreshold": "0"
+      },
+      {
+        "chainId": 1337,
+        "assetId": "0x9FBDa871d559710256a2502A2517b794B482Db40",
+        "reclaimThreshold": "1",
+        "target": "0",
+        "collateralizeThreshold": "0"
+      },
+      {
+        "chainId": 1338,
+        "assetId": "0x9FBDa871d559710256a2502A2517b794B482Db40",
+        "reclaimThreshold": "1",
+        "target": "0",
+        "collateralizeThreshold": "0"
+      }
+    ]
+  }
