@@ -55,6 +55,7 @@ COPY --from=ide-build /theia /theia
 	
 # get superviserd
 COPY supervisord.conf /etc/
+COPY node.config.json /app/node.config.json
 
 # set environment variable to look for plugins in the correct directory
 # set environment variable to look for plugins in the correct directory
