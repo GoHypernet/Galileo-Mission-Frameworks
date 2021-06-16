@@ -25,6 +25,9 @@ RUN yarn --pure-lockfile && \
     echo *.spec.* >> .yarnclean && \
     yarn autoclean --force && \
     yarn cache clean
+
+# get the router applications
+FROM connextproject/vector_router:0.2.5-beta.18 AS router-layer
 	
 # Final build stage
 FROM connextproject/vector_node:0.2.5-beta.18
@@ -42,6 +45,8 @@ COPY .vscode /home/galileo/.vscode
 RUN chmod a+rwx /home/galileo/.theia
 RUN chmod a+rwx /app
 
+COPY --from=router-layer /app /router
+
 # edit the node configuration file for operating as a relay node
 RUN mkdir /theia
 WORKDIR /theia
@@ -55,13 +60,13 @@ COPY --from=ide-build /theia /theia
 	
 # get superviserd
 COPY supervisord.conf /etc/
-COPY node.config.json /app/node.config.json
+COPY node.config.json /app/config.json
 
 # set environment variable to look for plugins in the correct directory
 # set environment variable to look for plugins in the correct directory
 ENV SHELL=/bin/bash \
     THEIA_DEFAULT_PLUGINS=local-dir:/theia/plugins
-ENV USE_LOCAL_GIT true
+ENV USE_LOCAL_GIT true0
 
 # get the Caddy server executable
 # copy the caddy server build into this container
