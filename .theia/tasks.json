@@ -1,0 +1,48 @@
+{
+    "tasks": [
+        {
+            "id": "start-algorand-node",
+            "label": "Start Relay Node",
+            "description": "Start the Algorand Relay node in the backgournd.",
+            "type": "shell",
+            "command": "/home/galileo/goal node start",
+            "icon": {
+                "prefix": "far",
+                "name": "play-circle"
+            }
+        },
+        {
+            "id": "stop-algorand-node",
+            "label": "Stop Relay Node",
+            "description": "Stop the Algorand Relay node.",
+            "type": "shell",
+            "command": "/home/galileo/goal node stop",
+            "icon": {
+                "prefix": "far",
+                "name": "stop-circle"
+            }
+        },
+		{
+            "id": "algorand-node-status",
+            "label": "Get Node Status",
+            "description": "Check on the status of your Algorand node.",
+            "type": "shell",
+            "command": "/home/galileo/goal node status",
+            "icon": {
+                "prefix": "fas",
+                "name": "info-circle"
+            }
+        },
+        {
+            "id": "algorand-node-update",
+            "label": "Upgrade Node",
+            "description": "Check for upgrades and apply them if necessary.",
+            "type": "shell",
+            "command": "bash /home/galileo/update.sh -d /home/galileo/data",
+            "icon": {
+                "prefix": "fas",
+                "name": "sync"
+            }
+        }
+    ]
+}
