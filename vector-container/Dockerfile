@@ -1,79 +1,57 @@
-#!/bin/bash
-
-## Run this file from the root of the project
-IMAGE=vector-base:test
-
-echo "Using image: $IMAGE"
-if [ -z $IMAGE ]; then
-    echo "Image is not set"
-    exit 1;
-fi
-
-NODE_BASE=modules/server-node
-ROUTER_BASE=modules/router
-
-ROOT=$(pwd)
-mkdir -p build; cd build;
-# git clone --branch test --single-branch --depth 1 https://github.com/GoHypernet/vector
-git clone --branch vector-0.2.5-beta.6 --single-branch --depth 1 https://github.com/connext/vector.git
-cd vector;
-# make clean
-make server-node-bundle router-bundle
-
-# Copy config files to the base of build dir
-cp -rf $ROOT/vector-container/* ./
-
-echo """
-**/node_modules/**
-**/tsconfig.tsbuildinfo
-*.docker-compose.yml
-docker-compose.yml
-modules/*/package-lock.json
-config-prod.json
-
-**/.cache
-**/.node-gyp
-**/.npm
-""" > .dockerignore
-
-echo """
-# Generated dockerfile. Do not modify this file directly. Please use original script to generate this.
-
 FROM node:12 as base_builder
+
 WORKDIR /root
+
 ENV HOME /root
+
 RUN apt update && apt install -y bash curl g++ gcc git jq make python openssl
 RUN npm install -g npm@6.14.7
-RUN npm i -g @prisma/cli@v2.16.1 nodemon pino-pretty ts-node typescript @types/node
+RUN npm i -g @prisma/cli@v2.16.1
+
+COPY build/ .
+
+# RUN git clone --branch vector-0.2.5-beta.6 https://github.com/connext/vector.git
+# WORKDIR /vector
+# RUN make server-node-bundle router-bundle
 
 FROM base_builder as node_builder
 WORKDIR /root/node
-COPY $NODE_BASE/ops ops
-COPY $NODE_BASE/ops/package.json package.json
+
+ENV NODE_BASE build/vector/modules/server-node
+ENV ROUTER_BASE build/vector/modules/router
+
+COPY build/vector/modules/server-node/ops ops
+COPY build/vector/modules/server-node/ops/package.json package.json
+
 RUN npm install
-COPY $NODE_BASE/prisma-postgres prisma-postgres
-COPY $NODE_BASE/prisma-sqlite prisma-sqlite
-# COPY $NODE_BASE/dist dist
-# COPY $NODE_BASE/dist/generated/db-client /root/node/.prisma/client
+
+COPY build/vector/modules/server-node/prisma-postgres prisma-postgres
+# COPY build/vector/modules/server-node/dist dist
+# COPY build/vector/modules/server-node/dist/generated/db-client /root/node/.prisma/client
 # Copy linux musl as debian openssl because musl is selected during my build and the runtime requires openssl one
-# COPY $NODE_BASE/dist/generated/db-client/query-engine-linux-musl /root/node/dist/query-engine-debian-openssl-1.1.x
+# COPY build/vector/modules/server-node/dist/generated/db-client/query-engine-linux-musl /root/node/dist/query-engine-debian-openssl-1.1.x
 
 FROM base_builder as router_builder
 WORKDIR /root/router
-COPY $ROUTER_BASE/ops/package.json package.json
-RUN npm install
-COPY $ROUTER_BASE/ops ops
-COPY $ROUTER_BASE/prisma-postgres prisma-postgres
-COPY $ROUTER_BASE/prisma-sqlite prisma-sqlite
-# COPY $ROUTER_BASE/dist dist
-RUN ln -s dist/prisma-sqlite prisma
-# COPY $ROUTER_BASE/dist/generated/db-client /root/router/prisma/client
+
+COPY build/vector/modules/router/ops/package.json package.json
+
+RUN npm install --only=prod
+
+COPY build/vector/modules/router/ops ops
+COPY build/vector/modules/router/prisma-postgres prisma-postgres
+# COPY build/vector/modules/router/dist dist
+RUN ln -s dist/prisma-postgres prisma
+# COPY build/vector/modules/router/dist/generated/db-client /root/router/prisma/client
 
 FROM ubuntu:18.04
 WORKDIR /root
 # 80 AND 443 for proxy. Other ports: 5432 database, 8000 router/node
 EXPOSE 80
 EXPOSE 443
+EXPOSE 5432
+EXPOSE 8000
+
 ENV NODE_ENV=production
 ENV DEBIAN_FRONTEND=noninteractive
 ENV VECTOR_PROD true
@@ -83,55 +61,53 @@ ENV VECTOR_JWT_SIGNER_PUBLIC_KEY -----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BA
 ENV VECTOR_MNEMONIC \"candy maple cake sugar pudding cream honey rich smooth crumble sweet treat\"
 ENV VECTOR_ADMIN_TOKEN cxt1234
 ENV VECTOR_PORT 5040
+
 RUN apt update && apt upgrade -y && apt install -y software-properties-common jq nginx apache2-utils gettext-base
 RUN add-apt-repository ppa:vbernat/haproxy-2.1 --yes && apt update -y
 RUN apt install -y supervisor bash openssl curl postgresql ca-certificates sudo mariadb-server certbot net-tools netcat haproxy nodejs unzip npm wget
 RUN wget https://raw.githubusercontent.com/vishnubob/wait-for-it/ed77b63706ea721766a62ff22d3a251d8b4a6a30/wait-for-it.sh > /bin/wait-for && chmod +x /bin/wait-for
-# RUN npm i -g npm
-# RUN npm install -g npm@latest
-# RUN npm i -g @prisma/cli@v2.16.1 nodemon pino-pretty ts-node typescript @types/node
+RUN npm install -g n
+RUN n 12.13.0
+RUN npm install -g npm@6.14.7
+RUN npm install -g prisma @prisma/client nodemon pino-pretty ts-node typescript @types/node
+
 COPY --from=node_builder /root/node node
 COPY --from=router_builder /root/router router
-COPY ops/proxy /root/proxy
+COPY build/vector/ops/proxy /root/proxy
 COPY http.cfg /root/proxy/http.cfg
 COPY supervisord.conf ./
 COPY entrypoint.sh ./
 COPY default.conf ./
 
-RUN npm install --only=prod
-
 ## Setup for postgres
-
 RUN apt install -y gnupg dirmngr
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common postgresql-12 postgresql-client-12
+RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y software-properties-common postgresql-12 postgresql-client-12
 
-# RUN cd / && sudo -u postgres psql --command \"CREATE USER docker WITH SUPERUSER PASSWORD 'docker';\" && createdb -O docker docker
 # Adjust PostgreSQL configuration so that remote connections to the
 # database are possible.
-# RUN echo 'host all  all    0.0.0.0/0  md5' >> /etc/postgresql/9.6/main/pg_hba.conf
-# RUN echo \"listen_addresses='*'\" >> /etc/postgresql/9.6/main/postgresql.conf
+RUN sed -i "/^#listen_addresses/i listen_addresses='*'" /etc/postgresql/12/main/postgresql.conf
+RUN sed -i "/^# DO NOT DISABLE\!/i # Allow access from any IP address" /etc/postgresql/12/main/pg_hba.conf
+RUN sed -i "/^# DO NOT DISABLE\!/i host all all 0.0.0.0/0 md5\n\n\n" /etc/postgresql/12/main/pg_hba.conf
 
-# Set the default command to run when starting the container
-# CMD /usr/lib/postgresql/9.6/bin/postgres -D /var/lib/postgresql/9.6/main -c config_file=/etc/postgresql/9.6/main/postgresql.conf
+# set root password
+RUN echo "vector:vector" | chpasswd
 
 RUN chmod +x /root/node/ops/entry.sh /root/router/ops/entry.sh /root/proxy/entry.sh /root/entrypoint.sh
+
 COPY vector-config.json .
-# COPY $ROUTER_BASE/dist/prisma-sqlite/schema.prisma /root/router/dist/schema.prisma
-# ADD hosts tmp/
-# RUN echo '127.0.0.1 router' >> /tmp/hosts
-# CMD cat /tmp/hosts >> /etc/hosts
+COPY build/vector/modules/router/prisma-postgres/schema.prisma /root/router/dist/schema.prisma
+COPY build/vector/modules/router/prisma-postgres/schema.prisma /prisma-postgres/schema.prisma
+# COPY /root/router/prisma-postgres/schema.prisma /root/router/dist/schema.prisma
 # RUN echo '127.0.0.1 router' >> /etc/hosts
 ENV ROUTER_HOST localhost:8000
 ENV NODE_HOST localhost:8001
 ENV ADMIN_TOKEN cxt1234
 ENV METRICS_URL http://localhost:8000/metrics
 ENV AUTO_REBALANCE_URL http://localhost:8000/auto-rebalance
-CMD /root/entrypoint.sh
-""" > Dockerfile
 
-# So that all the configuration files we have spewed are synced to the disk. Shouldn't be necessary but just in case.
-sync
-docker build -t $IMAGE .
-echo "Successfully built $IMAGE"
+# get superviserd
+COPY supervisord.conf /etc/
+
+ENTRYPOINT ["sh", "-c", "supervisord"]
