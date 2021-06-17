@@ -18,6 +18,9 @@
 Connext is a Layer 2 scaling technology based on the concept of state channels. It is designed to work with 
 EVM-based smart contract platforms. 
 
+This container contains, SQLite, Vector Server, and Vector Router. The default user is galileo (non-root) and the container
+can run with all kernel capabilities dropped (i.e. `docker run --cap-drop all`). 
+
 
 ## Building
 

@@ -40,19 +40,21 @@ RUN apk update && \
 
 # add galileo non-root user
 RUN adduser -S galileo
-COPY .vscode /app/.vscode
-COPY .theia /app/.theia
-RUN chmod a+rwx /home/galileo
-RUN chmod a+rwx /app
+RUN mkdir /database && chmod -R a+wrx /database
+COPY .vscode /home/galileo/.vscode
+COPY .theia /home/galileo/.theia
+RUN chmod -R a+rwx /home/galileo && chmod -R a+rwx /app && chmod -R a+rwx /.prisma
 
 COPY --from=router-layer /app /router
+RUN chmod -R a+rwx /router
 
 # edit the node configuration file for operating as a relay node
 RUN mkdir /theia
 WORKDIR /theia
 
 # switch to non-root user
-#USER galileo
+USER galileo
+ENV HOME /home/galileo
 WORKDIR /theia
 
 # get the IDE
@@ -61,7 +63,7 @@ COPY --from=ide-build /theia /theia
 # get superviserd
 COPY supervisord.conf /etc/
 COPY node.config.json /app/config.json
-COPY router.config.json /router.config.json
+COPY router.config.json /router/config.json
 
 # set environment variable to look for plugins in the correct directory
 # set environment variable to look for plugins in the correct directory
@@ -75,7 +77,6 @@ COPY --from=caddy-build /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/
 
 # Vector environment variables
-RUN mkdir /database
 ENV VECTOR_PROD true
 ENV VECTOR_SQLITE_FILE "/database/store.db"
 

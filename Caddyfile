@@ -8,17 +8,7 @@
 		import /tmp/hashpass.txt
     }
 	
-	handle_path /relay/* {
-        reverse_proxy http://localhost:4161
-    }
-	
-	handle_path /restapi/* {
-        reverse_proxy http://localhost:8080
-    }
-	
-	handle_path /tealdbg/* {
-        reverse_proxy http://localhost:9392
-		import /tmp/hashpass.txt
-    }
-    
+	handle_path /router/* {
+        reverse_proxy http://localhost:42069
+    }    
 }

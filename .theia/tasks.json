@@ -5,10 +5,32 @@
             "label": "Start Server Node",
             "description": "Start the Vector server node in the terminal.",
             "type": "shell",
-            "command": "bash ops/entry.sh",
+            "command": "cd /app && bash ops/entry.sh",
             "icon": {
-                "prefix": "far",
-                "name": "play-circle"
+                "prefix": "fas",
+                "name": "server"
+            }
+        },
+		{
+            "id": "start-router-node",
+            "label": "Start Router Node",
+            "description": "Start the Vector router node in the terminal.",
+            "type": "shell",
+            "command": "cd /router && bash ops/entry.sh",
+            "icon": {
+                "prefix": "fas",
+                "name": "route"
+            }
+        },
+		{
+            "id": "start-bash-terminal",
+            "label": "Bash Terminal",
+            "description": "Open a Bash terminal",
+            "type": "shell",
+            "command": "cd /home/galileo && /bin/bash",
+			"icon": {
+                "prefix": "fas",
+                "name": "terminal"
             }
         }
     ]
