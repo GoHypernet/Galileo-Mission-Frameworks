@@ -1,24 +1,38 @@
 :8888 {
-    log
-    root * /home/galileo
-    redir / /ui/
-	
-	handle_path /ui/* {
-        reverse_proxy http://localhost:3000
-		import /tmp/hashpass.txt
-    }
-	
-	handle_path /relay/* {
-        reverse_proxy http://localhost:4161
-    }
-	
-	handle_path /restapi/* {
-        reverse_proxy http://localhost:8080
-    }
-	
-	handle_path /tealdbg/* {
-        reverse_proxy http://localhost:9392
-		import /tmp/hashpass.txt
-    }
-    
+        log
+        root * /home/galileo
+        redir / /ui/
+
+        handle_path /relay/* {
+                @websockets {
+                        header Connection *Upgrade*
+                        header Upgrade websocket
+                }
+                reverse_proxy @websockets localhost:4161
+        }
+
+        handle_path /v1/* {
+                @websockets {
+                        header Connection *Upgrade*  
+                        header Upgrade websocket
+                }
+                reverse_proxy @websockets localhost:4161
+        }
+
+        handle_path /v2/* {
+                @websockets {
+                        header Connection *Upgrade*
+                        header Upgrade websocket
+                }
+                reverse_proxy @websockets localhost:4161
+        }
+
+        handle_path /ui/* {
+                reverse_proxy http://localhost:3000
+                import /tmp/hashpass.txt
+        }
+
+        handle_path /rpc/* {
+                reverse_proxy http://localhost:8080
+        }
 }

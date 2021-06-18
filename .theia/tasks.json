@@ -11,6 +11,28 @@
                 "name": "play-circle"
             }
         },
+		{
+            "id": "algorand-node-update",
+            "label": "Upgrade Node",
+            "description": "Check for upgrades and apply them if necessary.",
+            "type": "shell",
+            "command": "bash /home/galileo/update.sh -d /home/galileo/data",
+            "icon": {
+                "prefix": "fas",
+                "name": "sync"
+            }
+        },
+		{
+            "id": "algorand-node-status",
+            "label": "Get Node Status",
+            "description": "Check on the status of your Algorand node.",
+            "type": "shell",
+            "command": "/home/galileo/goal node status -w 1000",
+            "icon": {
+                "prefix": "fas",
+                "name": "info-circle"
+            }
+        },
         {
             "id": "stop-algorand-node",
             "label": "Stop Relay Node",
@@ -23,25 +45,25 @@
             }
         },
 		{
-            "id": "algorand-node-status",
-            "label": "Get Node Status",
-            "description": "Check on the status of your Algorand node.",
+            "id": "algorand-carpenter",
+            "label": "Carpenter Tool",
+            "description": "Protocol visualization tool.",
             "type": "shell",
-            "command": "/home/galileo/goal node status",
+            "command": "/home/galileo/carpenter -D",
             "icon": {
                 "prefix": "fas",
-                "name": "info-circle"
+                "name": "search-location"
             }
         },
-        {
-            "id": "algorand-node-update",
-            "label": "Upgrade Node",
-            "description": "Check for upgrades and apply them if necessary.",
+		{
+            "id": "start-bash-terminal",
+            "label": "Bash Terminal",
+            "description": "Open a Bash terminal",
             "type": "shell",
-            "command": "bash /home/galileo/update.sh -d /home/galileo/data",
-            "icon": {
+            "command": "cd /home/galileo && /bin/bash",
+                        "icon": {
                 "prefix": "fas",
-                "name": "sync"
+                "name": "terminal"
             }
         }
     ]

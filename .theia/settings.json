@@ -61,6 +61,16 @@
             "title": "🌎 Official Algorand Forum",
             "href": "https://forum.algorand.org/",
             "priority": 1
+            },
+			{
+            "title": "⛓ How big is the Algorand Blockchain?",
+            "href": "https://howbigisalgorand.com/",
+            "priority": 2
+            },
+			{
+            "title": "👩‍🏫 What are the different Algorand node types?",
+            "href": "https://developer.algorand.org/docs/run-a-node/setup/types/",
+            "priority": 3
             }
         ]
         },
@@ -69,18 +79,18 @@
         "title": "Galileo APIs",
         "content": [
             {
-            "title": "🏃‍♂️ Relay API",
-            "href": "/relay/",
+            "title": "🏃‍♂️ Relay URL",
+            "href": "/",
             "priority": 0
             },
             {
             "title": "☁ Rest API",
-            "href": "/restapi/",
+            "href": "/rpc/",
             "priority": 1
             },
 			{
             "title": "📊 Node Metrics",
-            "href": "/restapi/metrics",
+            "href": "/rpc/metrics",
             "priority": 2
             },
 			{

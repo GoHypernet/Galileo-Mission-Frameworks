@@ -21,7 +21,8 @@ Running a relay node requires syncing the full blockchain, which as of 5-12-2021
 
 This containerized application exposes the following reverse proxy endpoints:
 
-- /relay/* -> locoalhost:4161 (Relay node connections)
+- /v1/* -> localhost:4161 (Relay node connections)
+- /v2/* -> localhost:4161 (Relay node connections)
 - /restapi/* -> localhost:8080 (Algod rest API)
 - /tealdbg/* -> localhost:9392 (for connecting to the tealdbg program if activated)
  
