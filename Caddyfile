@@ -1,31 +1,14 @@
 :8888 {
         log
         root * /home/galileo
-        redir / /ui/
 
-        handle_path /relay/* {
-                @websockets {
-                        header Connection *Upgrade*
-                        header Upgrade websocket
-                }
-                reverse_proxy @websockets localhost:4161
+        handle_path /* {
+                reverse_proxy localhost:4161
         }
 
-        handle_path /v1/* {
-                @websockets {
-                        header Connection *Upgrade*  
-                        header Upgrade websocket
-                }
-                reverse_proxy @websockets localhost:4161
-        }
-
-        handle_path /v2/* {
-                @websockets {
-                        header Connection *Upgrade*
-                        header Upgrade websocket
-                }
-                reverse_proxy @websockets localhost:4161
-        }
+        handle_errors {
+		        redir / /ui/
+		}
 
         handle_path /ui/* {
                 reverse_proxy http://localhost:3000

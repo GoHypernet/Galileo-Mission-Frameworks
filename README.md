@@ -21,10 +21,9 @@ Running a relay node requires syncing the full blockchain, which as of 5-12-2021
 
 This containerized application exposes the following reverse proxy endpoints:
 
-- /v1/* -> localhost:4161 (Relay node connections)
-- /v2/* -> localhost:4161 (Relay node connections)
+- /* -> localhost:4161 (Relay node connections)
+- /ui/* -> localhost:3000 (Galileo IDE + authentication)
 - /restapi/* -> localhost:8080 (Algod rest API)
-- /tealdbg/* -> localhost:9392 (for connecting to the tealdbg program if activated)
  
 Additionally, the runtime environment contains node and python 3.8 for Algorand Smart Contract development. 
 
