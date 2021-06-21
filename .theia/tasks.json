@@ -1,0 +1,48 @@
+{
+    "tasks": [
+        {
+            "id": "start-terra-node",
+            "label": "Start Terra Node",
+            "description": "Start the Terra node in the background.",
+            "type": "shell",
+            "command": "/usr/bin/terrad start >& /home/galileo/terrad.log",
+            "icon": {
+                "prefix": "far",
+                "name": "play-circle"
+            }
+        },
+		{
+            "id": "terra-node-logs",
+            "label": "Terra Node Logs",
+            "description": "View the logs of your Terra node.",
+            "type": "shell",
+            "command": "tail -f /home/galileo/terrad.log",
+            "icon": {
+                "prefix": "far",
+                "name": "eye"
+            }
+        },
+        {
+            "id": "stop-terra-node",
+            "label": "Stop Terra Node",
+            "description": "Stop the Terra node.",
+            "type": "shell",
+            "command": "kill $(pgrep terrad)",
+            "icon": {
+                "prefix": "far",
+                "name": "stop-circle"
+            }
+        },
+		{
+            "id": "start-bash-terminal",
+            "label": "Bash Terminal",
+            "description": "Open a Bash terminal",
+            "type": "shell",
+            "command": "cd /home/galileo && /bin/bash",
+            "icon": {
+                "prefix": "fas",
+                "name": "terminal"
+            }
+        }
+    ]
+}

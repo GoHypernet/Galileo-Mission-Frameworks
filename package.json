@@ -3,31 +3,34 @@
     "theia": {
         "frontend": {
             "config": {
-                "applicationName": "Terra Terminal in Galileo",
-                "preferences": {
-					"files.enableTrash": false,
-                    "workbench.colorTheme": "Galileo Light"
-                },
-				"defaultTheme": "Galileo Light"
-            }
+                "applicationName": "Galileo Editor",
+                "defaultTheme": "Galileo Dark"
+              }
         },
-		"target": "browser"
+        "generator": {
+            "config": {
+              "preloadTemplate": "./preload.html"
+            }
+          }
     },
     "dependencies": {
-        "@theia/editor-preview": "latest",
-        "@theia/file-search": "latest",
-        "@theia/getting-started": "latest",
-        "@theia/markers": "latest",
-        "@theia/messages": "latest",
-        "@theia/monaco": "latest",
-        "@theia/navigator": "latest",
-        "@theia/outline-view": "latest",
-        "@theia/plugin-ext-vscode": "latest",
-        "@theia/preferences": "latest",
-        "@theia/preview": "latest",
-        "@theia/search-in-workspace": "latest",
-        "@theia/terminal": "latest",
-        "@theia/vsx-registry": "latest"
+		"@hypernetwork/galileo-ide-widget": "latest",
+		"@theia/editor-preview": "latest",
+		"@theia/file-search": "latest",
+		"@theia/markers": "latest",
+		"@theia/messages": "latest",
+		"@theia/monaco": "latest",
+		"@theia/navigator": "latest",
+		"@theia/outline-view": "latest",
+		"@theia/plugin-ext-vscode": "latest",
+		"@theia/preferences": "latest",
+		"@theia/preview": "latest",
+		"@theia/search-in-workspace": "latest",
+		"@theia/terminal": "latest",
+		"@theia/vsx-registry": "latest",
+		"@theia/task": "latest",
+		"@theia/plugin-dev": "latest",
+		"@theia/plugin-ext": "latest"
     },
     "devDependencies": {
         "@theia/cli": "latest"
@@ -69,6 +72,6 @@
         "vscode-builtin-xml": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/xml-1.39.1-prel.vsix",
         "vscode-builtin-yaml": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/yaml-1.39.1-prel.vsix",
         "vscode-editorconfig": "https://github.com/theia-ide/editorconfig-vscode/releases/download/v0.14.4/EditorConfig-0.14.4.vsix",
-		"galileo-theme": "https://github.com/GoHypernet/galileo-IDE-theme/releases/download/0.0.2/Hypernetlabs.galileo-theme-0.0.2.vsix"
+		"galileo-theme": "https://github.com/GoHypernet/galileo-IDE-theme/releases/download/0.0.3/galileo-theme-0.0.3.vsix"
     }
 }

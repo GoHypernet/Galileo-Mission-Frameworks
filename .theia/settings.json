@@ -1,0 +1,75 @@
+{
+    "galileo.logo": "https://cryptologos.cc/logos/terra-luna-luna-logo.svg?v=010",
+    "galileo.title": "Terra",
+    "galileo.description": "Programmable 💵 for the internet",
+    "galileo.widget_label": "Terra Core Portal",
+    "galileo.social_links": [
+        {
+        "icon": {
+            "prefix": "fab",
+            "name": "twitter"
+        },
+        "href": "https://twitter.com/terra_money",
+        "priority": 0
+        },
+        {
+        "icon": {
+            "prefix": "fab",
+            "name": "github"
+        },
+        "href": "https://github.com/terra-money/core",
+        "priority": 1
+        },
+		{
+        "icon": {
+            "prefix": "fab",
+            "name": "discourse"
+        },
+        "href": "https://agora.terra.money/",
+        "priority": 2
+        },
+		{
+        "icon": {
+            "prefix": "fab",
+            "name": "discord"
+        },
+        "href": "https://discord.gg/e29HWwC2Mz",
+        "priority": 2
+        }
+    ],
+    "galileo.ui_components": [
+        {
+        "type": "custom",
+        "title": "Getting Started",
+        "content": [
+            {
+            "title": "🏡 Terra Home Page",
+            "href": "https://www.terra.money/",
+            "priority": 0
+            },
+            {
+            "title": "🤓 Developer Resources",
+            "href": "https://docs.terra.money/",
+            "priority": 1
+            },
+            {
+            "title": "📙 Terra Node Guide",
+            "href": "https://docs.terra.money/node/installation.html",
+            "priority": 2
+            }
+        ]
+        },
+		{
+        "type": "custom",
+        "title": "Your Galileo API endpoints",
+        "content": [
+            {
+            "title": "☁ Rest API",
+            "href": "/rpc/",
+            "priority": 1
+            }
+        ]
+        }
+    ],
+    "workbench.colorTheme": "Galileo Dark"
+}
