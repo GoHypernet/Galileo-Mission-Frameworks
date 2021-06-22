@@ -19,6 +19,14 @@
         },
         "href": "https://github.com/connext",
         "priority": 1
+        },
+		{
+        "icon": {
+            "prefix": "fab",
+            "name": "discord"
+        },
+        "href": "https://discord.gg/VcNFQdKuxM",
+        "priority": 2
         }
     ],
     "galileo.ui_components": [
@@ -61,13 +69,13 @@
         },
 		{
         "type": "custom",
-        "title": "Galileo APIs",
+        "title": "Your API Endpoints",
         "content": [
             {
             "title": "☁ Router API",
-            "href": "/restapi/",
+            "href": "/routerapi/",
             "priority": 0
-            },
+            }
         ]
         }
     ],

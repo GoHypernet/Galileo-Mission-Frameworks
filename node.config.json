@@ -1,7 +1,5 @@
 {
-  "adminToken":"asdf",
-  "chainProviders": {"1":"https://eth-mainnet.alchemyapi.io/v2/_2mBX3HGWRFlLSg_2JeqBn3Ljlfn2hqU"},
+  "adminToken":"viletortoiserabidhunter",
   "mnemonic": "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat",
-  "messagingUrl": "https://messaging.connext.network",
   "port": 8000
 }

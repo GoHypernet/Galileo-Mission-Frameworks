@@ -5,7 +5,7 @@
             "label": "Start Server Node",
             "description": "Start the Vector server node in the terminal.",
             "type": "shell",
-            "command": "cd /app && bash ops/entry.sh",
+            "command": "cd /app && tmux new -s server bash ops/entry.sh",
             "icon": {
                 "prefix": "fas",
                 "name": "server"
@@ -16,7 +16,7 @@
             "label": "Start Router Node",
             "description": "Start the Vector router node in the terminal.",
             "type": "shell",
-            "command": "cd /router && bash ops/entry.sh",
+            "command": "cd /router && tmux new -s router bash ops/entry.sh",
             "icon": {
                 "prefix": "fas",
                 "name": "route"
