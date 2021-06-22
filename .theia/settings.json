@@ -1,23 +1,23 @@
 {
-    "galileo.logo": "https://storage.googleapis.com/mission_types/c37d3e16-e27f-4357-90e3-7ee1ea0c1486.png",
-    "galileo.title": "Connext Vector Node",
-    "galileo.description": "Say Hello to a Multichain Ethereum",
-    "galileo.widget_label": "Vector Node Portal",
+    "galileo.logo": "https://cryptologos.cc/logos/tezos-xtz-logo.png?v=010",
+    "galileo.title": "Tezos",
+    "galileo.description": "Security focused. Upgradable. Built to last.",
+    "galileo.widget_label": "Tezos Node Portal",
     "galileo.social_links": [
         {
         "icon": {
             "prefix": "fab",
             "name": "twitter"
         },
-        "href": "https://twitter.com/connextnetwork",
+        "href": "https://twitter.com/tezos",
         "priority": 0
         },
         {
         "icon": {
             "prefix": "fab",
-            "name": "github"
+            "name": "gitlab"
         },
-        "href": "https://github.com/connext",
+        "href": "https://gitlab.com/tezos/tezos",
         "priority": 1
         },
 		{
@@ -25,7 +25,7 @@
             "prefix": "fab",
             "name": "discord"
         },
-        "href": "https://discord.gg/VcNFQdKuxM",
+        "href": "https://discord.com/invite/udZwhQn",
         "priority": 2
         }
     ],
@@ -35,18 +35,18 @@
         "title": "Getting Started",
         "content": [
             {
-            "title": "🏡 Connext Home Page",
-            "href": "https://algorand.com/",
+            "title": "🏡 Tezos Home Page",
+            "href": "https://tezos.com/",
             "priority": 0
             },
             {
             "title": "🤓 Developer Resources",
-            "href": "https://docs.connext.network/",
+            "href": "https://tezos.com/developer-portal",
             "priority": 2
             },
             {
-            "title": "💸 Liquidity Guide",
-            "href": "https://developer.algorand.org/docs/run-a-node/setup/types/",
+            "title": "📙 Documentation",
+            "href": "https://tezos.gitlab.io/",
             "priority": 3
             }
         ]
@@ -56,14 +56,9 @@
         "title": "Help",
         "content": [
             {
-            "title": "🤔 Connext Chat",
-            "href": "https://discord.com/invite/VcNFQdKuxM",
+            "title": "🤔 Tezos Stackexchange",
+            "href": "https://tezos.stackexchange.com/",
             "priority": 0
-            },
-            {
-            "title": "🌎 Connext FAQ",
-            "href": "https://docs.connext.network/faq",
-            "priority": 1
             }
         ]
         },
@@ -72,7 +67,7 @@
         "title": "Your API Endpoints",
         "content": [
             {
-            "title": "☁ Router API",
+            "title": "☁ JSON RPC endpoint",
             "href": "/routerapi/",
             "priority": 0
             }

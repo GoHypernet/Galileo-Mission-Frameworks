@@ -27,7 +27,7 @@
             "label": "Bash Terminal",
             "description": "Open a Bash terminal",
             "type": "shell",
-            "command": "cd /home/galileo && /bin/bash",
+            "command": "cd /home/tezos && /bin/bash",
 			"icon": {
                 "prefix": "fas",
                 "name": "terminal"
