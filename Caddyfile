@@ -8,7 +8,7 @@
 		import /tmp/hashpass.txt
     }
 	
-	handle_path /router/* {
-        reverse_proxy http://localhost:42069
+	handle_path /jsonrpc/* {
+        reverse_proxy http://localhost:8732
     }    
 }

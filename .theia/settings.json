@@ -68,7 +68,7 @@
         "content": [
             {
             "title": "☁ JSON RPC endpoint",
-            "href": "/routerapi/",
+            "href": "/jsonrpc/",
             "priority": 0
             }
         ]
