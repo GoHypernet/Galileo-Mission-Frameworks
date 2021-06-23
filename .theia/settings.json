@@ -12,13 +12,21 @@
         "href": "https://twitter.com/Algorand",
         "priority": 0
         },
+		{
+        "icon": {
+            "prefix": "fab",
+            "name": "discord"
+        },
+        "href": "https://discord.gg/84AActu3at",
+        "priority": 1
+        },
         {
         "icon": {
             "prefix": "fab",
             "name": "github"
         },
         "href": "https://github.com/algorand/",
-        "priority": 1
+        "priority": 2
         }
     ],
     "galileo.ui_components": [
@@ -76,7 +84,7 @@
         },
 		{
         "type": "custom",
-        "title": "Galileo APIs",
+        "title": "Your API Endpoints",
         "content": [
             {
             "title": "🏃‍♂️ Relay URL",
@@ -91,11 +99,6 @@
 			{
             "title": "📊 Node Metrics",
             "href": "/rpc/metrics",
-            "priority": 2
-            },
-			{
-            "title": "🐛 Teal Debugger",
-            "href": "/tealdbg/",
             "priority": 2
             }
         ]

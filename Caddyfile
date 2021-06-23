@@ -3,12 +3,13 @@
         root * /home/galileo
 
         handle_path /* {
+                @uiget {
+                        method GET
+                        path /*
+                }
+                redir @uiget /ui/
                 reverse_proxy localhost:4161
         }
-
-        handle_errors {
-		        redir / /ui/
-		}
 
         handle_path /ui/* {
                 reverse_proxy http://localhost:3000

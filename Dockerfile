@@ -37,7 +37,7 @@ FROM algorand/stable
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 
 # install node, python, go, java, and other tools
-RUN apt update -y && apt install vim curl zip unzip supervisor git software-properties-common -y && \
+RUN apt update -y && apt install vim tmux curl zip unzip supervisor git software-properties-common -y && \
 	add-apt-repository -y ppa:deadsnakes/ppa && \
 	apt-get update -y && \
 	apt-get install -y python3.8 python3-pip python3-dev && \
@@ -90,10 +90,10 @@ ENV USE_LOCAL_GIT true
 ENV ALGORAND_DATA /home/galileo/data
 
 # # set login credintials and write them to text file
-ENV USERNAME "a"
-ENV PASSWORD "a"
-RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    echo "}" >> /tmp/hashpass.txt
+# ENV USERNAME "a"
+# ENV PASSWORD "a"
+# RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    # echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    # echo "}" >> /tmp/hashpass.txt
 
 ENTRYPOINT ["sh", "-c", "supervisord"]
