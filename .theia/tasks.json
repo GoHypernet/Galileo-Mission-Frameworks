@@ -5,7 +5,7 @@
             "label": "Geth Light Node (Homestead)",
             "description": "Downloads all block headers, block data, and verifies some randomly.",
             "type": "shell",
-            "command": "geth --syncmode light --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "tmux new -s geth geth --syncmode light --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics || tmux a -t geth",
 			"icon": {
                 "prefix": "fas",
                 "name": "feather-alt"
@@ -16,7 +16,7 @@
             "label": "Geth Fast Node (Homestead)",
             "description": "Downloads all blocks (including headers, transactions and receipts), verifies all headers, and downloads the state and verifies it against the headers.",
             "type": "shell",
-            "command": "geth --syncmode fast --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "tmux new -s geth geth --syncmode fast --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics || tmux a -t geth",
 			"icon": {
                 "prefix": "fas",
                 "name": "fast-forward"
@@ -27,7 +27,7 @@
             "label": "Geth Full Node (Homestead)",
             "description": "Downloads all blocks (including headers, transactions and receipts) and generates the state of the blockchain incrementally by executing every block.",
             "type": "shell",
-            "command": "geth --syncmode full --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "tmux new -s geth geth --syncmode full --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics || tmux a -t geth",
 			"icon": {
                 "prefix": "fas",
                 "name": "battery-full"
@@ -38,7 +38,7 @@
             "label": "Geth Archive (Homestead)",
             "description": "Downloads all blocks (including headers, transactions, receipts, and traces), verifies all headers, and downloads the state and verifies it against the headers.",
             "type": "shell",
-            "command": "geth --syncmode full --http.vhosts '*' --gcmode archive --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "tmux new -s geth geth --syncmode full --http.vhosts '*' --gcmode archive --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics || tmux a -t geth",
 			"icon": {
                 "prefix": "fas",
                 "name": "archive"
@@ -49,7 +49,7 @@
             "label": "Geth Light Node (Goerli)",
             "description": "Start a light synce node on the Goerli testnet.",
             "type": "shell",
-            "command": "geth --goerli --syncmode fast --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "tmux new -s geth geth --goerli --syncmode fast --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics || tmux a -t geth",
 			"icon": {
                 "prefix": "fas",
                 "name": "feather-alt"
@@ -60,7 +60,7 @@
             "label": "Geth Fast Node (Goerli)",
             "description": "Start a fast sync node on the Goerli testnet.",
             "type": "shell",
-            "command": "geth --goerli --syncmode fast --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "tmux new -s geth geth --goerli --syncmode fast --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics || tmux a -t geth",
 			"icon": {
                 "prefix": "fas",
                 "name": "fast-forward"
@@ -71,7 +71,7 @@
             "label": "Geth Light Node (Rinkeby)",
             "description": "Start light sync node on Rinkeby testnet.",
             "type": "shell",
-            "command": "geth --rinkeby --syncmode light --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "tmux new -s geth geth --rinkeby --syncmode light --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics || tmux a -t geth",
 			"icon": {
                 "prefix": "fas",
                 "name": "feather-alt"
@@ -82,7 +82,7 @@
             "label": "Geth Fast Node (Rinkeby)",
             "description": "Start fast sync node on Rinkeby testnet.",
             "type": "shell",
-            "command": "geth --rinkeby --syncmode fast --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "tmux new -s geth geth --rinkeby --syncmode fast --http.vhosts '*' --cache 2048 --http --http.api eth,net,web3 --ws --graphql --metrics || tmux a -t geth",
 			"icon": {
                 "prefix": "fas",
                 "name": "fast-forward"
@@ -93,32 +93,32 @@
             "label": "Geth Dev Node (1337)",
             "description": "Start a Geth developer node.",
             "type": "shell",
-            "command": "geth --dev --http --http.vhosts '*' --http.api eth,net,web3 --ws --graphql --metrics",
+            "command": "tmux new -s geth geth --dev --http --http.vhosts '*' --http.api eth,net,web3 --ws --graphql --metrics || tmux a -t geth",
 			"icon": {
                 "prefix": "fas",
                 "name": "hard-hat"
             }
         },
 		{
-            "id": "start-python-terminal",
-            "label": "Python Terminal",
-            "description": "Open a Python terminal",
+            "id": "geth-terminal",
+            "label": "Geth Terminal",
+            "description": "Start an interactive Geth command line session.",
             "type": "shell",
-            "command": "/usr/bin/python3.8",
+            "command": "tmux new -s gethcli geth attach || tmux a -t gethcli",
 			"icon": {
                 "prefix": "fab",
-                "name": "python"
+                "name": "ethereum"
             }
         },
 		{
-            "id": "start-node-terminal",
-            "label": "NodeJS Terminal",
-            "description": "Open a NodeJS terminal",
+            "id": "stop-geth-node",
+            "label": "Stop Geth Node",
+            "description": "Stop any running Geth node in this instance.",
             "type": "shell",
-            "command": "/usr/bin/node",
+            "command": "tmux kill-session -t geth",
 			"icon": {
-                "prefix": "fab",
-                "name": "node"
+                "prefix": "fas",
+                "name": "stop-circle"
             }
         },
 		{
@@ -126,7 +126,7 @@
             "label": "Bash Terminal",
             "description": "Open a Bash terminal",
             "type": "shell",
-            "command": "cd /home/galileo && /bin/bash",
+            "command": "tmux new -s myterminal || tmux a -t myterminal",
 			"icon": {
                 "prefix": "fas",
                 "name": "terminal"

@@ -92,10 +92,10 @@
         },
 		{
         "type": "custom",
-        "title": "Galileo APIs",
+        "title": "Your API Endpoints",
         "content": [
 			{
-			"title": "🔱 HTTP API",
+			"title": "🔱 HTTP JSON-RPC",
 			"href": "/http/",
 			"priority": 0
 			},

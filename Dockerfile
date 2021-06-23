@@ -52,7 +52,7 @@ RUN apt update -y \
     ethereum solc \
     supervisor \
     python3.8 python3-pip python3.8-dev \
-	vim curl git zip unzip vim speedometer net-tools \
+	vim curl tmux git zip unzip vim speedometer net-tools \
   && python3.8 -m pip install web3 py-solc py-solc-x \
   && curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
   && apt install -y nodejs \
