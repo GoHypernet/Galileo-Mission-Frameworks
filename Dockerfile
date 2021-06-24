@@ -86,10 +86,10 @@ ENV VECTOR_MESSAGING_URL 'https://messaging.connext.network'
 ENV VECTOR_CHAIN_PROVIDERS='{"1":"https://eth-mainnet.alchemyapi.io/v2/_2mBX3HGWRFlLSg_2JeqBn3Ljlfn2hqU"}'
 
 # # set login credintials and write them to text file
-ENV USERNAME "a"
-ENV PASSWORD "a"
-RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    echo "}" >> /tmp/hashpass.txt
+# ENV USERNAME "a"
+# ENV PASSWORD "a"
+# RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    # echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    # echo "}" >> /tmp/hashpass.txt
 
 ENTRYPOINT ["sh", "-c", "supervisord"]
