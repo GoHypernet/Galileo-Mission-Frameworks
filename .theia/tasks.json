@@ -1,0 +1,70 @@
+{
+    "tasks": [
+		{
+            "id": "get-genesis-file",
+            "label": "Get Genesis State",
+            "description": "Get Genesis state file for running your validator.",
+            "type": "shell",
+            "command": "cd /home/galileo && wget https://opera.fantom.network/mainnet.g",
+            "icon": {
+                "prefix": "fas",
+                "name": "download"
+            }
+        },
+        {
+            "id": "start-opera-node",
+            "label": "Start Opera Node",
+            "description": "Start the Opera validator node.",
+            "type": "shell",
+            "command": "tmux new -s opera-node opera --genesis /home/galileo/mainnet.g --nousb || tmux a -t opera-node",
+            "icon": {
+                "prefix": "far",
+                "name": "play-circle"
+            }
+        },
+		{
+            "id": "create-validator-wallet",
+            "label": "Create Wallet",
+            "description": "Create a new validator wallet for this node.",
+            "type": "shell",
+            "command": "opera account new",
+            "icon": {
+                "prefix": "fas",
+                "name": "sync"
+            }
+        },
+		{
+            "id": "opera-console",
+            "label": "Opera Console",
+            "description": "Attach to the interactive Opera console.",
+            "type": "shell",
+            "command": "tmux new -s opera-console opera attach",
+            "icon": {
+                "prefix": "fas",
+                "name": "info-circle"
+            }
+        },
+        {
+            "id": "stop-opera-node",
+            "label": "Stop Opera Node",
+            "description": "Stop the Opera node.",
+            "type": "shell",
+            "command": "tmux kill-session opera-node",
+            "icon": {
+                "prefix": "far",
+                "name": "stop-circle"
+            }
+        },
+		{
+            "id": "start-bash-terminal",
+            "label": "Bash Terminal",
+            "description": "Open a Bash terminal",
+            "type": "shell",
+            "command": "cd /home/galileo && /bin/bash",
+            "icon": {
+                "prefix": "fas",
+                "name": "terminal"
+			}
+		}
+    ]
+}

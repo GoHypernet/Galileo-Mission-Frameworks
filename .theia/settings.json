@@ -1,0 +1,82 @@
+{
+    "galileo.logo": "https://cryptologos.cc/logos/fantom-ftm-logo.svg?v=010",
+    "galileo.title": "Fantom",
+    "galileo.description": "One platform, endless solutions.",
+    "galileo.widget_label": "Fantom Portal",
+    "galileo.social_links": [
+        {
+        "icon": {
+            "prefix": "fab",
+            "name": "twitter"
+        },
+        "href": "https://twitter.com/FantomFDN",
+        "priority": 0
+        },
+		{
+        "icon": {
+            "prefix": "fab",
+            "name": "discord"
+        },
+        "href": "http://chat.fantom.network/",
+        "priority": 1
+        },
+        {
+        "icon": {
+            "prefix": "fab",
+            "name": "github"
+        },
+        "href": "https://github.com/Fantom-Foundation",
+        "priority": 2
+        }
+    ],
+    "galileo.ui_components": [
+        {
+        "type": "custom",
+        "title": "Getting Started",
+        "content": [
+            {
+            "title": "🏡 Fantom Home Page",
+            "href": "https://fantom.foundation/",
+            "priority": 0
+            },
+            {
+            "title": "💸 Fantom Wallet Information",
+            "href": "https://fantom.foundation/ftm-wallet/",
+            "priority": 1
+            },
+            {
+            "title": "🤓 Developer Resources",
+            "href": "https://docs.fantom.foundation/",
+            "priority": 3
+            },
+            {
+            "title": "📙 Fontom Validator Node Guide",
+            "href": "https://docs.fantom.foundation/staking/how-to-run-a-validator-node",
+            "priority": 3
+            }
+        ]
+        },
+        {
+        "type": "custom",
+        "title": "Help",
+        "content": [
+            {
+            "title": "🤔 Fantom FAQ",
+            "href": "https://fantom.foundation/fantom-faq/",
+            "priority": 0
+            },
+            {
+            "title": "🌎 Fantom Community Resources",
+            "href": "https://fantom.foundation/fantom-community/",
+            "priority": 1
+            },
+			{
+            "title": "🛰 Opera Explorer",
+            "href": "https://explorer.fantom.network/",
+            "priority": 2
+            }
+        ]
+        }
+    ],
+    "workbench.colorTheme": "Galileo Dark"
+}
