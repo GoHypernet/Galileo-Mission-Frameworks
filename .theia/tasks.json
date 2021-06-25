@@ -24,13 +24,24 @@
         },
 		{
             "id": "start-bash-terminal",
-            "label": "Bash Terminal",
-            "description": "Open a Bash terminal",
+            "label": "Server Node Settings",
+            "description": "Edit Server Node config with vim.",
             "type": "shell",
-            "command": "cd /home/galileo && /bin/bash",
+            "command": "tmux new -s vimservernode vim /app/config.json || tmux a -t vimservernode",
 			"icon": {
                 "prefix": "fas",
-                "name": "terminal"
+                "name": "clipboard-check"
+            }
+        },
+        {
+            "id": "start-bash-terminal",
+            "label": "Router Node Settings",
+            "description": "Edit Router Node config with vim.",
+            "type": "shell",
+            "command": "tmux new -s vimrouternode vim /router/config.json || tmux a -t vimrouternode",
+			"icon": {
+                "prefix": "fas",
+                "name": "map-marked"
             }
         }
     ]
