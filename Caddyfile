@@ -5,7 +5,7 @@
         handle_path /* {
                 @uiget {
                         method GET
-                        path /*
+                        path /
                 }
                 redir @uiget /ui/
                 reverse_proxy localhost:4161
