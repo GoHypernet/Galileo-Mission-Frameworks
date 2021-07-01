@@ -15,25 +15,26 @@
     },
     "dependencies": {
 		"@hypernetwork/galileo-ide-widget": "latest",
-        "@theia/editor-preview": "latest",
-        "@theia/file-search": "latest",
-        "@theia/markers": "latest",
-        "@theia/messages": "latest",
-        "@theia/monaco": "latest",
-        "@theia/navigator": "latest",
-        "@theia/outline-view": "latest",
-        "@theia/plugin-ext-vscode": "latest",
-        "@theia/preferences": "latest",
-        "@theia/preview": "latest",
-        "@theia/search-in-workspace": "latest",
-        "@theia/terminal": "latest",
-        "@theia/vsx-registry": "latest",
-		"@theia/task": "latest",
-        "@theia/plugin-dev": "latest",
-        "@theia/plugin-ext": "latest"
+		"@hypernetwork/galileo-ide-password-widget": "latest",
+        "@theia/editor-preview": "1.15.0",
+        "@theia/file-search": "1.15.0",
+        "@theia/markers": "1.15.0",
+        "@theia/messages": "1.15.0",
+        "@theia/monaco": "1.15.0",
+        "@theia/navigator": "1.15.0",
+        "@theia/outline-view": "1.15.0",
+        "@theia/plugin-ext-vscode": "1.15.0",
+        "@theia/preferences": "1.15.0",
+        "@theia/preview": "1.15.0",
+        "@theia/search-in-workspace": "1.15.0",
+        "@theia/terminal": "1.15.0",
+        "@theia/vsx-registry": "1.15.0",
+		"@theia/task": "1.15.0",
+        "@theia/plugin-dev": "1.15.0",
+        "@theia/plugin-ext": "1.15.0"
     },
     "devDependencies": {
-        "@theia/cli": "latest"
+        "@theia/cli": "1.15.0"
     },
     "scripts": {
         "preinstall": "node-gyp install"

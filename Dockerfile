@@ -5,7 +5,7 @@ FROM caddy AS caddy-build
 FROM connextproject/vector_node:0.2.5-beta.18 as ide-build
 
 RUN apk update && \
-    apk add git openssh bash python3 python3-dev py-pip make gcc g++ libx11-dev libxkbfile-dev supervisor && \
+    apk add git openssh bash python3 python3-dev py-pip make gcc g++ libsecret-dev libx11-dev libxkbfile-dev supervisor && \
     wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash && \
     apk add nodejs npm
 
@@ -34,7 +34,7 @@ FROM connextproject/vector_router:0.2.5-beta.18 AS router-layer
 FROM connextproject/vector_node:0.2.5-beta.18
 
 RUN apk update && \
-    apk add git tmux vim zip unzip openssh bash python3 python3-dev py-pip make gcc g++ libx11-dev libxkbfile-dev supervisor && \
+    apk add git tmux vim zip unzip openssh bash python3 python3-dev py-pip make gcc g++ libsecret-dev libx11-dev libxkbfile-dev supervisor && \
     wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash && \
     apk add nodejs npm && \
 	curl https://rclone.org/install.sh | bash 
@@ -86,10 +86,10 @@ ENV VECTOR_MESSAGING_URL 'https://messaging.connext.network'
 ENV VECTOR_CHAIN_PROVIDERS='{"1":"https://eth-mainnet.alchemyapi.io/v2/_2mBX3HGWRFlLSg_2JeqBn3Ljlfn2hqU"}'
 
 # # set login credintials and write them to text file
-# ENV USERNAME "a"
-# ENV PASSWORD "a"
-# RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    # echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    # echo "}" >> /tmp/hashpass.txt
+ENV USERNAME "a"
+ENV PASSWORD "a"
+RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    echo "}" >> /tmp/hashpass.txt
 
 ENTRYPOINT ["sh", "-c", "supervisord"]
