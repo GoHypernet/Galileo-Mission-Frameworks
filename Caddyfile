@@ -5,7 +5,8 @@
 	
 	handle_path /ui/* {
         reverse_proxy http://localhost:3000
-		import /tmp/hashpass.txt
+        respond /passwordcheck/ "OK"
+        import /tmp/hashpass.txt
     }
 	
 	handle_path /jsonrpc/* {

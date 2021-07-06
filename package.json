@@ -15,6 +15,7 @@
     },
     "dependencies": {
 		"@hypernetwork/galileo-ide-widget": "latest",
+		"@hypernetwork/galileo-ide-password-widget": "1.0.0",
         "@theia/editor-preview": "latest",
         "@theia/file-search": "latest",
         "@theia/markers": "latest",

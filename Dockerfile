@@ -7,7 +7,7 @@ FROM tezos/tezos:latest-release as ide-build
 USER root 
 
 RUN apk update && \
-    apk add git openssh bash python3 python3-dev py-pip make gcc g++ libx11-dev libxkbfile-dev supervisor && \
+    apk add git openssh bash python3 python3-dev py-pip make gcc g++ libsecret-dev libx11-dev libxkbfile-dev supervisor && \
     wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash && \
     apk add nodejs npm && \
 	npm install yarn -g
@@ -36,7 +36,7 @@ FROM tezos/tezos:latest-release
 USER root
 
 RUN apk update && \
-    apk add git tmux vim zip unzip openssh bash python3 python3-dev py-pip make gcc g++ libx11-dev libxkbfile-dev supervisor && \
+    apk add git tmux vim zip unzip openssh bash python3 python3-dev py-pip make gcc g++ libsecret-dev libx11-dev libxkbfile-dev supervisor && \
     wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash && \
     apk add nodejs npm && \
 	curl https://rclone.org/install.sh | bash 

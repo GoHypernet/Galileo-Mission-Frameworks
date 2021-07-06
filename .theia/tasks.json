@@ -16,7 +16,7 @@
             "label": "Start Tezos Node",
             "description": "Run a Tezos node connected to the public mainnet.",
             "type": "shell",
-            "command": "tmux new -s node tezos-node run --rpc-addr 127.0.0.1",
+            "command": "tmux new -s node tezos-node run --rpc-addr 127.0.0.1 || tmux a -t node",
             "icon": {
                 "prefix": "fas",
                 "name": "play-circle"
@@ -27,7 +27,7 @@
             "label": "Stop Tezos Node",
             "description": "End Tezos node process.",
             "type": "shell",
-            "command": "tmux kill-session -s node",
+            "command": "tmux kill-session -t node",
             "icon": {
                 "prefix": "fas",
                 "name": "stop-circle"
@@ -38,7 +38,7 @@
             "label": "Check Tezos Node Status",
             "description": "Test if your Tezos node is bootstrapped.",
             "type": "shell",
-            "command": "tmux new -s bootstrap tezos-client bootstrapped",
+            "command": "tmux new -s bootstrap tezos-client bootstrapped || tmux a -t bootstrap",
             "icon": {
                 "prefix": "fas",
                 "name": "thermometer"
@@ -60,7 +60,7 @@
             "label": "Start Tezos Baker",
             "description": "Start Baker process in tmux terminal.",
             "type": "shell",
-            "command": "tmux new -s baker tezos-baker-alpha run with local node ~/.tezos-node my-galileo",
+            "command": "tmux new -s baker tezos-baker-alpha run with local node ~/.tezos-node my-galileo || tmux a -t baker",
             "icon": {
                 "prefix": "fas",
                 "name": "bread-slice"
