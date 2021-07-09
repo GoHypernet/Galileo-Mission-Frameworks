@@ -1,0 +1,77 @@
+{
+    "galileo.logo": "https://storage.googleapis.com/mission_types/stata_stata.jfif",
+    "galileo.title": "Stata",
+    "galileo.description": "Your data tell a story.",
+    "galileo.widget_label": "Stata Portal",
+    "galileo.social_links": [
+        {
+        "icon": {
+            "prefix": "fab",
+            "name": "twitter"
+        },
+        "href": "https://twitter.com/Stata?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
+        "priority": 0
+        },
+		{
+        "icon": {
+            "prefix": "fab",
+            "name": "reddit"
+        },
+        "href": "https://www.reddit.com/r/stata/",
+        "priority": 1
+        },
+		{
+        "icon": {
+            "prefix": "fab",
+            "name": "facebook"
+        },
+        "href": "http://www.facebook.com/StataCorp",
+        "priority": 1
+        }
+    ],
+    "galileo.ui_components": [
+        {
+        "type": "custom",
+        "title": "Getting Started",
+        "content": [
+            {
+            "title": "🏡 Stata Home Page",
+            "href": "https://www.stata.com/",
+            "priority": 0
+            },
+            {
+            "title": "💸 Stata Purchase Information",
+            "href": "https://www.stata.com/order/",
+            "priority": 1
+            },
+            {
+            "title": "🤓 Stata Training Resources",
+            "href": "https://www.stata.com/learn/",
+            "priority": 3
+            },
+            {
+            "title": "📙 Stata Documentation",
+            "href": "https://www.stata.com/features/documentation/",
+            "priority": 3
+            }
+        ]
+        },
+        {
+        "type": "custom",
+        "title": "Help",
+        "content": [
+            {
+            "title": "🤔 Stata FAQ",
+            "href": "https://www.stata.com/support/faqs/",
+            "priority": 0
+            },
+            {
+            "title": "🌎 Stata Journal",
+            "href": "https://www.stata.com/bookstore/stata-journal/",
+            "priority": 1
+            }
+        ]
+        }
+    ],
+    "workbench.colorTheme": "Galileo Dark"
+}

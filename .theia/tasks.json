@@ -1,0 +1,26 @@
+{
+    "tasks": [
+        {
+            "id": "register-license",
+            "label": "Register License",
+            "description": "Register you Stata license in the session.",
+            "type": "shell",
+            "command": "bash /usr/local/stata16/runstatagui.sh",
+            "icon": {
+                "prefix": "fas",
+                "name": "box-open"
+            }
+        },
+		{
+            "id": "start-stata",
+            "label": "Start Stata",
+            "description": "Open the Stata terminal.",
+            "type": "shell",
+            "command": "tmux new -s stataterm xstata || tmux a -t stataterm",
+            "icon": {
+                "prefix": "far",
+                "name": "play-circle"
+            }
+        }
+    ]
+}
