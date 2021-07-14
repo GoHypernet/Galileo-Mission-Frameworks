@@ -56,7 +56,7 @@ ENV PATH $PATH:/usr/local/go/bin:/home/galileo:/home/galileo/.local/bin
 # add galileo non-root user
 RUN useradd -ms /bin/bash galileo
 COPY .theia /home/galileo/.theia
-RUN chmod a+rwx /home/galileo/.theia
+RUN chmod -R a+rwx /home/galileo/.theia
 
 # get the Caddy server executable
 # copy the caddy server build into this container
