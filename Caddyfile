@@ -1,7 +1,11 @@
 :8888 {
     log
-    root * C:\Users\Public\tuflow
-    reverse_proxy :3000
+    root * \users\ContainerAdministrator
+    redir / /ui/
 
-    import C:\Users\Public\caddy\hashpass.txt
+    handle_path /ui/* {
+        reverse_proxy http://localhost:3000
+        respond /passwordcheck/ "OK"
+        import "C:\Users\Public\caddy\hpassword.txt"
+    }
 }

@@ -23,6 +23,10 @@ COPY --from=ide "C:\Users\Public\galileo-ide" "C:\Users\Public\galileo-ide"
 COPY --from=ide /exe /exe
 COPY --from=caddy-build "C:\caddy.exe" "C:\Users\Public\caddy\caddy.exe"
 
+# get IDE widget configs
+COPY .theia "C:\Users\ContainerAdministrator\.theia"
+COPY .vscode "C:\Users\ContainerAdministrator\.vscode"
+
 # set Default executable paths to be the latest version
 ENV EXE_iSP "C:\\exe\\2020-01-AA\\TUFLOW_iSP_w64.exe -nmb -nc"
 ENV EXE_iDP "C:\\exe\\2020-01-AA\\TUFLOW_iDP_w64.exe -nmb -nc"
@@ -38,7 +42,7 @@ COPY run_ide.py run_ide.py
 COPY Caddyfile "C:\Users\Public\caddy\Caddyfile"
 
 # create some usefule batch files
-RUN echo C:\Users\Public\caddy\caddy.exe run -adapter caddyfile -config C:\Users\Public\caddy\Caddyfile > run_caddy.bat
+RUN echo C:\Users\Public\caddy\caddy.exe run -config C:\Users\Public\caddy\Caddyfile > run_caddy.bat
 RUN echo node .\src-gen\backend\main.js C:\Users\Public\tuflow --hostname=0.0.0.0 > run_ide.bat
 
 # install package manager 
@@ -53,8 +57,11 @@ ENV GALILEO_RESULTS_DIR "C:\Users\Public\tuflow"
 
 # set login credentials and write them to text file
 # uncomment these lines if testing locally
-#ENV USERNAME "myuser"
-#ENV PASSWORD "testpass2"
-#RUN C:\\Users\\Public\\caddy\\caddy.exe hash-password -plaintext %PASSWORD% > "C:\Users\Public\caddy\hpassword.txt"
+ENV USERNAME "a"
+ENV PASSWORD "a"
+RUN echo basicauth /* { > "C:\Users\Public\caddy\hpassword.txt"
+RUN echo {$USERNAME} >> "C:\Users\Public\caddy\hpassword.txt"
+RUN C:\\Users\\Public\\caddy\\caddy.exe hash-password -plaintext %PASSWORD% >> "C:\Users\Public\caddy\hpassword.txt"
+RUN echo } >> "C:\Users\Public\caddy\hpassword.txt"
 
-#ENTRYPOINT ["python","run_ide.py"]
+ENTRYPOINT ["python","run_ide.py"]

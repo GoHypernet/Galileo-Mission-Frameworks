@@ -1,0 +1,26 @@
+{
+    "tasks": [
+        {
+            "id": "start-powershell",
+            "label": "Start a Powershell",
+            "description": "Start a windows Powershell.",
+            "type": "shell",
+            "command": "powershell",
+            "icon": {
+                "prefix": "fas",
+                "name": "terminal"
+            }
+        },
+		{
+            "id": "start-cmd",
+            "label": "Start a CMD Prompt",
+            "description": "Start a windows cmd prompt.",
+            "type": "shell",
+            "command": "cmd",
+            "icon": {
+                "prefix": "fas",
+                "name": "terminal"
+            }
+        }
+    ]
+}

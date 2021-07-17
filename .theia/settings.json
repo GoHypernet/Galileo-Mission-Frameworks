@@ -1,0 +1,59 @@
+{
+    "galileo.logo": "https://storage.googleapis.com/mission_types/1897ee04-654a-42f3-b11f-0fc2ce39f355.png",
+    "galileo.title": "Tuflow",
+    "galileo.description": "Industry leading hydraulic modelling software.",
+    "galileo.widget_label": "Tuflow Portal",
+    "galileo.social_links": [
+	    {
+        "icon": {
+            "prefix": "far",
+            "name": "comments"
+        },
+        "href": "https://forum.tuflow.com/",
+        "priority": 0
+        },
+		{
+        "icon": {
+            "prefix": "fab",
+            "name": "linkedin"
+        },
+        "href": "https://www.linkedin.com/groups/1908583/",
+        "priority": 0
+        }
+	],
+    "galileo.ui_components": [
+        {
+        "type": "custom",
+        "title": "Getting Started",
+        "content": [
+            {
+            "title": "🏡 Tuflow Home Page",
+            "href": "https://www.tuflow.com/",
+            "priority": 0
+            },
+			{
+            "title": "💸 Tuflow Pricing",
+            "href": "https://www.tuflow.com/pricing",
+            "priority": 1
+            }
+        ]
+        },
+        {
+        "type": "custom",
+        "title": "Help",
+        "content": [
+            {
+            "title": "🤔 Tuflow Support",
+            "href": "https://www.tuflow.com/support/",
+            "priority": 0
+            },
+			{
+            "title": "🌎 Tuflow Wiki",
+            "href": "hhttps://wiki.tuflow.com/index.php?title=Main_Page",
+            "priority": 1
+            }
+        ]
+        }
+    ],
+    "workbench.colorTheme": "dark"
+}
