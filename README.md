@@ -13,7 +13,7 @@
 - **Website**: https://www.tuflow.com/
 
 ## Notes
-Is is common for TUFLOW models to container a large number of small text files. This makes uploading raw TUFLOW
+It is common for TUFLOW models to contain a large number of small text files. This makes uploading raw TUFLOW
 models very time consuming since each file requires an individual API call. TUFLOW models should be zipped before
 uploading to a Galileo Mission. The build-in entrypoint will decompress the model automatically. 
 
