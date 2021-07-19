@@ -59,9 +59,6 @@ ENV GALILEO_RESULTS_DIR "C:\Users\Public\tuflow"
 # uncomment these lines if testing locally
 ENV USERNAME "a"
 ENV PASSWORD "a"
-RUN echo basicauth /* { > "C:\Users\Public\caddy\hpassword.txt"
-RUN echo {$USERNAME} >> "C:\Users\Public\caddy\hpassword.txt"
-RUN C:\\Users\\Public\\caddy\\caddy.exe hash-password -plaintext %PASSWORD% >> "C:\Users\Public\caddy\hpassword.txt"
-RUN echo } >> "C:\Users\Public\caddy\hpassword.txt"
+RUN C:\\Users\\Public\\caddy\\caddy.exe hash-password -plaintext %PASSWORD% > /Users/Public/caddy/hp.txt 
 
 ENTRYPOINT ["python","run_ide.py"]

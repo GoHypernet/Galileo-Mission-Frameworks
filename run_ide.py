@@ -14,7 +14,7 @@ except Exception as e:
 
 try:
     # read the hashed password
-    with open(WindowsPath('/Users/Public/caddy/hpassword.txt'), 'r') as f:
+    with open(WindowsPath('/Users/Public/caddy/hp.txt'), 'r') as f:
         hpass = f.read()
 
     # create the basic authentication file

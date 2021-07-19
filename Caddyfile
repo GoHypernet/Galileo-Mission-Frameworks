@@ -6,6 +6,6 @@
     handle_path /ui/* {
         reverse_proxy http://localhost:3000
         respond /passwordcheck/ "OK"
-        import "C:\Users\Public\caddy\hpassword.txt"
+        import "C:\Users\Public\caddy\hashpass.txt"
     }
 }
