@@ -57,8 +57,8 @@ ENV GALILEO_RESULTS_DIR "C:\Users\Public\tuflow"
 
 # set login credentials and write them to text file
 # uncomment these lines if testing locally
-ENV USERNAME "a"
-ENV PASSWORD "a"
-RUN C:\\Users\\Public\\caddy\\caddy.exe hash-password -plaintext %PASSWORD% > /Users/Public/caddy/hp.txt 
+# ENV USERNAME "a"
+# ENV PASSWORD "a"
+# RUN C:\\Users\\Public\\caddy\\caddy.exe hash-password -plaintext %PASSWORD% > /Users/Public/caddy/hp.txt 
 
-ENTRYPOINT ["python","run_ide.py"]
+# ENTRYPOINT ["python","run_ide.py"]
