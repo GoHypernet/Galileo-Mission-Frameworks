@@ -26,6 +26,8 @@ This framework comes with a React-based IDE for interactive sessions. A password
 `PASSWORD` and `USERNAME` environment variables for authentication with the interactive session. The IDE is served on 
 port 3000 and the authenticated enpoint which reverse-proxies the app is on port 8888. 
 
+![alt](Galileo-Tuflow-IDE.png)
+
 ## Building
 
 In order to build the Tuflow base image, first install [Docker for Windows](https://docs.docker.com/docker-for-windows/). 
