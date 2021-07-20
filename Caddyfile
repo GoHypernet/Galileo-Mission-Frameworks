@@ -17,7 +17,7 @@
                 import /tmp/hashpass.txt
         }
 		
-		handle_path /rclone/* {
+        handle_path /rclone/* {
                 reverse_proxy http://localhost:5572
                 import /tmp/hashpass.txt
         }
