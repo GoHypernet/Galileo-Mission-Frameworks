@@ -86,6 +86,9 @@ COPY --from=ide-build /theia /theia
 # get superviserd
 COPY supervisord.conf /etc/
 
+# rclone configuration file 
+COPY rclone.conf /home/galileo/.config/rclone/rclone.conf
+
 # set environment variable to look for plugins in the correct directory
 ENV SHELL=/bin/bash \
     THEIA_DEFAULT_PLUGINS=local-dir:/theia/plugins
@@ -94,10 +97,10 @@ ENV USE_LOCAL_GIT true
 ENV ALGORAND_DATA /home/galileo/data
 
 # # set login credintials and write them to text file
-# ENV USERNAME "a"
-# ENV PASSWORD "a"
-# RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    # echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    # echo "}" >> /tmp/hashpass.txt
+ENV USERNAME "a"
+ENV PASSWORD "a"
+RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    echo "}" >> /tmp/hashpass.txt
 
 ENTRYPOINT ["sh", "-c", "supervisord"]

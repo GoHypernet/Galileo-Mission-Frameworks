@@ -1,6 +1,6 @@
+  
 :8888 {
         log
-        root * /home/galileo
 
         handle_path /* {
                 @uiget {
