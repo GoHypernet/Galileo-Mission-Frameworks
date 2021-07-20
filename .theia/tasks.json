@@ -93,7 +93,7 @@
             "label": "Geth Dev Node (1337)",
             "description": "Start a Geth developer node.",
             "type": "shell",
-            "command": "tmux new -s geth geth --dev --http --http.vhosts '*' --http.api eth,net,web3 --ws --graphql --metrics || tmux a -t geth",
+            "command": "tmux new -s geth geth --dev --allow-insecure-unlock || tmux a -t geth",
 			"icon": {
                 "prefix": "fas",
                 "name": "hard-hat"

@@ -7,7 +7,7 @@ FROM golang as go
 FROM ubuntu:18.04 as ide-build
 
 # install node, yarn, and other tools
-RUN apt update -y && apt install vim curl gcc g++ make libx11-dev libxkbfile-dev supervisor -y && \
+RUN apt update -y && apt install vim curl gcc g++ make libsecret-1-dev libx11-dev libxkbfile-dev supervisor -y && \
     curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
 	apt install -y nodejs && \
 	npm install --global yarn
@@ -30,14 +30,14 @@ RUN yarn --pure-lockfile && \
     yarn autoclean --force && \
     yarn cache clean
 
-# get metrics binaries
-FROM ubuntu:18.04 as metrics
+# # get metrics binaries
+# FROM ubuntu:18.04 as metrics
 	
-# get prometheus metrics monitoring
-ADD https://github.com/prometheus/prometheus/releases/download/v2.27.1/prometheus-2.27.1.linux-amd64.tar.gz .
-RUN tar -xvf prometheus-2.27.1.linux-amd64.tar.gz
-RUN sed -i 's/localhost:9090,/localhost:9900,/g' /prometheus-2.27.1.linux-amd64/prometheus.yml
-RUN ls -la
+# # get prometheus metrics monitoring
+# ADD https://github.com/prometheus/prometheus/releases/download/v2.27.1/prometheus-2.27.1.linux-amd64.tar.gz .
+# RUN tar -xvf prometheus-2.27.1.linux-amd64.tar.gz
+# RUN sed -i 's/localhost:9090,/localhost:9900,/g' /prometheus-2.27.1.linux-amd64/prometheus.yml
+# RUN ls -la
 
 # Final build stage
 FROM ubuntu:18.04 
@@ -52,6 +52,7 @@ RUN apt update -y \
     ethereum solc \
     supervisor \
     python3.8 python3-pip python3.8-dev \
+    libsecret-1-dev \
 	vim curl tmux git zip unzip vim speedometer net-tools \
   && python3.8 -m pip install web3 py-solc py-solc-x \
   && curl -fsSL https://deb.nodesource.com/setup_12.x | bash - \
@@ -83,10 +84,11 @@ RUN chmod -R a+rwx /galileo-ide
 USER galileo
 WORKDIR /home/galileo
 
-RUN mkdir /home/galileo/prysm
-
 # get supervisor configuration file
 COPY supervisord.conf /etc/
+
+# rclone configuration file 
+COPY rclone.conf /home/galileo/.config/rclone/rclone.conf
 
 WORKDIR /galileo-ide
 
@@ -96,11 +98,11 @@ ENV SHELL=/bin/bash \
 ENV USE_LOCAL_GIT true
 ENV GALILEO_RESULTS_DIR /home/galileo
 
-# set login credintials and write them to text file
-# ENV USERNAME "a"
-# ENV PASSWORD "a"
-# RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
-    # echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
-    # echo "}" >> /tmp/hashpass.txt
+# set login credentials and write them to text file
+ENV USERNAME "a"
+ENV PASSWORD "a"
+RUN echo "basicauth /* {" >> /tmp/hashpass.txt && \
+    echo "    {env.USERNAME}" $(caddy hash-password -plaintext $(echo $PASSWORD)) >> /tmp/hashpass.txt && \
+    echo "}" >> /tmp/hashpass.txt
 
 ENTRYPOINT ["sh", "-c", "supervisord"]

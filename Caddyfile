@@ -1,11 +1,16 @@
 :8888 {
     log
-    root * /home/galileo
     redir / /ui/
 	
 	handle_path /ui/* {
         reverse_proxy http://localhost:3000
+        respond /passwordcheck/ "OK"
 		import /tmp/hashpass.txt
+    }
+	
+    handle_path /rclone/* {
+        reverse_proxy http://localhost:5572
+        import /tmp/hashpass.txt
     }
 	
 	handle_path /http/* {
