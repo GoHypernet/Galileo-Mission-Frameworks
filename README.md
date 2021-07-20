@@ -2,7 +2,7 @@
   <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/algorand/algorand_logo.png" width="200">
 </p>
 
-# Algorand
+# Galileo-Algorand Environment
 
 ## Overview
 - **Industry**: Cryptocurrency, node hosting
