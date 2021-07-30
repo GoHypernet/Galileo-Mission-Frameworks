@@ -2,7 +2,7 @@
   <img src="https://github.com/GoHypernet/Galileo-Mission-Frameworks/blob/algorand/algorand_logo.png" width="200">
 </p>
 
-# Algorand
+# Galileo-Algorand Environment
 
 ## Overview
 - **Industry**: Cryptocurrency, node hosting
@@ -23,7 +23,8 @@ This containerized application exposes the following reverse proxy endpoints:
 
 - /* -> localhost:4161 (Relay node connections)
 - /ui/* -> localhost:3000 (Galileo IDE + authentication)
-- /restapi/* -> localhost:8080 (Algod rest API)
+- /rclone/* -> localhost:5572 (rclone api)
+- /rpc/* -> localhost:8080 (Algod rest API)
  
 Additionally, the runtime environment contains node and python 3.8 for Algorand Smart Contract development. 
 

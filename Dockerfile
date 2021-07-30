@@ -62,7 +62,7 @@ ENV PATH $PATH:/usr/local/go/bin:/home/galileo:/home/galileo/.local/bin:/home/ga
 # add galileo non-root user
 RUN useradd -ms /bin/bash galileo
 COPY .theia /home/galileo/.theia
-RUN chmod a+rwx /home/galileo/.theia; 
+RUN chmod -R a+rwx /home/galileo/.theia
 
 WORKDIR /home/galileo
 # get the Caddy server executable
@@ -105,6 +105,9 @@ WORKDIR /theia
 COPY --from=ide-build /theia /theia
 # get superviserd
 COPY supervisord.conf /etc/
+
+# rclone configuration file 
+COPY rclone.conf /home/galileo/.config/rclone/rclone.conf
 
 # set environment variable to look for plugins in the correct directory
 ENV SHELL=/bin/bash \
