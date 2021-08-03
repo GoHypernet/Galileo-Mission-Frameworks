@@ -6,57 +6,138 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Authentication Portal">
+    <meta name="author" content="Hypernetlabs">
+
+    <link rel="shortcut icon" href="https://storage.googleapis.com/mission_types/h_logo_transparent.svg" type="image/png">
+    <link rel="icon" href="https://storage.googleapis.com/mission_types/h_logo_transparent.svg" type="image/png">
 
     <!-- Matrialize CSS -->
     <link rel="stylesheet" href="{{ pathjoin .ActionEndpoint "/assets/materialize-css/css/materialize.css" }}" />
     <link rel="stylesheet" href="{{ pathjoin .ActionEndpoint "/assets/google-webfonts/roboto.css" }}" />
     <link rel="stylesheet" href="{{ pathjoin .ActionEndpoint "/assets/line-awesome/line-awesome.css" }}" />
-    <link rel="stylesheet" href="{{ pathjoin .ActionEndpoint "/assets/css/styles.css" }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
     {{ if eq .Data.ui_options.custom_css_required "yes" }}
     <link rel="stylesheet" href="{{ pathjoin .ActionEndpoint "/assets/css/custom.css" }}" />
     {{ end }}
+    <style>
+    input {
+        border: 1px solid #9e9e9e !important;
+    border-radius: 10px !important;
+    padding-left: 12px !important;
+    }
+    input:focus {
+        box-shadow: none !important;
+    }
+    p {
+        margin-top: 0;
+        margin-bottom: 4px;
+        font-weight: 500;
+        font-size: 15px;
+    }
+    .app-input-field {
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-right: 12px;
+    }
+    body {
+        background: linear-gradient(to right, #d2e4ea 0%, #e5bfae 100%);
+    }
+    * {
+        font-family: 'Montserrat', sans-serif !important;
+
+    }
+    .app-card-container {
+        background-color: white;
+        margin-top: 2em;
+        border-radius: 10px;
+    }
+    .app-form {
+        padding: 40px;
+        margin-bottom: 0;
+    }
+    .app-title {
+        font-size: 20px;
+        font-weight: 300;
+        margin-bottom: 0;
+        margin-top: 0;
+        margin-left: 8px;
+    }
+    .app-title .app-brand-name {
+        font-weight: 500;
+    }
+    .app-header-column {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 24px 0 !important;
+    }
+    .app-divider {
+        background-color: rgba(0, 0, 0, 0.12);
+    margin: 0 30px;
+    height: 1px;
+    border: none;
+    } 
+    .app-header {
+        margin-bottom: 0;
+    }
+    .app-btn {
+        width: 100%;
+    border-radius: 24px;
+    padding: 0;
+    text-transform: none;
+    font-weight: 500;
+    font-size: 15px;
+    height: 48px;
+    /* background-color: #4dc1ab; */
+    background: linear-gradient(to right, #0078ff 0%, #7e00ff 100%);
+    }
+    .app-button-container {
+        padding: 0 40px !important;
+        margin-bottom: 20px;
+
+    }
+</style>
   </head>
   <body class="app-body">
     <div class="container">
       <div class="row">
-        <div class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4 app-card-container">
+        <div class="col s12 m8 offset-m2 l6 offset-l3 app-card-container z-depth-2">
           <div class="row app-header center">
-            {{ if .LogoURL }}
-            <div class="col s4">
-              <img class="d-block mx-auto mb-2" src="{{ .LogoURL }}" alt="{{ .LogoDescription }}" width="72" height="72">
+            <div class="col s12 app-header-column">
+              <img class="d-block mx-auto mb-2" src="https://storage.googleapis.com/mission_types/h_logo_transparent.svg" alt="Hypernet Logo" width="48">
+              <h4 class="app-title"><span class="app-brand-name">Hypernet </span>Sign In</h4>
             </div>
-            <div class="col s8">
-              <h4>{{ .Title }}</h4>
-            </div>
-            {{ else }}
-              <h4>{{ .Title }}</h4>
-            {{ end }}
           </div>
+          <hr class="app-divider">
           {{ if eq .Data.login_options.form_required "yes" }}
           <form action="{{ pathjoin .ActionEndpoint "/login" }}" method="POST">
             <div class="row app-form">
               {{ if eq .Data.login_options.username_required "yes" }}
-              <div class="row app-input-row valign-wrapper">
-                <div class="col s4">
+              <div class="row app-input-row">
+                <div class="col s12">
                   <p class="app-input-text">Username</p>
+              </div>
+              <div class="col s12">
+                <div class="input-field app-input-field">
+                  <input id="username" name="username" type="text" class="validate" autocorrect="off" autocapitalize="off" required />
                 </div>
-                <div class="col s8">
-                  <div class="input-field app-input-field">
-                    <input id="username" name="username" type="text" class="validate" autocorrect="off" autocapitalize="off" required />
-                  </div>
-                </div>
+              </div>
               </div>
               {{ end }}
               {{ if eq .Data.login_options.password_required "yes" }}
-              <div class="row app-input-row valign-wrapper">
-                <div class="col s4">
+              <div class="row app-input-row ">
+                <div class="col s12">
+
                   <p class="app-input-text">Password</p>
+
+              </div>
+              <div class="col s12">
+                <div class="input-field app-input-field">
+                  <input id="password" name="password" type="password" class="validate" autocorrect="off" autocapitalize="off" required />
                 </div>
-                <div class="col s8">
-                  <div class="input-field app-input-field">
-                    <input id="password" name="password" type="password" class="validate" autocorrect="off" autocapitalize="off" required />
-                  </div>
-                </div>
+              </div>
               </div>
               {{ end }}
               {{ if eq .Data.login_options.realm_dropdown_required "yes" }}
@@ -84,7 +165,7 @@
                 {{ end }}
               {{ end }}
             </div>
-            <div class="row app-control valign-wrapper">
+            <div class="row app-control">
               <div class="col s6">
                 {{ if eq .Data.login_options.registration_required "yes" }}
                 <span class="app-link"><a href="{{ pathjoin .ActionEndpoint "/register" }}">Register</a></span>
@@ -93,9 +174,8 @@
                 <span class="app-link"><a href="{{ pathjoin .ActionEndpoint "/forgot" }}">Forgot Password?</a></span>
                 {{ end }}
               </div>
-              <div class="col s6 right-align">
-                <button type="submit" name="submit" class="waves-effect waves-light btn app-btn">
-                  <i class="las la-sign-in-alt left app-btn-icon"></i>
+              <div class="col s12 app-button-container">
+                <button type="submit" name="submit" class="btn app-btn">
                   <span class="app-btn-text">Login</span>
                 </button>
               </div>

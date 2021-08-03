@@ -1,0 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+body {
+  background: linear-gradient(to right, #d2e4ea 0%, #e5bfae 100%);
+}
+* :not(.las) {
+  font-family: "Montserrat", sans-serif !important;
+}
