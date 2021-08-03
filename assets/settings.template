@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <meta name="description" content="Authentication Portal">
-
+    <meta name="author" content="Hypernetlabs">
+    <link rel="shortcut icon" href="https://storage.googleapis.com/mission_types/h_logo_transparent.svg" type="image/png">
+    <link rel="icon" href="https://storage.googleapis.com/mission_types/h_logo_transparent.svg" type="image/png">
     <!-- Matrialize CSS -->
     <link rel="stylesheet" href="{{ pathjoin .ActionEndpoint "/assets/materialize-css/css/materialize.css" }}" />
     <link rel="stylesheet" href="{{ pathjoin .ActionEndpoint "/assets/google-webfonts/roboto.css" }}" />
