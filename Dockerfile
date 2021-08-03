@@ -62,6 +62,7 @@ ENV PATH $PATH:/usr/local/go/bin:/home/galileo:/home/galileo/.local/bin:/home/ga
 # add galileo non-root user
 RUN useradd -ms /bin/bash galileo
 COPY .theia /home/galileo/.theia
+COPY assets /etc/gatekeeper/assets
 RUN chmod -R a+rwx /home/galileo/.theia
 
 WORKDIR /home/galileo

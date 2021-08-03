@@ -44,7 +44,7 @@
       "last_modified": "2020-05-05T18:47:51.513552175Z",
       "roles": [
         {
-          "name": "authp/admin"
+          "name": "authp/user"
         }
       ]
     }
