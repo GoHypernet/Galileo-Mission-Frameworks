@@ -53,7 +53,7 @@ ENV SCOOP_HOME "C:\scoop\apps\scoop\current"
 ENV THEIA_DEFAULT_PLUGINS "local-dir:c:\Users\Public\galileo-ide\plugins"
 
 # set environment variable for result collection
-ENV GALILEO_RESULTS_DIR "C:\Users\Public\tuflow"
+ENV GALILEO_RESULTS_DIR "C:\Users\Public\tuflow\results"
 
 # set login credentials and write them to text file
 # uncomment these lines if testing locally
